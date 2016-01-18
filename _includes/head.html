@@ -6,7 +6,13 @@
     <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
     <meta name="description" content="{{ site.description }}">
 
-    <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic|Oswald|Roboto+Condensed:400,300,300italic,400italic,700,700italic|Roboto+Mono:400,400italic,700,700italic|Josefin+Slab:100,300' rel='stylesheet' type='text/css'>
+
+    <style type="text/css">
+        {% capture include_to_scssify %}
+          {% include style.scss %}
+        {% endcapture %}
+        {{ include_to_scssify | scssify }}
+    </style>
 </head>

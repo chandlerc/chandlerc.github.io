@@ -4,9 +4,12 @@ email: chandlerc@gmail.com
 description: >
   Thoughts on programming languages, compilers, optimization, and performance.
 baseurl: ""
-url: "https://chandlerc.github.io"
+url: https://chandlerc.github.io
 twitter_username: chandlerc1024
 github_username:  chandlerc
 
 # Build settings
 markdown: kramdown
+sass:
+  sass_dir: _sass
+  style: compressed
