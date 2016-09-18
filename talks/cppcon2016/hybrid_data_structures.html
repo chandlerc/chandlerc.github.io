@@ -35,7 +35,9 @@ class: center, middle
 ```c++
 #include <iostream>
 
-int main() { return 0; }
+*struct S {};
+
+int main() { `return 0;' }
 ```
 
     </textarea>
@@ -48,23 +50,11 @@ int main() { return 0; }
         // Alternatives: '16:9', ...
         ratio: '16:9',
 
-        // Navigation options
-        navigation: {
-          // Enable or disable navigating using scroll
-          // Default: true
-          // Alternatives: false
-          scroll: true,
-
-          // Enable or disable navigation using touch
-          // Default: true
-          // Alternatives: false
-          touch: true,
-
-          // Enable or disable navigation using click
-          // Default: false
-          // Alternatives: true
-          click: false
-        },
+        // Syntax highlighting theme
+        highlightLanguage: 'c++',
+        highlightStyle: 'ir_black',
+        highlightLines: true,
+        highlightSpans: true,
 
         // Customize slide number label, either using a format string..
         slideNumberFormat: '(%current% / %total%)',
