@@ -53,6 +53,15 @@
         border: 5px solid #F00;
         box-shadow: 0 0 30px #F00;
       }
+      .left-col {
+        float: left;
+        width: 50%;
+      }
+      .right-col {
+        float: right;
+        width: 50%;
+      }
+
       #slide-llvm {
         background-position: -50% 60%;
         background-size: 120%;
@@ -109,13 +118,9 @@ utilities.
 
 ---
 name: core-ds
-template: basic-layout
+template: title-layout
 
-## Core Data Structures:
-
-1. Vector
-1. Set
-1. Map
+## Vectors and sets, and maps, oh my!
 
 ???
 
@@ -126,8 +131,6 @@ Really, its even more simple as the map is built directly out of the set.
 ---
 name: smallvector
 template: basic-layout
-
-### LLVM's vector
 
 ```
 template <typename T, int N>
@@ -196,11 +199,45 @@ template: title-layout
 name: erase-small-size
 template: basic-layout
 
-### `SmallVector` also supports *free* erasure of small size
+.left-col[
+```
+template <typename T>
+class SmallVectorImpl<T> {
+  T *begin, *end;
+  size_t capacity;
 
-(code for `SmallVectorImpl<T>` in an interface)
+protected:
+  SmallVectorImpl(T *begin, T *end, size_t capacity)
+      : begin(begin), end(end), capacity(capacity) {}
+
+public:
+  iterator begin();
+  iterator end();
+
+  void push_back(const T& element);
+  void pop_back();
+
+  // ...
+};
+```
+]
+.right-col[
+```
+template <typename T, int N>
+class SmallVector : public SmallVectorImpl<T> {
+  char buffer[sizeof(T) * N];
+
+public:
+  SmallVector()
+      : SmallVectorImpl((T*)buffer, (T*)buffer, N) {}
+
+  // ...
+};
+]
 
 ???
+`SmallVector` also supports *free* erasure of small size
+
 This trick comes from very careful usage of factoring the design.
 - All the relevant APIs for SmallVector are provided by a base class.
 - We pass the capacity down as we need it in the large form anyways.
