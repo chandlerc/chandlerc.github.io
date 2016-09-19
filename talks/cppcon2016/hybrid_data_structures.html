@@ -43,7 +43,10 @@
       .remark-slide-content h3 {
         font-size: 75px
       }
-      .remark-code, .remark-inline-code { font-family: 'Roboto Mono', monospace; }
+      .remark-code, .remark-inline-code {
+        font-family: 'Roboto Mono', monospace;
+        font-size: 22px;
+      }
       .remark-code-line-highlighted {
         background-color: #000;
         border: 5px solid #F00;
@@ -208,7 +211,7 @@ class SmallVectorImpl<T> {
   size_t capacity;
 
 protected:
-  SmallVectorImpl(T *begin, T *end,.....
+  SmallVectorImpl(T *begin, T *end,
                   size_t capacity)
       : begin(begin), end(end),
         capacity(capacity) {}
@@ -233,7 +236,7 @@ class SmallVector
 
 public:
   SmallVector()
-      : SmallVectorImpl((T*)buffer,.....
+      : SmallVectorImpl((T*)buffer,
                         (T*)buffer,
                         N) {}
 
