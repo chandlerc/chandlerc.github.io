@@ -69,6 +69,7 @@ they're fast, and how to use them solve really interesting problems.
 
 ---
 name: llvm
+template: layout
 background-image: url(DragonFull.png)
 
 ## LLVM
@@ -87,7 +88,6 @@ utilities.
 
 ---
 name: core-ds
-template: layout
 
 ## Core Data Structures:
 
@@ -117,11 +117,84 @@ class SmallVector {
 Despite the name "small", this type is used pervasively as the vector type of
 choice in LLVM.
 
+This is really the workhorse data structure, not unlike std::vector
+- Everything uses it...
+- Queue
+- Worklist
+- stack
+- binary heap
+- sorted set or map
+
+In essence, just a small size optimized vector
+- Useful to skip initial alloc even when large often
+- Customizable "small" size makes it flexible for cases where reserving a large
+  chunk of the stack is actually the best approach
+
+---
+name: smallvector-layout
+
+### A small buffer pre-allocated inside the object
+
+For example `SmallVector<int*, 1>` uses a memory layout like:
+
+<table class="memory">
+  <thead>
+    <tr class="bytes">
+      <th class="label">bytes</th>
+      <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>
+      <th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th>
+      <th>16</th><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th>
+      <th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>29</th><th>30</th><th>31</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="label">members</td>
+      <td colspan=8>pointer</td>
+      <td colspan=8>size</td>
+      <td colspan=8>capacity</td>
+      <td colspan=8>inline buffer</td>
+    </tr>
+  </tbody>
+</table>
+
+???
+We layout the inline buffer within the object. The
+pointer just points into this buffer when in "small" mode.
+
+---
+name: why-not-std-vector
+template: title-layout
+
+### Why not `std::vector`? Iterator invalidation.
+
+---
+name: erase-small-size
+template: layout
+
+### `SmallVector` also supports *free* erasure of small size
+
+(code for `SmallVectorImpl<T>` in an interface)
+
+???
+This trick comes from very careful usage of factoring the design.
+- All the relevant APIs for SmallVector are provided by a base class.
+- We pass the capacity down as we need it in the large form anyways.
+- Allows zero-cost "erasure" of the small size as it is only needed to allocate.
+
 ---
 name: smalldenseset
 
+### LLVM's set structure: `SmallDenseSet`
+
+- Not "dense", just uses open addressing and no buckets
+- Small-size optimization layered on top
+- Can even avoid hashing and just append when *very* small
+
 ---
 name: smalldensemap
+
+### LLVM's map structure is just a set with a key/value pair
 
 ---
 name: done
@@ -162,11 +235,11 @@ typically just use auto and stop caring.
 
 ---
 
-## mumble transition
+## Small-size optimization is best for values that are *small*!
 
 ---
 
-## How can we make the values *small*?
+## So how can we make the values *small*?
 
 ---
 
