@@ -208,8 +208,10 @@ class SmallVectorImpl<T> {
   size_t capacity;
 
 protected:
-  SmallVectorImpl(T *begin, T *end, size_t capacity)
-      : begin(begin), end(end), capacity(capacity) {}
+  SmallVectorImpl(T *begin, T *end,.....
+                  size_t capacity)
+      : begin(begin), end(end),
+        capacity(capacity) {}
 
 public:
   iterator begin();
@@ -225,12 +227,15 @@ public:
 .right-col[
 ```
 template <typename T, int N>
-class SmallVector : public SmallVectorImpl<T> {
+class SmallVector
+    : public SmallVectorImpl<T> {
   char buffer[sizeof(T) * N];
 
 public:
   SmallVector()
-      : SmallVectorImpl((T*)buffer, (T*)buffer, N) {}
+      : SmallVectorImpl((T*)buffer,.....
+                        (T*)buffer,
+                        N) {}
 
   // ...
 };
