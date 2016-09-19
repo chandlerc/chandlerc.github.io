@@ -24,6 +24,8 @@
       }
       .remark-slide-content {
         background-color: #000;
+        background-size: cover;
+        background-position: center;
         color: #f8f8f8;
       }
       .remark-code, .remark-inline-code { font-family: 'Roboto Mono', monospace; }
@@ -37,6 +39,8 @@
         border: 5px solid #F00;
         box-shadow: 0 0 30px #F00;
       }
+      #slide-llvm {
+      }
     </style>
   </head>
   <body>
@@ -44,6 +48,7 @@
 
 name: layout
 layout: true
+class: left, top
 
 ---
 name: title-layout
@@ -193,6 +198,7 @@ name: smalldenseset
 
 ---
 name: smalldensemap
+template: title-layout
 
 ### LLVM's map structure is just a set with a key/value pair
 
@@ -204,8 +210,7 @@ template: title-layout
 
 ---
 name: elephant
-
-(elephant in the room picture)
+background-image: url(elephant.jpg)
 
 --
 
