@@ -62,14 +62,14 @@
   <body>
     <textarea id="source">
 
-name: layout
-layout: true
-class: left, top
-
----
 name: title-layout
 layout: true
 class: center, middle, title
+
+---
+name: basic-layout
+layout: true
+class: left, top
 
 ---
 name: title
@@ -90,7 +90,7 @@ they're fast, and how to use them solve really interesting problems.
 
 ---
 name: llvm
-template: layout
+template: basic-layout
 background-image: url(DragonFull.png)
 
 ## LLVM
@@ -109,6 +109,7 @@ utilities.
 
 ---
 name: core-ds
+template: basic-layout
 
 ## Core Data Structures:
 
@@ -124,6 +125,7 @@ Really, its even more simple as the map is built directly out of the set.
 
 ---
 name: smallvector
+template: basic-layout
 
 ### LLVM's vector
 
@@ -153,6 +155,7 @@ In essence, just a small size optimized vector
 
 ---
 name: smallvector-layout
+template: basic-layout
 
 ### A small buffer pre-allocated inside the object
 
@@ -191,7 +194,7 @@ template: title-layout
 
 ---
 name: erase-small-size
-template: layout
+template: basic-layout
 
 ### `SmallVector` also supports *free* erasure of small size
 
@@ -205,6 +208,7 @@ This trick comes from very careful usage of factoring the design.
 
 ---
 name: smalldenseset
+template: basic-layout
 
 ### LLVM's set structure: `SmallDenseSet`
 
@@ -226,6 +230,7 @@ template: title-layout
 
 ---
 name: elephant
+template: title-layout
 background-image: url(elephant.jpg)
 
 --
@@ -233,14 +238,20 @@ background-image: url(elephant.jpg)
 ## Why not just use allocators?
 
 ---
+name: allocators
+template: basic-layout
 
 ### (allocators code example)
 
 ---
+name: allocator-interface-boundary
+template: basic-layout
 
 ### (allocators on an interface boundary example)
 
 ---
+name: return-small-vector
+template: basic-layout
 
 ### (return a smallvector code example)
 
@@ -255,20 +266,28 @@ With smallvector, even though the small size is exposed in the interface, users
 typically just use auto and stop caring.
 
 ---
+name: small-size
+template: title-layout
 
 ## Small-size optimization is best for values that are *small*!
 
 ---
+name: make-values-small
+template: title-layout
 
 ## So how can we make the values *small*?
 
 ---
+name: address-identity
+template: title-layout
 
 ## First: give large objects *address identity*
 
 ???
 
 ---
+name: vector-unique-ptr
+template: basic-layout
 
 ### (vector of unique ptrs rather than objects, makes grow fast)
 
@@ -279,6 +298,8 @@ Downsides are that the separate allocation run the risk of undermining the
 locality and cache friendliness of the data structures.
 
 ---
+name: bump-ptr-allocator
+template: basic-layout
 
 ### (bumpptrallocator example)
 
@@ -300,6 +321,8 @@ objects
 
 
 ---
+name: index-identity
+template: basic-layout
 
 ### (SmallVector and using index identity example code)
 
@@ -310,10 +333,14 @@ have *index* identity instead of *address* identity. Same wins as with pointers,
 but even more compact data if we can get away with 32bit or smaller indices.
 
 ---
+name: bitpacking
+template: title-layout
 
 ## Second: aggressively pack bits
 
 ---
+name: pointer-bits-available
+template: basic-layout
 
 ### Just made most of our data structure values pointers above:
 
@@ -327,6 +354,8 @@ free bits. As more and more users have 64-bit address spaces, overaligned types
 become very effective
 
 ---
+name: pointer-int-pair
+template: basic-layout
 
 ### (code for PointerIntPair)
 
@@ -335,6 +364,8 @@ This lets us combine pointers with small integers. The code ends up being fully
 generic.
 
 ---
+name: pointer-embedded-int
+template: basic-layout
 
 ### (code for putting a PointerEmbeddedInteger into a PointerIntPair)
 
@@ -342,6 +373,8 @@ generic.
 And it isn't restricted to pointers. It can handle any "pointer like" object.
 
 ---
+name: pointer-int-pair-nested
+template: basic-layout
 
 ### (code for nesting a PointerIntPair inside another PointerIntPair)
 
@@ -350,6 +383,8 @@ And in fact, it is itself a pointer like object! It just consumes some of the
 pointer-like alignment provided.
 
 ---
+name: pointer-sum-type
+template: basic-layout
 
 ### (code for PointerSumType)
 
@@ -357,6 +392,8 @@ pointer-like alignment provided.
 We can then use this to build still more abstractions such as a sum type across pointer like types with an enum descriminator
 
 ---
+name: tiny-ptr-vector
+template: basic-layout
 
 ### (code for TinyPtrVector)
 
@@ -364,6 +401,8 @@ We can then use this to build still more abstractions such as a sum type across 
 Then we can build another hybrid data structure on top of this by introducing a vector that is a pointer-like object, AND EVEN HAS A SMALL SIZE OPTIMIZATION!
 
 ---
+name: dense-map-tiny-ptr-vector
+template: basic-layout
 
 ### (code for DenseMap<K*, TinyPtrVector<V*>>)
 
@@ -371,10 +410,14 @@ Then we can build another hybrid data structure on top of this by introducing a 
 One of the most important applications of this is to nest a vector within a map with high locality and very good scalaing properties.
 
 ---
+name: bitfields
+template: title-layout
 
 ### Third: use bitfields everywhere.
 
 ---
+name: ordering
+template: title-layout
 
 ## Sometimes, you really need to impose ordering on containers...
 
@@ -382,6 +425,8 @@ One of the most important applications of this is to nest a vector within a map 
 Hash tables, open addressing and pointers all make this much harder to achieve.
 
 ---
+name: sort
+template: title-layout
 
 ### Where possible, sort vectors.
 
@@ -394,10 +439,14 @@ Note that everything more complex than sorting also works well here. For
 example, in-vector trees and heaps are very fast and excellent structures.
 
 ---
+name: not-always-ordered
+template: title-layout
 
 ### Sometimes, there isn't a useful sort-based ordering to use.
 
 ---
+name: setvector
+template: basic-layout
 
 ### (code for SetVector)
 
@@ -412,6 +461,8 @@ fact that the set is *also* a vector when small to have the small size
 optimization be shared.
 
 ---
+name: mapvector
+template: basic-layout
 
 ### (code for MapVector)
 
@@ -419,10 +470,14 @@ optimization be shared.
 Naturally, all that applies for sets, applies for maps.
 
 ---
+name: conclusion
+template: title-layout
 
 ## mumble conclusion mumble
 
 ---
+name: questions
+template: title-layout
 
 # Questions?
 
