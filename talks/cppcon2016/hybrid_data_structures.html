@@ -10,6 +10,10 @@
         font-family: 'Oswald', sans-serif;
         font-weight: normal;
       }
+      .footnote {
+        position: absolute;
+        bottom: 3em;
+      }
       .remark-container {
         background-color: #000;
       }
@@ -38,29 +42,76 @@
   <body>
     <textarea id="source">
 
-class: center, middle
+name: title-layout
+layout: true
+class: center, middle, title
 
-# Title
+---
+name: title
+
+# High Performance Code 201: Hybrid Data Structures
+
+.footnote[Chandler Carruth, [chandlerc@gmail.com], [@chandlerc1024](https://twitter.com/chandlerc1024)]
+
+???
+Intro:
+- I'm Chandler Carruth
+- I'm the lead for Google's C++ PL platform
+- Also one of the core developers on the LLVM open source compiler project
+
+I'm going to walk you through the essential hybrid data structures, describe why
+they're fast, and how to use them solve really interesting problems.
+
+---
+name: llvm
+background-image: url(DragonFull.png)
+
+## LLVM
+- Performance sensitive
+- Hacked on by performance nuts
+
+???
+These DS aren't just hypothetical. They actually make up the core data
+structures used by the LLVM project. I'll be showing code snippets from that
+project, so this is talk will be rooted in real code that is actually in use.
+
+LLVM is a great example because it contains a *lot* of performance sensitive
+algorithms that use a wide variety of data structures. And the LLVM project and
+developers are performance nuts so it tends to use very well optimized and tuned
+utilities.
 
 ---
 
-# Agenda
+## Core Data Structures:
 
-1. Introduction
-2. Deep-dive
-3. ...
+1. Vector
+1. Set
+1. Map
+
+???
+
+The core DS set is really this small. A vector, a set, and a map.
+
+Really, its even more simple as the map is built directly out of the set.
 
 ---
 
-# Some code
+## LLVM's vector
 
 ```
-#include <iostream>
-
-*struct S {};
-
-int main() { `return 0;` }
+template <typename T, int N>
+class SmallVector {
+  ...
+};
 ```
+
+???
+Despite the name "small", this type is used pervasively as the vector type of
+choice in LLVM.
+
+---
+
+
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">
