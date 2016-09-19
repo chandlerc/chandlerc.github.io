@@ -42,12 +42,17 @@
   <body>
     <textarea id="source">
 
+name: layout
+layout: true
+
+---
 name: title-layout
 layout: true
 class: center, middle, title
 
 ---
 name: title
+template: title-layout
 
 # High Performance Code 201: Hybrid Data Structures
 
@@ -81,6 +86,8 @@ developers are performance nuts so it tends to use very well optimized and tuned
 utilities.
 
 ---
+name: core-ds
+template: layout
 
 ## Core Data Structures:
 
@@ -95,8 +102,9 @@ The core DS set is really this small. A vector, a set, and a map.
 Really, its even more simple as the map is built directly out of the set.
 
 ---
+name: smallvector
 
-## LLVM's vector
+### LLVM's vector
 
 ```
 template <typename T, int N>
@@ -110,8 +118,219 @@ Despite the name "small", this type is used pervasively as the vector type of
 choice in LLVM.
 
 ---
+name: smalldenseset
+
+---
+name: smalldensemap
+
+---
+name: done
+template: title-layout
+
+## We're done.
+
+---
+name: elephant
+
+(elephant in the room picture)
+
+--
+
+## Why not just use allocators?
+
+---
+
+### (allocators code example)
+
+---
+
+### (allocators on an interface boundary example)
+
+---
+
+### (return a smallvector code example)
+
+???
+The real challenge with allocators is that they lose value semantics.
+
+Consider this code, where the small vector can be returned by value. Doing this
+with an allocator requires passing in the allocator, complicating the code and
+making clients aware of the particular small size required.
+
+With smallvector, even though the small size is exposed in the interface, users
+typically just use auto and stop caring.
+
+---
+
+## mumble transition
+
+---
+
+## How can we make the values *small*?
+
+---
+
+## First: give large objects *address identity*
+
+???
+
+---
+
+### (vector of unique ptrs rather than objects, makes grow fast)
+
+???
+Really simple technique.
+
+Downsides are that the separate allocation run the risk of undermining the
+locality and cache friendliness of the data structures.
+
+---
+
+### (bumpptrallocator example)
+
+???
+To address the separate allocation problem, we often use a slab or "bump
+pointer" allocator to allocate objects densely in memory at stable addresses.
+
+Allocating slabs of large objects (especially if they're not uniformly sized)
+and then building your set, map, or worklist data structures out of pointers to
+them turns out to be incredibly efficient.
+
+Consider, walking a vector of pointers to objects versus walking a list of
+objects
+- If the list is doubly linked, twice as much overhead
+- much harder to have small size optimization keep all the pointers warm in cache
+- Fewer dependencies - accessing the next element doesn't depend on accessing
+  the first. in highly out-of-order modern processors, this can significantly
+  improve their ability to hide memory access latencies
 
 
+---
+
+### (SmallVector and using index identity example code)
+
+???
+Sometimes, pointers don't work well or are still too large. In those cases we
+will often use counted objects allocated in a single contiguous location and
+have *index* identity instead of *address* identity. Same wins as with pointers,
+but even more compact data if we can get away with 32bit or smaller indices.
+
+---
+
+## Second: aggressively pack bits
+
+---
+
+### Just made most of our data structure values pointers above:
+
+(insert image of bits in a pointer)
+
+???
+Some of the bits in pointers aren't actually used
+
+When necessary, we can even artificially align the types higher and get more
+free bits. As more and more users have 64-bit address spaces, overaligned types
+become very effective
+
+---
+
+### (code for PointerIntPair)
+
+???
+This lets us combine pointers with small integers. The code ends up being fully
+generic.
+
+---
+
+### (code for putting a PointerEmbeddedInteger into a PointerIntPair)
+
+???
+And it isn't restricted to pointers. It can handle any "pointer like" object.
+
+---
+
+### (code for nesting a PointerIntPair inside another PointerIntPair)
+
+???
+And in fact, it is itself a pointer like object! It just consumes some of the
+pointer-like alignment provided.
+
+---
+
+### (code for PointerSumType)
+
+???
+We can then use this to build still more abstractions such as a sum type across pointer like types with an enum descriminator
+
+---
+
+### (code for TinyPtrVector)
+
+???
+Then we can build another hybrid data structure on top of this by introducing a vector that is a pointer-like object, AND EVEN HAS A SMALL SIZE OPTIMIZATION!
+
+---
+
+### (code for DenseMap<K*, TinyPtrVector<V*>>)
+
+???
+One of the most important applications of this is to nest a vector within a map with high locality and very good scalaing properties.
+
+---
+
+### Third: use bitfields everywhere.
+
+---
+
+## Sometimes, you really need to impose ordering on containers...
+
+???
+Hash tables, open addressing and pointers all make this much harder to achieve.
+
+---
+
+### Where possible, sort vectors.
+
+???
+Sorted vectors are a wonderful thing. If you constantly need the ordering, keep
+everything sorted and use appropriate algorithsm to update. If you only
+occasionally need things ordered, sort on demand.
+
+Note that everything more complex than sorting also works well here. For
+example, in-vector trees and heaps are very fast and excellent structures.
+
+---
+
+### Sometimes, there isn't a useful sort-based ordering to use.
+
+---
+
+### (code for SetVector)
+
+???
+A very common pattern in those situations is just to keep a set and a vector.
+This gives you insertion-order in the vector but set semantics. LLVM wraps this
+up because it is so common. Of course, this delegates to the nicely small-size
+optimized routines.
+
+A really useful technique we haven't yet imployed is to take advantage of the
+fact that the set is *also* a vector when small to have the small size
+optimization be shared.
+
+---
+
+### (code for MapVector)
+
+???
+Naturally, all that applies for sets, applies for maps.
+
+---
+
+## mumble conclusion mumble
+
+---
+
+# Questions?
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">
