@@ -309,19 +309,53 @@ background-image: url(elephant.jpg)
 name: allocators
 template: basic-layout
 
-### (allocators code example)
+```
+template <class T, int N>
+using SmallVector =
+    std::vector<T, short_alloc<T, N>>;
+
+void f() {
+  SmallVector<int, 4>::allocator_type::arena_type a;
+  SmallVector<int> v{a};
+  // ...
+}
+```
 
 ---
 name: allocator-interface-boundary
 template: basic-layout
 
-### (allocators on an interface boundary example)
+```
+template <class T, int N>
+using SmallVector =
+    std::vector<T, short_alloc<T, N>>;
+
+void g(SmallVector<int, `4`> &v);
+
+void f() {
+  SmallVector<int, `8`>::allocator_type::arena_type a;
+  SmallVector<int> v{a};
+  // ...
+  g(v); // BOOOM
+}
+```
 
 ---
 name: return-small-vector
 template: basic-layout
 
-### (return a smallvector code example)
+```
+template <class T, int N>
+using SmallVector =
+    std::vector<T, short_alloc<T, N>>;
+
+`SmallVector<T, 4>` f() {
+  SmallVector<int, 4>::allocator_type::arena_type a;
+  SmallVector<int> v{a};
+  // ...
+  g(v); // You're gonna have a bad time...
+}
+```
 
 ???
 The real challenge with allocators is that they lose value semantics.
@@ -357,7 +391,9 @@ template: title-layout
 name: vector-unique-ptr
 template: basic-layout
 
-### (vector of unique ptrs rather than objects, makes grow fast)
+```
+SmallVector<std::unique_ptr<BigObject>, 4> Objects;
+```
 
 ???
 Really simple technique.
@@ -369,7 +405,31 @@ locality and cache friendliness of the data structures.
 name: bump-ptr-allocator
 template: basic-layout
 
-### (bumpptrallocator example)
+```
+class BumpPtrAllocator {
+  constexpr int SlabSize = 4096;
+  SmallVector<void *, 4> Slabs;
+  void *CurPtr;
+  char *End;
+
+public:
+  void *Allocate(int Size) {
+    if (Size < (End - CurPtr)) {
+      void *Ptr = CurPtr;
+      CurPtr += Size;
+      return Ptr;
+    }
+
+    void *Ptr = malloc(SlabSize);
+    Slabs.push_back(Ptr);
+    CurPtr = Ptr + Size;
+    End = Ptr + SlabSize;
+    return Ptr;
+  }
+
+  // ...
+};
+```
 
 ???
 To address the separate allocation problem, we often use a slab or "bump
@@ -390,9 +450,9 @@ objects
 
 ---
 name: index-identity
-template: basic-layout
+template: title-layout
 
-### (SmallVector and using index identity example code)
+### If pointers are too large, use an index into a vector.
 
 ???
 Sometimes, pointers don't work well or are still too large. In those cases we
@@ -407,15 +467,33 @@ template: title-layout
 ## Second: aggressively pack bits
 
 ---
+name: everything-is-a-pointer
+template: title-layout
+
+![Give me a pointer!](http://imgs.xkcd.com/comics/pointers.png)
+
+???
+We just made everything a pointer, what can we do with those?
+
+Well, real pointers don't look quite like the ones in xkcd...
+
+---
 name: pointer-bits-available
 template: basic-layout
 
-### Just made most of our data structure values pointers above:
-
-(insert image of bits in a pointer)
+```
+Breakpoint 1, main () at test.cpp:7
+7         S *s = new S;
+(gdb) n
+8         return 0;
+(gdb) p/a s
+$2 = 0x402010
+(gdb) p/t s
+$3 = 10000000010000000010000
+```
 
 ???
-Some of the bits in pointers aren't actually used
+Some of the bits in pointers aren't actually used due to alignment.
 
 When necessary, we can even artificially align the types higher and get more
 free bits. As more and more users have 64-bit address spaces, overaligned types
@@ -425,7 +503,26 @@ become very effective
 name: pointer-int-pair
 template: basic-layout
 
-### (code for PointerIntPair)
+```
+template <typename T, int IntBits, typename IntT = unsigned>
+class PointerIntPair {
+  constexpr int PtrBitsFree = log2(alignof(T));
+  constexpr int IntShift = PtrBitsFree - IntBits;
+  constexpr uintptr_t IntMask =
+      (uintptr_t)(((intptr_t)1 << IntBits) - 1);
+  constexpr uintptr_t PtrMask =
+      ~(uintptr_t)(((intptr_t)1 << PtrBitsFree) - 1);
+
+  uintptr_t Value;
+
+public:
+  T* getPointer() const {
+    return reinterpret_cast<T*>(Value & PtrMask);
+  }
+  IntType getInt() const {
+    return (IntType)((Value >> IntShift) & IntMask);
+  }
+```
 
 ???
 This lets us combine pointers with small integers. The code ends up being fully
