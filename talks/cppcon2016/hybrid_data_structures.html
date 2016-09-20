@@ -206,7 +206,7 @@ template: basic-layout
 .left-col[
 ```
 template <typename T>
-class SmallVectorImpl<T> {
+class SmallVectorImpl {
   T *begin, *end;
   size_t capacity;
 
@@ -220,7 +220,7 @@ public:
   iterator begin();
   iterator end();
 
-  void push_back(const T& element);
+  void push_back(const T &element);
   void pop_back();
 
   // ...
@@ -236,8 +236,8 @@ class SmallVector
 
 public:
   SmallVector()
-      : SmallVectorImpl((T*)buffer,
-                        (T*)buffer,
+      : SmallVectorImpl((T *)buffer,
+                        (T *)buffer,
                         N) {}
 
   // ...
@@ -257,8 +257,11 @@ This trick comes from very careful usage of factoring the design.
 name: smalldenseset
 template: basic-layout
 
-### LLVM's set structure: `SmallDenseSet`
+### Set: `SmallDenseSet`
 
+![SmallDenseSet memory layout](small-set.svg)
+
+???
 - Not "dense", just uses open addressing and no buckets
 - Small-size optimization layered on top
 - Can even avoid hashing and just append when *very* small
@@ -267,7 +270,7 @@ template: basic-layout
 name: smalldensemap
 template: title-layout
 
-### LLVM's map structure is just a set with a key/value pair
+### Map: just a set with a key/value pair
 
 ---
 name: done
