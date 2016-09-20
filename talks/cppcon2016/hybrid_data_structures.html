@@ -280,6 +280,7 @@ template <typename KeyT, typename ValueT, int N,
           typename Traits = DenseSetTraits<KeyT>>
 class SmallDenseMap {
   typedef std::pair<KeyT, ValueT> PairT;
+
   PairT *Buckets;
   size_t Size, NumTombstones, BucketsSize;
   char Buffer[sizeof(PairT) * N];
