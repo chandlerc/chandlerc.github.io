@@ -501,24 +501,27 @@ name: pointer-int-pair
 template: basic-layout
 
 ```
-template <typename T, int IntBits, typename IntT = unsigned>
+template <typename PtrT, int IntBits, typename IntT = unsigned,
+          typename PtrTraits = PointerLikeTraits<PtrT>>
 class PointerIntPair {
-  constexpr int PtrBitsFree = log2(alignof(T));
-  constexpr int IntShift = PtrBitsFree - IntBits;
+  constexpr int IntShift = PtrTraits::FreeBits - IntBits;
   constexpr uintptr_t IntMask = (uintptr_t)(((intptr_t)1 << IntBits) - 1);
-  constexpr uintptr_t PtrMask = ~(uintptr_t)(((intptr_t)1 << PtrBitsFree) - 1);
+  constexpr uintptr_t PtrMask = ~(uintptr_t)(((intptr_t)1 << PtrTraits::FreeBits) - 1);
 
   uintptr_t Value;
 
 public:
-  T* getPointer() const {
-    return reinterpret_cast<T*>(Value & PtrMask);
-  }
-  IntType getInt() const {
-    return (IntType)((Value >> IntShift) & IntMask);
-  }
+  T* getPointer() const { return PtrTraits::getPointer(Value & PtrMask); }
+
+  IntType getInt() const { return (IntType)((Value >> IntShift) & IntMask); }
 
   // ...
+};
+
+template <typename PtrT> struct PointerLikeTraits {
+  constexpr int FreeBits = log2(alignof(PtrT));
+
+  static PtrT getPointer(uintptr_t Value) { return reinterpret_cast<T*>(Value); }
 };
 ```
 
@@ -534,16 +537,20 @@ template: basic-layout
 template <typename IntT, int Bits = sizeof(IntT) * CHAR_BIT>
 class PointerEmbeddedInt {
   constexpr int Shift = sizeof(uintptr_t) * CHAR_BIT - Bits;
-
   uintptr_t Value;
 
 public:
-  void set(IntT i) {
-    Value = (uintptr_t)(i) << Shift;
-  }
+  PointerEmbeddedInt(uintptr_t Value) : Value(Value) {}
 
-  IntT get() const {
-    return (IntT)(Value >> Shift);
+  void set(IntT i) { Value = (uintptr_t)(i) << Shift; }
+  IntT get() const { return (IntT)(Value >> Shift); }
+};
+template <typename IntT, int Bits>
+struct PointerLikeTraits<PointerEmbeddedInt<IntT, Bits>> {
+  constexpr int FreBits = sizeof(uintptr_t) * CHAR_BIT - Bits;
+
+  static PointerEmbeddedInt<IntT, int Bits> getPointer(uintptr_t Value) {
+    return Value;
   }
 };
 ```
@@ -555,7 +562,16 @@ And it isn't restricted to pointers. It can handle any "pointer like" object.
 name: pointer-int-pair-nested
 template: basic-layout
 
-### (code for nesting a PointerIntPair inside another PointerIntPair)
+```
+template <typename PtrT, int IntBits, typename IntT, typename PtrTraits>
+struct PointerLikeTraits<PointerIntPair<PtrT, IntBits, IntT, PtrTraits>> {
+  constexpr int FreeBits = PtrTraits::FreeBits - IntBits;
+
+  // ...
+};
+
+PointerIntPair<PointerIntPair<S *, 1, bool>, 1, bool> PtrAndTwoBools;
+```
 
 ???
 And in fact, it is itself a pointer like object! It just consumes some of the
