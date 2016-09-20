@@ -54,11 +54,13 @@
         background-color: #000;
         border: 5px solid #F00;
         box-shadow: 0 0 30px #F00;
+        margin: -5px;
       }
       .remark-code-span-highlighted {
         background-color: #000;
         border: 5px solid #F00;
         box-shadow: 0 0 30px #F00;
+        margin: -5px;
       }
       .left-col {
         float: left;
@@ -556,9 +558,9 @@ class PointerIntPair {
   uintptr_t Value;
 
 public:
-  T* getPointer() const { return PtrTraits::getPointer(Value & PtrMask); }
+  auto getPointer() const { return PtrTraits::getPointer(Value & PtrMask); }
 
-  IntType getInt() const { return (IntType)((Value >> IntShift) & IntMask); }
+  auto getInt() const { return (IntT)((Value >> IntShift) & IntMask); }
 
   // ...
 };
@@ -566,7 +568,7 @@ public:
 template <typename PtrT> struct PointerLikeTraits {
   constexpr int FreeBits = log2(alignof(PtrT));
 
-  static PtrT getPointer(uintptr_t Value) { return reinterpret_cast<T*>(Value); }
+  static auto getPointer(uintptr_t Value) { return (PtrT)(Value); }
 };
 ```
 
@@ -588,15 +590,15 @@ public:
   PointerEmbeddedInt(uintptr_t Value) : Value(Value) {}
 
   void set(IntT i) { Value = (uintptr_t)(i) << Shift; }
-  IntT get() const { return (IntT)(Value >> Shift); }
+  auto get() const { return (IntT)(Value >> Shift); }
 };
 
 template <typename IntT, int Bits>
 struct PointerLikeTraits<PointerEmbeddedInt<IntT, Bits>> {
   constexpr int FreBits = sizeof(uintptr_t) * CHAR_BIT - Bits;
 
-  static PointerEmbeddedInt<IntT, int Bits> getPointer(uintptr_t Value) {
-    return Value;
+  static auto getPointer(uintptr_t Value) {
+    return PointerEmbeddedInt<IntT, Bits>(Value);
   }
 };
 ```
@@ -641,10 +643,10 @@ template <typename TagT, typename... MemberTs> class PointerSumType {
   uintptr_t Value;
 
 public:
-  TagT getTag() const { return (TagT)(Value & HelperT::TagMask); }
+  auto getTag() const { return (TagT)(Value & HelperT::TagMask); }
   template <TagT N> bool is() const { return N == getTag(); }
 
-  template <TagT N> TagPtrT<N> get() const {
+  template <TagT N> auto get() const {
     return TagPtrTraits<N>::getFromInt(is<N>() ? (Value & HelperT::PtrMask) : 0u);
   }
 };
