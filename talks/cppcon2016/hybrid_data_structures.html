@@ -144,7 +144,14 @@ template: basic-layout
 ```
 template <typename T, int N>
 class SmallVector {
-  ...
+  T *Begin, *End;
+  size_t Capacity;
+  char Buffer[sizeof(T) * N];
+
+public:
+  SmallVector() : Begin((T *)Buffer), End((T *)Buffer), Capacity(N) {}
+
+  // ...
 };
 ```
 
@@ -166,43 +173,20 @@ In essence, just a small size optimized vector
   chunk of the stack is actually the best approach
 
 ---
-name: smallvector-layout
-template: basic-layout
-
-### A small buffer pre-allocated inside the object
-
-For example `SmallVector<int*, 1>` uses a memory layout like:
-
-<table class="memory">
-  <thead>
-    <tr class="bytes">
-      <th class="label">bytes</th>
-      <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>
-      <th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th>
-      <th>16</th><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th>
-      <th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>29</th><th>30</th><th>31</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="label">members</td>
-      <td colspan=8>pointer</td>
-      <td colspan=8>size</td>
-      <td colspan=8>capacity</td>
-      <td colspan=8>inline buffer</td>
-    </tr>
-  </tbody>
-</table>
-
-???
-We layout the inline buffer within the object. The
-pointer just points into this buffer when in "small" mode.
-
----
 name: why-not-std-vector
 template: title-layout
 
-### Why not `std::vector`? Iterator invalidation.
+### Why not `std::vector`? Iterator invalidation!
+
+???
+One interesting question is why can't we make std::vector support (perhaps
+optionally) this kind of small size optimization.
+
+Sadly, we can't because of the iterator invalidation requirements: move cannot
+invalidate iterators.
+
+But we don't stop with just this small-size optimized API. There is a
+surprisingly important extension to it....
 
 ---
 name: erase-small-size
@@ -212,20 +196,18 @@ template: basic-layout
 ```
 template <typename T>
 class SmallVectorImpl {
-  T *begin, *end;
-  size_t capacity;
+  T *Begin, *End;
+  size_t Capacity;
 
 protected:
-  SmallVectorImpl(T *begin, T *end,
-                  size_t capacity)
-      : begin(begin), end(end),
-        capacity(capacity) {}
+  SmallVectorImpl(T *Begin, T *End,
+                  size_t Capacity);
 
 public:
-  iterator begin();
-  iterator end();
+  iterator begin() { return Begin; }
+  iterator end() { return End; }
 
-  void push_back(const T &element);
+  void push_back(const T &Element);
   void pop_back();
 
   // ...
@@ -237,12 +219,12 @@ public:
 template <typename T, int N>
 class SmallVector
     : public SmallVectorImpl<T> {
-  char buffer[sizeof(T) * N];
+  char Buffer[sizeof(T) * N];
 
 public:
   SmallVector()
-      : SmallVectorImpl((T *)buffer,
-                        (T *)buffer,
+      : SmallVectorImpl((T *)Buffer,
+                        (T *)Buffer,
                         N) {}
 
   // ...
