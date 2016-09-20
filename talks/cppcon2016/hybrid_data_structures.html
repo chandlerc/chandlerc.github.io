@@ -367,7 +367,7 @@ void f() {
   SmallVector<int, `8`>::allocator_type::arena_type a;
   SmallVector<int> v{a};
   // ...
-  `g(v); // BOOOM`
+  `g(v);` // BOOOM
 }
 ```
 
@@ -384,7 +384,7 @@ SmallVector<T, 4> f() {
   SmallVector<int, 4>::allocator_type::arena_type a;
   SmallVector<int> v{a};
   // ...
-  return v; // You're gonna have a bad time...
+  return v;
 }
 ```
 
@@ -397,11 +397,11 @@ template <class T, int N>
 using SmallVector =
     std::vector<T, short_alloc<T, N>>;
 
-*SmallVector<T, 4> f() {
+`SmallVector<T, 4>` f() {
   SmallVector<int, 4>::allocator_type::arena_type a;
   SmallVector<int> v{a};
   // ...
-  `return v; // You're gonna have a bad time...`
+  `return v;` // You're gonna have a bad time...
 }
 ```
 
