@@ -202,6 +202,23 @@ template: basic-layout
 
 .left-col[
 ```
+template <typename T, int N>
+class SmallVector
+    : public SmallVectorImpl<T> {
+  char Buffer[sizeof(T) * N];
+
+public:
+  SmallVector()
+      : SmallVectorImpl((T *)Buffer,
+                        (T *)Buffer,
+                        N) {}
+
+  // ...
+};
+```
+]
+.right-col[
+```
 template <typename T>
 class SmallVectorImpl {
   T *Begin, *End;
@@ -222,23 +239,6 @@ public:
 };
 ```
 ]
-.right-col[
-```
-template <typename T, int N>
-class SmallVector
-    : public SmallVectorImpl<T> {
-  char Buffer[sizeof(T) * N];
-
-public:
-  SmallVector()
-      : SmallVectorImpl((T *)Buffer,
-                        (T *)Buffer,
-                        N) {}
-
-  // ...
-};
-```
-]
 
 ???
 `SmallVector` also supports *free* erasure of small size
@@ -253,13 +253,6 @@ name: smalldenseset
 template: basic-layout
 
 ```
-template <typename T> struct DenseSetTraits {
-  static T getEmpty();
-  static T getTombstone();
-  static size_t getHash(const T &X);
-  static bool compare(const T &LHS, const T &RHS);
-};
-
 template <typename T, int N, typename Traits = DenseSetTraits<T>>
 class SmallDenseSet {
   T *Buckets;
@@ -271,6 +264,13 @@ public:
       : Buckets((T *)Buffer), Size(0), NumTombstones(0), BucketsSize(N) {}
 
   // ...
+};
+
+template <typename T> struct DenseSetTraits {
+  static T getEmpty();
+  static T getTombstone();
+  static size_t getHash(const T &X);
+  static bool compare(const T &LHS, const T &RHS);
 };
 ```
 
@@ -321,6 +321,10 @@ background-image: url(elephant.jpg)
 
 ## Why not just use allocators?
 
+???
+Very commonly people suggest that rather than using a customized container, we
+should be using allocators to do small-size optimization.
+
 ---
 name: allocators
 template: basic-layout
@@ -336,6 +340,10 @@ void f() {
   // ...
 }
 ```
+
+???
+As an example, this is from Howard Hinnant's post suggesting using allocators
+to build a SmallVector.
 
 ---
 name: allocator-interface-boundary
@@ -356,6 +364,10 @@ void f() {
 }
 ```
 
+???
+However, things become problematic when an allocator based smallvector occurs
+in an API boundary.
+
 ---
 name: allocator-interface-boundary-highlight
 template: basic-layout
@@ -375,6 +387,13 @@ void f() {
 }
 ```
 
+???
+As you can see, it is very easy to get mismatches or fail to update everything
+in lock step here.
+
+Maybe there is some trick to get something similar to
+SmallVectorImpl above, but I don't know how.
+
 ---
 name: return-small-vector
 template: basic-layout
@@ -391,6 +410,10 @@ SmallVector<T, 4> f() {
   return v;
 }
 ```
+
+???
+However things get even worse if you want value semantics, for example to
+return a small vector.
 
 ---
 name: return-small-vector-highlight
@@ -410,8 +433,6 @@ SmallVector<T, 4> f() {
 ```
 
 ???
-The real challenge with allocators is that they lose value semantics.
-
 Consider this code, where the small vector can be returned by value. Doing this
 with an allocator requires passing in the allocator, complicating the code and
 making clients aware of the particular small size required.
