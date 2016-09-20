@@ -244,7 +244,27 @@ This trick comes from very careful usage of factoring the design.
 name: smalldenseset
 template: title-layout
 
-### Set: small-size, open addressing hash table
+```
+template <typename T> struct DenseSetTraits {
+  static T getEmpty();
+  static T getTombstone();
+  static size_t getHash(const T &X);
+  static bool compare(const T &LHS, const T &RHS);
+};
+
+template <typename T, int N, typename Traits = DenseSetTraits<T>>
+class SmallDenseSet {
+  T *Buckets;
+  size_t Size, NumTombstones, BucketsSize;
+  char Buffer[sizeof(T) * N];
+
+public:
+  SmallDenseSet()
+      : Buckets((T *)Buffer), Size(0), NumTombstones(0), BucketsSize(N) {}
+
+  // ...
+};
+```
 
 ???
 - Not "dense", just uses open addressing and no buckets
@@ -252,28 +272,30 @@ template: title-layout
 - Can even avoid hashing and just append when *very* small
 
 ---
-name: smalldenseset-small
-template: basic-layout
-
-![SmallDenseSet memory layout](small-set.svg)
-
----
-name: smalldenseset-linear
-template: basic-layout
-
-![SmallDenseSet memory layout](small-set-linear.svg)
-
----
-name: smalldenseset-probe
-template: basic-layout
-
-![SmallDenseSet memory layout](small-set-probe.svg)
-
----
 name: smalldensemap
 template: title-layout
 
-### Map: just a set with a key/value pair
+```
+template <typename KeyT, typename ValueT, int N,
+          typename Traits = DenseSetTraits<KeyT>>
+class SmallDenseMap {
+  typedef std::pair<KeyT, ValueT> PairT;
+  PairT *Buckets;
+  size_t Size, NumTombstones, BucketsSize;
+  char Buffer[sizeof(PairT) * N];
+
+public:
+  SmallDenseMap()
+      : Buckets((PairT *)Buffer), Size(0), NumTombstones(0), BucketsSize(N) {}
+
+  // ...
+};
+```
+
+???
+The map is essentially the same as the set except for operating on just the
+first part of a pair in the buckets. This is a bit awkward to write with one in
+terms of the other, so the code here is really just for illustration.
 
 ---
 name: done
