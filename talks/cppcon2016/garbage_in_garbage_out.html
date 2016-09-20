@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Oswald|Roboto|Roboto+Mono" rel="stylesheet">
+    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        font-size: 120%
+      }
+      a {
+        color: #96cbfe;
+        text-decoration: initial;
+      }
+      h1, h2, h3 {
+        font-family: 'Oswald', sans-serif;
+        font-weight: normal;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 2em;
+        right: 1em;
+      }
+      .remark-container {
+        background-color: #000;
+      }
+      .remark-slide-scaler {
+        -moz-box-shadow: 0 0 30px #000;
+        -webkit-box-shadow: 0 0 30px #000;
+        box-shadow: 0 0 30px #000;
+      }
+      .remark-slide-content {
+        background-color: #000;
+        background-size: cover;
+        background-position: center;
+        color: #f8f8f8;
+        font-size: 32px;
+        text-shadow: 0px 0px 16px #000, 0px 0px 32px #000;
+        padding: 0.5em 1em 0.5em 1em
+      }
+      .remark-slide-content h1 {
+        font-size: 85px
+      }
+      .remark-slide-content h2 {
+        font-size: 75px
+      }
+      .remark-slide-content h3 {
+        font-size: 75px
+      }
+      .remark-code, .remark-inline-code {
+        font-family: 'Roboto Mono', monospace;
+      }
+      .remark-code {
+        font-size: 22px;
+      }
+      .remark-code-line-highlighted {
+        background-color: #000;
+        border: 5px solid #F00;
+        box-shadow: 0 0 30px #F00;
+        margin: -5px;
+        padding: initial;
+      }
+      .remark-code-span-highlighted {
+        background-color: #000;
+        border: 5px solid #F00;
+        box-shadow: 0 0 30px #F00;
+        margin: -5px;
+        padding: initial;
+      }
+      .left-col {
+        float: left;
+        width: 49%;
+      }
+      .right-col {
+        float: right;
+        width: 49%;
+      }
+
+      #slide-ub-is-scary2 h1 {
+        font-size: 85px
+      }
+      #slide-ub-is-scary2 h2 {
+        font-size: 85px
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+name: title-layout
+layout: true
+class: center, middle, title
+
+---
+name: basic-layout
+layout: true
+class: left, top
+
+---
+name: title
+template: title-layout
+
+# Garbage In, Garbage Out
+## Arguing about Undefined Behavior with Nasal Demons
+.footnote[Chandler Carruth, <chandlerc@gmail.com>, [@chandlerc1024](https://twitter.com/chandlerc1024)]
+
+???
+Intro:
+- I'm Chandler Carruth
+- I'm the lead for Google's C++ PL platform
+- Also one of the core developers on the LLVM open source compiler project
+
+---
+name: ub-is-scary1
+template: title-layout
+
+# Undefined Behavior!
+
+???
+So, the reason you're all here! We're going to talk about Undefined Behavior!!!
+
+This seems to be one of the big issues facing C++ right now. It needs its own
+tense theme music.
+
+---
+name: ub-is-scary2
+template: title-layout
+
+# UNDEFINED
+## BEHAVIOR
+
+???
+And the only thing worse than the UNDEFINED BEHAVIOR, are scary nasal demons that result...
+
+---
+name: nasal-demons
+template: title-layout
+
+# (nasal demon photo)
+
+---
+name: ub-tweet1
+template: title-layout
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">
+<a href="https://twitter.com/bdiamand">@bdiamand</a> <a href="https://twitter.com/cmuratori">@cmuratori</a> <a href="https://twitter.com/nothings">@nothings</a> <a href="https://twitter.com/LiaSae">@LiaSae</a> &quot;We hear there&#39;s undefined behavior in libc somewhere so now we have license to remove all your code&quot;</p>&mdash; Fabian Giesen (@rygorous) <a href="https://twitter.com/rygorous/status/402523459835539457">November 18, 2013</a>
+</blockquote>
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/rygorous">@rygorous</a> <a href="https://twitter.com/cmuratori">@cmuratori</a> <a href="https://twitter.com/nothings">@nothings</a> <a href="https://twitter.com/LiaSae">@LiaSae</a> Yes! Next step is detect use of that lib and remove the files from HD. Then the OS that loads them!</p>&mdash; Ben Diamand (@bdiamand) <a href="https://twitter.com/bdiamand/status/402524039924555776">November 18, 2013</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/bdiamand">@bdiamand</a> <a href="https://twitter.com/cmuratori">@cmuratori</a> <a href="https://twitter.com/nothings">@nothings</a> <a href="https://twitter.com/LiaSae">@LiaSae</a> It&#39;s technically legal!</p>&mdash; Fabian Giesen (@rygorous) <a href="https://twitter.com/rygorous/status/402525177801502720">November 18, 2013</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+---
+name: ub-tweet2
+template: title-layout
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/dakami">@dakami</a> <br>2. [in the event of undefined behavior] &quot;all program code is instantly replaced by the 1981 arcade classic, &#39;Ms Pac-Man&#39;.  \</p>&mdash; James Widman (@JamesWidman) <a href="https://twitter.com/JamesWidman/status/679119658562265088">December 22, 2015</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/dakami">@dakami</a> Also, your male cat is now pregnant. (This is true regardless of whether you previously had a cat.)&quot;</p>&mdash; James Widman (@JamesWidman) <a href="https://twitter.com/JamesWidman/status/679119698357784577">December 22, 2015</a></blockquote>
+
+---
+name: ub-tweet3
+template: title-layout
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Maybe what we need is an Anti-Nasal-Demon League</p>&mdash; Melissa 👑✨ (@0xabad1dea) <a href="https://twitter.com/0xabad1dea/status/679027357886320640">December 21, 2015</a></blockquote>
+
+---
+name: ub-djb-quote
+template: basic-layout
+
+As a boring platform for the portable parts of boring crypto software, 
+I'd like to see a free C compiler that clearly defines, and permanently 
+commits to, carefully designed semantics for everything that's labeled 
+"undefined" or "unspecified" or "implementation-defined" in the C 
+"standard". This compiler will provide a comprehensible foundation for 
+people writing C code, for people auditing C code, and for people 
+formally verifying C code.
+
+---
+name: no-platform-ub-tweet
+template: title-layout
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">I had an argument with a guy from Sony the other month where I was trying to explain why a UB Sanitizer is not a useful thing to work on...</p>&mdash; Jonathan Blow (@Jonathan_Blow) <a href="https://twitter.com/Jonathan_Blow/status/705624288368336896">March 4, 2016</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">but I didn&#39;t explain it very well at the time. But the point is, if you are the platform (like a game console), there is no such thing</p>&mdash; Jonathan Blow (@Jonathan_Blow) <a href="https://twitter.com/Jonathan_Blow/status/705624427434610688">March 4, 2016</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">as undefined behavior, because you define the behavior! That&#39;s your whole job!</p>&mdash; Jonathan Blow (@Jonathan_Blow) <a href="https://twitter.com/Jonathan_Blow/status/705624482694590464">March 4, 2016</a></blockquote>
+
+---
+name: questions
+template: title-layout
+
+# Questions?
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({
+        // Set the slideshow display ratio
+        // Default: '4:3'
+        // Alternatives: '16:9', ...
+        ratio: '16:9',
+
+        // Syntax highlighting theme
+        highlightLanguage: 'cpp',
+        highlightStyle: 'ir-black',
+        highlightLines: true,
+        highlightSpans: true,
+
+        // Customize slide number label, either using a format string..
+        slideNumberFormat: '(%current% / %total%)',
+      });
+    </script>
+  </body>
+</html>
