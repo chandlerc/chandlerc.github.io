@@ -409,21 +409,18 @@ template: basic-layout
 class BumpPtrAllocator {
   constexpr int SlabSize = 4096;
   SmallVector<void *, 4> Slabs;
-  void *CurPtr;
-  char *End;
+  void *CurPtr, *End;
 
 public:
   void *Allocate(int Size) {
-    if (Size < (End - CurPtr)) {
-      void *Ptr = CurPtr;
-      CurPtr += Size;
-      return Ptr;
+    if (Size >= (End - CurPtr)) {
+      CurPtr = malloc(SlabSize);
+      End = CurPtr + SlabSize;
+      Slabs.push_back(CurPtr);
     }
 
-    void *Ptr = malloc(SlabSize);
-    Slabs.push_back(Ptr);
-    CurPtr = Ptr + Size;
-    End = Ptr + SlabSize;
+    void *Ptr = CurPtr;
+    CurPtr += Size;
     return Ptr;
   }
 
@@ -508,10 +505,8 @@ template <typename T, int IntBits, typename IntT = unsigned>
 class PointerIntPair {
   constexpr int PtrBitsFree = log2(alignof(T));
   constexpr int IntShift = PtrBitsFree - IntBits;
-  constexpr uintptr_t IntMask =
-      (uintptr_t)(((intptr_t)1 << IntBits) - 1);
-  constexpr uintptr_t PtrMask =
-      ~(uintptr_t)(((intptr_t)1 << PtrBitsFree) - 1);
+  constexpr uintptr_t IntMask = (uintptr_t)(((intptr_t)1 << IntBits) - 1);
+  constexpr uintptr_t PtrMask = ~(uintptr_t)(((intptr_t)1 << PtrBitsFree) - 1);
 
   uintptr_t Value;
 
@@ -522,6 +517,9 @@ public:
   IntType getInt() const {
     return (IntType)((Value >> IntShift) & IntMask);
   }
+
+  // ...
+};
 ```
 
 ???
