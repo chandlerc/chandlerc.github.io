@@ -92,7 +92,11 @@ template: title-layout
 
 # High Performance Code 201: Hybrid Data Structures
 
-.footnote[Chandler Carruth, [chandlerc@gmail.com], [@chandlerc1024](https://twitter.com/chandlerc1024)]
+.footnote[
+  Chandler Carruth,
+  <chandlerc@gmail.com>,
+  [@chandlerc1024](https://twitter.com/chandlerc1024)
+]
 
 ???
 Intro:
@@ -407,19 +411,19 @@ typically just use auto and stop caring.
 name: small-size
 template: title-layout
 
-## Small-size optimization is best for values that are *small*!
+## Small-size optimization is best when the values are *small!*
 
 ---
 name: make-values-small
 template: title-layout
 
-## So how can we make the values *small*?
+## So how can we make the values *small?*
 
 ---
 name: address-identity
 template: title-layout
 
-## First: give large objects *address identity*
+## Give large objects *address identity*
 
 ???
 
@@ -485,7 +489,7 @@ objects
 name: index-identity
 template: title-layout
 
-### If pointers are too large, use an index into a vector.
+### If pointers are too large, use an index
 
 ???
 Sometimes, pointers don't work well or are still too large. In those cases we
@@ -497,13 +501,14 @@ but even more compact data if we can get away with 32bit or smaller indices.
 name: bitpacking
 template: title-layout
 
-## Second: aggressively pack bits
+## Next, aggressively pack the bits
 
 ---
 name: everything-is-a-pointer
 template: title-layout
 
 ![Give me a pointer!](http://imgs.xkcd.com/comics/pointers.png)
+<http://xkcd.com/138/>
 
 ???
 We just made everything a pointer, what can we do with those?
@@ -581,6 +586,7 @@ public:
   void set(IntT i) { Value = (uintptr_t)(i) << Shift; }
   IntT get() const { return (IntT)(Value >> Shift); }
 };
+
 template <typename IntT, int Bits>
 struct PointerLikeTraits<PointerEmbeddedInt<IntT, Bits>> {
   constexpr int FreBits = sizeof(uintptr_t) * CHAR_BIT - Bits;
@@ -618,13 +624,8 @@ name: pointer-sum-type
 template: basic-layout
 
 ```
-template <uintptr_t N, typename PtrArgT,
-          typename PtrArgTraits = PointerLikeTraits<PtrArgT>>
-struct PointerSumTypeMember {
-  constexpr uintptr_t Tag = N;
-  typedef PtrArgT PtrT;
-  typedef PtrArgTraits PtrTraits;
-};
+template <uintptr_t N, typename PtrT, typename PtrTraits = PointerLikeTraits<T>>
+struct PointerSumTypeMember;
 
 template <typename TagT, typename... MemberTs> struct PointerSumTypeHelper;
 
@@ -698,13 +699,17 @@ with high locality and very good scalaing properties.
 name: bitfields
 template: title-layout
 
-### Third: use bitfields everywhere.
+### Lastly, use bitfields everywhere
+
+???
+This is boring and well understood. But you pretty often need to combine it
+with the techniques outlined above.
 
 ---
 name: ordering
 template: title-layout
 
-## Sometimes, you really need to impose ordering on containers...
+## Sometimes, you really need an *ordering*...
 
 ???
 Hash tables, open addressing and pointers all make this much harder to achieve.
@@ -727,7 +732,7 @@ example, in-vector trees and heaps are very fast and excellent structures.
 name: not-always-ordered
 template: title-layout
 
-### Sometimes, there isn't a useful sort-based ordering to use.
+### Not always a useful sort-based ordering
 
 ---
 name: setvector
