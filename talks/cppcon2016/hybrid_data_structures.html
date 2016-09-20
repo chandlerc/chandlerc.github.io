@@ -581,28 +581,82 @@ pointer-like alignment provided.
 name: pointer-sum-type
 template: basic-layout
 
-### (code for PointerSumType)
+```
+template <uintptr_t N, typename PtrArgT,
+          typename PtrArgTraits = PointerLikeTraits<PtrArgT>>
+struct PointerSumTypeMember {
+  constexpr uintptr_t Tag = N;
+  typedef PtrArgT PtrT;
+  typedef PtrArgTraits PtrTraits;
+};
+
+template <typename TagT, typename... MemberTs> struct PointerSumTypeHelper;
+
+template <typename TagT, typename... MemberTs> class PointerSumType {
+  using HelperT = detail::PointerSumTypeHelper<TagT, MemberTs...>;
+  template <TagT N> using TagPtrT = HelperT::template Lookup<N>::PtrT;
+  template <TagT N> using TagPtrTraits = HelperT::template Lookup<N>::PtrTraits;
+
+  uintptr_t Value;
+
+public:
+  TagT getTag() const { return (TagT)(Value & HelperT::TagMask); }
+  template <TagT N> bool is() const { return N == getTag(); }
+
+  template <TagT N> TagPtrT<N> get() const {
+    return TagPtrTraits<N>::getFromInt(is<N>() ? (Value & HelperT::PtrMask) : 0u);
+  }
+};
+```
 
 ???
-We can then use this to build still more abstractions such as a sum type across pointer like types with an enum descriminator
+We can then use this to build still more abstractions such as a sum type across
+pointer like types with an enum descriminator
 
 ---
 name: tiny-ptr-vector
 template: basic-layout
 
-### (code for TinyPtrVector)
+```
+template <typename T> class TinyPtrVector {
+  enum State { Inline, Vector };
+  typedef SmallVector<T, 4> VecT;
+  typedef PointerSumType<State,
+                         PointerSumTypeMember<Inline, T>,
+                         PointerSumTypeMember<Inline, std::unique_ptr<VecT>>>
+      SumT;
+
+  SumT Value;
+ 
+public:
+  T &operator[](int i) const {
+    if (Value.template is<Inline>()) {
+      assert(i == 0);
+      return Value.template get<Inline>();
+    }
+    return (*Value.template get<Vector>())[i];
+  }
+
+  // ...
+};
+```
 
 ???
-Then we can build another hybrid data structure on top of this by introducing a vector that is a pointer-like object, AND EVEN HAS A SMALL SIZE OPTIMIZATION!
+Then we can build another hybrid data structure on top of this by introducing a
+vector that is a pointer-like object, AND EVEN HAS A SMALL SIZE OPTIMIZATION!
 
 ---
 name: dense-map-tiny-ptr-vector
 template: basic-layout
 
-### (code for DenseMap<K*, TinyPtrVector<V*>>)
+```
+template <typename KeyT, typename ValueT>
+using SmallMultiMap = SmallDenseMap<KeyT, TinyPtrVector<ValueT>>;
+```
 
 ???
-One of the most important applications of this is to nest a vector within a map with high locality and very good scalaing properties.
+One of the most important applications of this is to nest a vector within a map
+with high locality and very good scalaing properties.
 
 ---
 name: bitfields
@@ -643,7 +697,26 @@ template: title-layout
 name: setvector
 template: basic-layout
 
-### (code for SetVector)
+```
+template <typename T, int N,
+          typename VectorT = SmallVector<T, N>,
+          typename SetT = SmallDenseSet<T, N>>
+class SmallSetVector {
+  SetT S;
+  VectorT V;
+public:
+  bool insert(const T &X) {
+    bool Result = S.insert(X).second;
+    if (Result) V.push_back(X);
+    return Result;
+  }
+
+  VectorT::iterator begin() { return V.begin(); }
+  VectorT::iterator end() { return V.end(); }
+
+  // ...
+};
+```
 
 ???
 A very common pattern in those situations is just to keep a set and a vector.
@@ -659,7 +732,30 @@ optimization be shared.
 name: mapvector
 template: basic-layout
 
-### (code for MapVector)
+```
+template <typename KeyT, typename ValueT, int N,
+          typename VectorT = SmallVector<std::pair<KeyT, ValueT>, N>,
+          typename MapT = SmallDenseMap<KeyT, int, N>>
+class SmallMapVector {
+  MapT M;
+  VectorT V;
+public:
+  ValueT &operator[](const KeyT &K) {
+    auto InsertResult = M.insert({K, 0});
+    int &Index = InsertResult.first->second;
+    if (InsertResult.second) {
+      V.push_back({K, ValueT()});
+      Index = V.size() - 1;
+    }
+    return V[Index];
+  }
+
+  VectorT::iterator begin() { return V.begin(); }
+  VectorT::iterator end() { return V.end(); }
+
+  // ...
+};
+```
 
 ???
 Naturally, all that applies for sets, applies for maps.
@@ -668,7 +764,7 @@ Naturally, all that applies for sets, applies for maps.
 name: conclusion
 template: title-layout
 
-## mumble conclusion mumble
+## 2.5 small size optimized data structures, pointers, and bit packing
 
 ---
 name: questions
