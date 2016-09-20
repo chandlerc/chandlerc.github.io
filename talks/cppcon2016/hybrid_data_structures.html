@@ -530,7 +530,23 @@ generic.
 name: pointer-embedded-int
 template: basic-layout
 
-### (code for putting a PointerEmbeddedInteger into a PointerIntPair)
+```
+template <typename IntT, int Bits = sizeof(IntT) * CHAR_BIT>
+class PointerEmbeddedInt {
+  constexpr int Shift = sizeof(uintptr_t) * CHAR_BIT - Bits;
+
+  uintptr_t Value;
+
+public:
+  void set(IntT i) {
+    Value = (uintptr_t)(i) << Shift;
+  }
+
+  IntT get() const {
+    return (IntT)(Value >> Shift);
+  }
+};
+```
 
 ???
 And it isn't restricted to pointers. It can handle any "pointer like" object.
