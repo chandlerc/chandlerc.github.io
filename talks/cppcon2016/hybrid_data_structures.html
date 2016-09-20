@@ -184,7 +184,7 @@ In essence, just a small size optimized vector
 name: why-not-std-vector
 template: title-layout
 
-### Why not `std::vector`? Iterator invalidation!
+### Why not `std::vector`?<br />Iterator invalidation!
 
 ???
 One interesting question is why can't we make std::vector support (perhaps
@@ -694,7 +694,7 @@ template <typename T> class TinyPtrVector {
   typedef SmallVector<T, 4> VecT;
   typedef PointerSumType<State,
                          PointerSumTypeMember<Inline, T>,
-                         PointerSumTypeMember<Inline, std::unique_ptr<VecT>>>
+                         PointerSumTypeMember<Vector, std::unique_ptr<VecT>>>
       SumT;
 
   SumT Value;
@@ -752,7 +752,7 @@ Hash tables, open addressing and pointers all make this much harder to achieve.
 name: sort
 template: title-layout
 
-### Where possible, sort vectors.
+### Where possible, sort vectors
 
 ???
 Sorted vectors are a wonderful thing. If you constantly need the ordering, keep
@@ -766,7 +766,7 @@ example, in-vector trees and heaps are very fast and excellent structures.
 name: not-always-ordered
 template: title-layout
 
-### Not always a useful sort-based ordering
+### Sometimes there is no intrinsic ordering
 
 ---
 name: setvector
