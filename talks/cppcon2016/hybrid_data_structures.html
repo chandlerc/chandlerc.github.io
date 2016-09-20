@@ -9,6 +9,10 @@
         font-family: 'Roboto', sans-serif;
         font-size: 120%
       }
+      a {
+        color: #96cbfe;
+        text-decoration: initial;
+      }
       h1, h2, h3 {
         font-family: 'Oswald', sans-serif;
         font-weight: normal;
@@ -546,10 +550,38 @@ free bits. As more and more users have 64-bit address spaces, overaligned types
 become very effective
 
 ---
+name: pointer-bits-available-highlight
+template: basic-layout
+
+```
+Breakpoint 1, main () at test.cpp:7
+7         S *s = new S;
+(gdb) n
+8         return 0;
+(gdb) p/a s
+$2 = 0x402010
+(gdb) p/t s
+$3 = 1000000001000000001`0000`
+```
+
+???
+Some of the bits in pointers aren't actually used due to alignment.
+
+When necessary, we can even artificially align the types higher and get more
+free bits. As more and more users have 64-bit address spaces, overaligned types
+become very effective
+
+---
 name: pointer-int-pair
 template: basic-layout
 
 ```
+template <typename PtrT> struct PointerLikeTraits {
+  constexpr int FreeBits = log2(alignof(PtrT));
+
+  static auto getPointer(uintptr_t Value) { return (PtrT)(Value); }
+};
+
 template <typename PtrT, int IntBits, typename IntT = unsigned,
           typename PtrTraits = PointerLikeTraits<PtrT>>
 class PointerIntPair {
@@ -565,12 +597,6 @@ public:
   auto getInt() const { return (IntT)((Value >> IntShift) & IntMask); }
 
   // ...
-};
-
-template <typename PtrT> struct PointerLikeTraits {
-  constexpr int FreeBits = log2(alignof(PtrT));
-
-  static auto getPointer(uintptr_t Value) { return (PtrT)(Value); }
 };
 ```
 
