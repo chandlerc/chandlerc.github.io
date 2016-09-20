@@ -330,13 +330,32 @@ template <class T, int N>
 using SmallVector =
     std::vector<T, short_alloc<T, N>>;
 
+void g(SmallVector<int, 4> &v);
+
+void f() {
+  SmallVector<int, 8>::allocator_type::arena_type a;
+  SmallVector<int> v{a};
+  // ...
+  g(v);
+}
+```
+
+---
+name: allocator-interface-boundary-highlight
+template: basic-layout
+
+```
+template <class T, int N>
+using SmallVector =
+    std::vector<T, short_alloc<T, N>>;
+
 void g(SmallVector<int, `4`> &v);
 
 void f() {
   SmallVector<int, `8`>::allocator_type::arena_type a;
   SmallVector<int> v{a};
   // ...
-  g(v); // BOOOM
+  `g(v); // BOOOM`
 }
 ```
 
@@ -349,11 +368,28 @@ template <class T, int N>
 using SmallVector =
     std::vector<T, short_alloc<T, N>>;
 
-`SmallVector<T, 4>` f() {
+SmallVector<T, 4> f() {
   SmallVector<int, 4>::allocator_type::arena_type a;
   SmallVector<int> v{a};
   // ...
-  g(v); // You're gonna have a bad time...
+  return v; // You're gonna have a bad time...
+}
+```
+
+---
+name: return-small-vector-highlight
+template: basic-layout
+
+```
+template <class T, int N>
+using SmallVector =
+    std::vector<T, short_alloc<T, N>>;
+
+*SmallVector<T, 4> f() {
+  SmallVector<int, 4>::allocator_type::arena_type a;
+  SmallVector<int> v{a};
+  // ...
+  `return v; // You're gonna have a bad time...`
 }
 ```
 
@@ -764,7 +800,7 @@ Naturally, all that applies for sets, applies for maps.
 name: conclusion
 template: title-layout
 
-## 2.5 small size optimized data structures, pointers, and bit packing
+## 2.5 small size optimized structures, pointers, and bit packing
 
 ---
 name: questions
