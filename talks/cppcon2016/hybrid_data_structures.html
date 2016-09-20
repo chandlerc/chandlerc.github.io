@@ -397,7 +397,7 @@ template <class T, int N>
 using SmallVector =
     std::vector<T, short_alloc<T, N>>;
 
-`SmallVector<T, 4>` f() {
+SmallVector<T, 4> f() {
   SmallVector<int, 4>::allocator_type::arena_type a;
   SmallVector<int> v{a};
   // ...
