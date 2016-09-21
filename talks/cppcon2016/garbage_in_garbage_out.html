@@ -79,9 +79,6 @@
       .tweet {
         text-shadow: initial;
       }
-      blockquote.twitter-tweet p.Tweet-text {
-        font-size: 150% !important;
-      }
 
       #slide-ub-is-scary2 h1 {
         font-size: 85px
@@ -206,6 +203,431 @@ int *p = nullptr;
 
 int x = *p;
 ```
+
+???
+This is a really simple example of a programming error.
+- We could check for this kind of error, but that introduces overhead, and C++
+  decided it didn't want to introduce systematic overhead of this kind.
+- And yes, there are even platforms or environments where we could efficiently
+  check for this error, but even limiting itself to those kinds of platforms
+  would be an overhead
+
+In essence, anything we try to do to "handle" this in a standardized,
+predictable way will *actively pessimize code* on some platform.
+
+---
+name: programming-error
+template: title-layout
+
+## Programming error, like using an API out of contract
+
+???
+These are catching programming errors, not providing error handling! In this
+way, they are precisely analogous to API contracts.
+
+---
+name: non-null-api
+template: basic-layout
+
+```
+/// \param p must not be null.
+void f(int *p);
+```
+--
+```
+void f(int *p) [[expects: p != nullptr]];
+```
+
+???
+Here, you are *required* to call this function with a non-null pointer. It
+doesn't throw or otherwise indicate an error if you do this. It's implementation
+gets to firmly and completely ignore such a possibility.
+
+---
+name: incorrect-programs
+template: title-layout
+
+## Programming errors result in *incorrect programs*
+
+???
+With this basic framework of contracts in mind, we can start to pin down our
+terminology further. Not only are these programming errors, but as a consequence
+what we have is an incorrect program.
+
+This actually helps clarify just how high the bar should be for contracts! You
+must be comfortable actively labeling any program which fails to satisfy the
+contract as fundamentally *incorrect*.
+
+We will return to what it means that these are incorrect programs more later,
+but immediately this leads to an important observation:
+
+---
+name: incorrect-programs-have-ub
+template: title-layout
+
+## We cannot define the behavior of *incorrect programs!*
+
+???
+If the program is fundamentally incorrect, I don't know how we can effectively
+define its behavior. It will misbehave in some way, but that way can be really
+surprising. In fact, it is the surprising and unpredictable way in which
+incorrect programs can fail that got us into this mess with nasal demons.
+
+---
+name: api-acyclic-example-interface
+template: basic-layout
+
+```
+struct Node {
+  // ...
+
+  std::vector<Node *> outgoing_edges;
+};
+
+/// Finds a sink in the directed graph containing the node.
+///
+/// Requires that the graph containing the node is acyclic.
+Node &findSink(Node &n);
+```
+
+???
+Imagine you have a routine that searches a directed acyclic graph structure for
+a particular node. If you give it a directed graph with a cycle, violating this
+contract, the algorithm might well infinitely loop.
+
+Checking this requires cycle detection which has really significant cost and
+might not be reasonable at all
+
+Under some performance circumstances might be able to to check this, but not
+always.
+
+That's OK because it is simply a *programming error* to call this routine
+out-of-contract
+
+A user of some library might insist that the library at least have a mode to
+check this though!
+
+But what I want to focus on, is could we define the behavior here for a cyclic
+graph? Just how could it go wrong?
+
+---
+name: api-acyclic-example-impl1
+template: basic-layout
+
+```
+Node &findSink(Node &n) {
+  if (n.outgoing_edges.empty())
+    return n;
+
+  // Don't need any particular sink, just recurse to find the first one
+  // encountered.
+  return findSink(*n.outgoing_edges.front());
+}
+```
+
+???
+Ok, so what can go wrong with this? Let's look at the first attempt to implement
+the routine.
+
+---
+name: api-acyclic-example-impl2
+template: basic-layout
+
+```
+Node &findSink(Node &start_node) {
+  Node *n = &start_node;
+
+  // Walk any outgoing edge until we encounter a sink.
+  while (!n.outgoing_edges.empty())
+    n = n.outgoing_edges.front();
+
+  return *n;
+}
+```
+
+---
+name: ub-from-inability-to-define
+template: title-layout
+
+## "UB" stems from this: our inability to define behavior for incorrect programs
+
+---
+name: eliminate-ub
+template: title-layout
+
+# So can we eliminate UB?
+
+---
+name: eliminate-local-ub
+template: title-layout
+
+## Maybe we can eliminate UB from one feature?
+
+---
+name: eliminate-local-ub-requires
+template: title-layout
+
+## Requires no usage to be out of contract
+
+---
+name: eliminate-local-ub-wide
+template: title-layout
+
+## This is exactly what a *wide contract* provides!
+
+---
+name: eliminate-all-ub
+template: title-layout
+
+## So can we eliminate *all* UB?
+
+???
+Not a really useful question... Even if every usage of every feature was
+in-contract that wouldn't be enough. You'd need every API to have a wide
+contract and all logic to not have bugs. You'd also need a bug-free compiler.
+
+The real question here is about whether the contracts on the language features
+are wide or narrow.
+
+---
+name: eliminate-all-ub-wide
+template: title-layout
+
+## Can we make every language feature have a wide contract?
+
+---
+name: eliminate-all-ub-nope
+template: title-layout
+
+## No. (grumpy cat)
+
+???
+Why not? Because this kind of extreme direction seems infeasible without
+comprimising fundamental aspects of C++.
+
+Let's look at just one hard example: how do we define all behavior in the
+presence of data races? This has been a serious challenge for Java for over 20
+years. And almost any solution employed by C++ would have a very significant
+performance penalty for a large number of users.
+
+But this extreme position also isn't really necessary.
+
+---
+name: evaluate-ub-case-by-case
+template: title-layout
+
+## Instead, evaluate wide vs. narrow contracts case by case
+
+---
+name: constrain-ub
+template: title-layout
+
+# OK, can we at least *constrain* UB?
+
+---
+name: constrain-ub-contradition
+template: title-layout
+
+## This isn't about UB which is inherently unconstrained
+
+---
+name: constrain-out-of-contract
+template: title-layout
+
+## Can we define *some* behavior when out of contract?
+
+---
+name: constrain-out-of-contract-yes
+template: title-layout
+
+## Yes.
+--
+But what do you define?
+
+---
+name: constrain-out-of-contract-mistake
+template: title-layout
+
+## Instead, we should let users choose constraints
+
+---
+name: already-constrained
+template: title-layout
+
+## No actual nasal demons already
+
+---
+name: tailored-constraints
+template: title-layout
+
+## Need a range of options for different users
+
+???
+Want users to be able to select tradeoffs between three different aspects that are in tension:
+1. Improved runtime performance of correct programs through aggressive optimizations
+1. Minimizing the extent of surprising behavior of incorrect programs
+1. Checking programs for whether they are correct
+
+---
+name: constrain-narrow-contracts
+template: title-layout
+
+# But when is it appropriate to have a narrow contract?
+
+???
+Trying to constrain the behavior of programs that are out-of-contract is
+interesting for security folks and for debugging and other things. But that
+isn't what IMO impacts programmers the most long term.
+
+The real question for programmers is when is it reasonable for the language to
+provide them a narrow contract instead of a wide contract?
+
+---
+name: narrow-contracts-simplify
+template: title-layout
+
+## Narrow contracts simplify implementation, specification, testing...
+
+---
+name: narrow-contracts-cost
+template: title-layout
+
+## But narrow contracts impose a burden on the programmer
+
+???
+This is a complex tradeoff question. It would be useful to outline some
+principled constraints that we should use to pin down when a language level
+contract should be narrow.
+
+---
+name: narrow-contract-principles
+template: basic-layout
+
+### Principles for narrow language contracts
+--
+1. Must be (probabilistically) checkable at runtime
+???
+The checking may be very expensive, but it has to be possible. We've managed to
+do this for one of the most challenging areas: data races.
+
+And just because it is primarily checked at runtime doesn't mean it shouldn't be
+checked at every opportunity at every other layer of the development stack from
+compile time warnings through static analysis tools.
+--
+1. Provides significant value through bug finding, simplification, and/or
+   optimization
+???
+This is a tradeoff space and so there must be a value proposition attached.
+--
+1. Can be easily explained and taught to programmers
+???
+...
+--
+1. Is not pervasively violated by existing code that would otherwise work
+   correctly and as intended
+???
+While this point is important it is often misunderstood. The code has to
+otherwise work correctly and as intended. If the pervasive code outside the
+narrow contract is already buggy or doesn't work as intended, then keeping it
+working doesn't actually have any value and so the other factors should
+dominate.
+
+---
+name: analysis-of-examples
+template: title-layout
+
+# Let's examine interesting cases with this framework
+
+---
+name: left-shift-too-many-bits
+template: basic-layout
+
+```
+#include <iostream>
+
+int main() {
+  volatile unsigned x = 1;
+  volatile unsigned y = 33;
+  volatile unsigned result = x << y;
+
+  std::cout << "Bad shift: " << result << "\n";
+}
+```
+
+---
+name: signed-integer-arith
+template: basic-layout
+
+```
+bool mainGtU(uint32_t i1, uint32_t i2, uint8_t *block, uint16_t *quadrant,
+             uint32_t nblock, int32_t *budget) {
+  uint8_t c1, c2;
+  uint16_t s1, s2;
+
+  // ...
+
+  do {
+    /* 1 */
+    c1 = block[i1]; c2 = block[i2];
+    if (c1 != c2) return (c1 > c2);
+    s1 = quadrant[i1]; s2 = quadrant[i2];
+    if (s1 != s2) return (s1 > s2);
+    i1++; i2++;
+
+    /* 2 */
+    c1 = block[i1]; c2 = block[i2];
+    if (c1 != c2) return (c1 > c2);
+    s1 = quadrant[i1]; s2 = quadrant[i2];
+    if (s1 != s2) return (s1 > s2);
+    i1++; i2++;
+
+    /* 3 */
+    c1 = block[i1]; c2 = block[i2];
+    if (c1 != c2) return (c1 > c2);
+    s1 = quadrant[i1]; s2 = quadrant[i2];
+    if (s1 != s2) return (s1 > s2);
+    i1++; i2++;
+
+    ...
+```
+
+---
+name: arithmetic-right-shift
+template: basic-layout
+
+```
+#include <iostream>
+#include <limits>
+#include <stdint.h>
+
+int main() {
+  volatile int32_t x = std::numeric_limits<int32_t>::min();
+  volatile int32_t y = 7;
+  volatile int32_t result = (x >> y);
+  std::cout << "Arithmetic shift: " << std::hex << result << "\n";
+}
+```
+
+---
+name: memcpy-contract
+template: basic-layout
+
+```
+#include <string.h>
+
+int main() {
+  void *volatile src = nullptr;
+  void *volatile dst = nullptr;
+  volatile size_t size = 0;
+
+  memcpy(dst, src, size);
+}
+```
+
+???
+When a narrow contract diverges from widespread, reasonable, and portable
+expectations and implementations. Even more so when they are in fact not
+checked at any point. These contracts become de facto wide.
 
 ---
 name: questions
