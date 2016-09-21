@@ -54,16 +54,19 @@
         color: #f8f8f8;
         font-size: 32px;
         text-shadow: 0px 0px 16px #000, 0px 0px 32px #000;
-        padding: 0.5em 1em 0.5em 1em
+        padding: 0.5em 1em 0.5em 1em;
       }
       .remark-slide-content h1 {
-        font-size: 85px
+        font-size: 85px;
       }
       .remark-slide-content h2 {
-        font-size: 75px
+        font-size: 75px;
       }
       .remark-slide-content h3 {
-        font-size: 65px
+        font-size: 65px;
+      }
+      .remark-slide-content .title h3 {
+        font-size: 45px;
       }
       .remark-code, .remark-inline-code {
         font-family: 'Roboto Mono', monospace;
@@ -268,7 +271,7 @@ void f(int *p) [[expects: p != nullptr]];
 
 ???
 Here, you are *required* to call this function with a non-null pointer. It
-doesn't throw or otherwise indicate an error if you do this. It's implementation
+doesn't throw or otherwise indicate an error if you do this. Its implementation
 gets to firmly and completely ignore such a possibility.
 
 ---
