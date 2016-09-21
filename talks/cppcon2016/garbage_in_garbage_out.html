@@ -559,7 +559,52 @@ int main() {
 ```
 
 ---
-name: signed-integer-arith
+name: unsigned-integer-bugs
+template: basic-layout
+
+```
+// Allocate a zeroed rtx vector of N elements
+//
+// sizeof(struct rtvec_def) == 16
+// sizeof(rtunion) == 8
+rtvec rtvec_alloc(int n) {
+  rtvec rt;
+  int i;
+  rt = (rtvec)obstack_alloc(
+      rtl_obstack,
+      sizeof(struct rtvec_def) + ((n - 1) * sizeof(rtunion)));
+
+  // ...
+
+  return rt;
+}
+```
+.footnote[[Dietz, Will, et al. "Understanding integer overflow in C/C++."](http://dl.acm.org/citation.cfm?id=2743019>)]
+???
+Making signed integers have a wide contract may not be a win. Remember, narrow
+contracts often make it easier to find bugs.
+
+We can look at code dealing with these kinds of boundary conditions with
+unsigned integers which have a wide contract to see how it goes. For example
+here is code found in the copy of GCC in SPEC CINT2000 by researchers looking
+at integer overflow bugs.
+
+First, consider this code after the sizeof operators are resolved and the
+promotion rules are applied: 16 + ((unsigned)(n-1)) * ((unsigned)8). When n =
+0, we immediately see the code casting −1 to unsigned, which evaluates to
+UINT_MAX, or 2^32 − 1. The result is then multiplied by eight, which overflows
+with a result of 2^32 − 8. Finally, the addition is evaluated, which produces
+the final result of 8 after wrapping around again. Although the overflow itself
+is benign, its consequences are unfortunate. Only eight bytes are allocated but
+the rtvec_def structure is 16 bytes. Any attempt to copy it by value will
+result in a memory safety error, perhaps corrupting the heap
+
+Now consider how much simpler it would be to reason about these bugs with
+signed integer arithmetic and assertions or compiler synthesized overflow
+checking.
+
+---
+name: signed-integer-optz
 template: basic-layout
 
 ```
