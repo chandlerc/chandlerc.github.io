@@ -217,10 +217,10 @@ template: tweet-layout
 <blockquote class="twitter-tweet tw-align-center" data-conversation="none" data-lang="en"><p lang="en" dir="ltr">as undefined behavior, because you define the behavior! That&#39;s your whole job!</p>&mdash; Jonathan Blow (@Jonathan_Blow) <a href="https://twitter.com/Jonathan_Blow/status/705624482694590464">March 4, 2016</a></blockquote>
 
 ---
-name: whence-ub
+name: what-is-ub
 template: title-layout
 
-# Where does all this "UB" come from?
+# What is "UB" anyways?
 
 ---
 name: null-deref-example
@@ -373,35 +373,81 @@ Node &findSink(Node &start_node) {
 }
 ```
 
+???
+"UB" stems from our inability to define behavior for incorrect programs
+
 ---
 name: ub-from-inability-to-define
 template: title-layout
 
-## "UB" stems from our inability to define behavior for incorrect programs
+# UB is a *symptom* of incorrect programs
 
 ---
-name: eliminate-ub
+name: ub-symptom
 template: title-layout
 
-# So can we eliminate UB?
+## (house diagnosis)
+
+???
+Like any symptom of a problem, we *use* UB to help *diagnose* incorrect
+programs.
 
 ---
-name: eliminate-local-ub
+name: ub-symptom
 template: title-layout
 
-## Maybe from just one language feature?
+## (house: its not UB)
+
+???
+But it doesn't cause anything to be incorrect.
+
+Just because we see UB everywhere doesn't mean UB is the problem. The problem is that the program is incorrect somewhere. And the real problem is that this stems from the program using some language feature out of contract
 
 ---
-name: eliminate-local-ub-requires
+name: ub-symptom-out-of-contract
 template: title-layout
 
-## Requires no usage to be out of contract
+## The code used a feature *out of contract*
+
+???
+We even know what this implies about the language feature now that we put it in terms of contracts...
 
 ---
-name: eliminate-local-ub-wide
+name: ub-symptom-of-narrow-contract-violation
 template: title-layout
 
-## This is a *wide contract*!
+## The feature has a *narrow contract!*
+
+???
+And this frustrates users.
+
+---
+name: ub-symptom-came-too-late
+template: title-layout
+
+## It was a *latent* error all this time
+
+Why does a narrow contract on a feature frustrate our users so much?
+
+Because they wrote their code, they tested their code, in many cases they
+deployed their code. They used every tool we gave them. And at no point did any
+tool say "hey, your code is out of contract, might need to fix that".
+
+So the code worked. It worked for a very long time. It *predictably* worked. And
+this leads to the feeling that the code is in fact correct.
+
+When our users discover the problem at last, their surprise understandably leads
+them to blame the symptom. And it doesn't help that in many cases they still
+don't have any tools to tell them what went wrong.
+
+---
+name: what-can-we-do
+template: title-layout
+
+# So what can we do?
+
+???
+I think we have to help our users out here, no matter how challenging it is.
 
 ---
 name: eliminate-all-ub
@@ -480,17 +526,14 @@ Want users to be able to select tradeoffs between three different aspects that a
 1. Minimizing the extent of surprising behavior of incorrect programs
 1. Checking programs for whether they are correct
 
----
-name: already-constrained
-template: title-layout
-
-## Already banished the nasal demons
+No matter what we do here, we will *pessimize* C++ for some users without
+providing those users any benefits.
 
 ---
 name: constrain-narrow-contracts
 template: title-layout
 
-# But when is it appropriate to have a narrow contract?
+# When is it appropriate to have a narrow contract?
 
 ???
 Trying to constrain the behavior of programs that are out-of-contract is
@@ -576,6 +619,77 @@ int main() {
 ```
 
 ---
+name: signed-left-shift
+template: basic-layout
+
+.left-col[
+```
+#include <iostream>
+using std::cout;
+
+int main() {
+  volatile int x1 = 1;
+  volatile int result1 = (x1 << 31);
+  cout << "Bad:  " << result1 << "\n";
+
+  volatile int x2 = 0b11;
+  volatile int result2 = (x2 << 30);
+  cout << "Bad:  " << result2 << "\n";
+
+  volatile int x3 = 0b111;
+  volatile int result3 = (x3 << 30);
+  cout << "Bad:  " << result3 << "\n";
+
+  volatile int x4 = -1; // 0xFFFFFFFF
+  volatile int result4 = (x4 << 31);
+  cout << "Good? " << result4 << "\n";
+
+  volatile int x5 = -2; // 0xFFFFFFFE
+  volatile int result5 = (x5 << 30);
+  cout << "Good? " << result5 << "\n";
+}
+```
+]
+.right-col[
+```
+#include <iostream>
+using std::cout;
+
+int main() {
+  volatile int x1 = 1;
+  volatile int r1 = (x1 * (1ll << 31));
+  cout << "Bad:  " << r1 << "\n";
+
+  volatile int x2 = 0b11;
+  volatile int r2 = (x2 * (1 << 30));
+  cout << "Bad:  " << r2 << "\n";
+
+  volatile int x3 = 0b111;
+  volatile int r3 = (x3 * (1 << 30));
+  cout << "Bad:  " << r3 << "\n";
+
+  volatile int x4 = -1;
+  volatile int r4 = (x4 * (1ll << 31));
+  cout << "Good? " << r4 << "\n";
+
+  volatile int x5 = -2;
+  volatile int r5 = (x5 * (1 << 30));
+  cout << "Good? " << r5 << "\n";
+}
+```
+]
+
+???
+The key question here is what mathematical model do we use?
+
+The best one I have for a *signed* left shift is multiplication by a power of
+two. 
+
+Unfortunately, I think the committee made some mistakes here and we now don't
+have a very good mathematical model available. This makes things like shift
+right very hard to teach.
+
+---
 name: unsigned-integer-bugs
 template: basic-layout
 
@@ -647,15 +761,11 @@ bool mainGtU(uint32_t i1, uint32_t i2, uint8_t *block, uint16_t *quadrant,
     if (s1 != s2) return (s1 > s2);
     i1++; i2++;
 
-    /* 3 */
-    c1 = block[i1]; c2 = block[i2];
-    if (c1 != c2) return (c1 > c2);
-    s1 = quadrant[i1]; s2 = quadrant[i2];
-    if (s1 != s2) return (s1 > s2);
-    i1++; i2++;
-
     ...
 ```
+
+???
+This code is directly taken from bzip2
 
 ---
 name: arithmetic-right-shift
