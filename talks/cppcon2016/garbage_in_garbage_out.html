@@ -454,7 +454,7 @@ template: title-layout
 name: constrain-ub-contradition
 template: title-layout
 
-## This isn't about UB which is inherently unconstrained
+## UB is inherently unconstrained...<br />But this isn't about UB!
 
 ---
 name: constrain-out-of-contract
@@ -466,33 +466,25 @@ template: title-layout
 name: constrain-out-of-contract-yes
 template: title-layout
 
-## Yes.
---
- But what do you define?
+## Yes... But what do you define?
 
 ---
-name: constrain-out-of-contract-mistake
+name: constrain-out-of-contract-differently
 template: title-layout
 
-## Instead, we should let users choose constraints
-
----
-name: already-constrained
-template: title-layout
-
-## No actual nasal demons already
-
----
-name: tailored-constraints
-template: title-layout
-
-## Need a range of options for different users
+## Different users need different behaviors
 
 ???
 Want users to be able to select tradeoffs between three different aspects that are in tension:
 1. Improved runtime performance of correct programs through aggressive optimizations
 1. Minimizing the extent of surprising behavior of incorrect programs
 1. Checking programs for whether they are correct
+
+---
+name: already-constrained
+template: title-layout
+
+## Already banished the nasal demons
 
 ---
 name: constrain-narrow-contracts
