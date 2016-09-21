@@ -738,34 +738,90 @@ checking.
 name: signed-integer-optz
 template: basic-layout
 
+.left-col[
 ```
-bool mainGtU(uint32_t i1, uint32_t i2, uint8_t *block, uint16_t *quadrant,
-             uint32_t nblock, int32_t *budget) {
+bool mainGtU(uint32_t i1, uint32_t i2,
+             uint8_t *block) {
   uint8_t c1, c2;
-  uint16_t s1, s2;
 
-  // ...
+  /* 1 */
+  c1 = block[i1]; c2 = block[i2];
+  if (c1 != c2) return (c1 > c2);
+  i1++; i2++;
 
-  do {
-    /* 1 */
-    c1 = block[i1]; c2 = block[i2];
-    if (c1 != c2) return (c1 > c2);
-    s1 = quadrant[i1]; s2 = quadrant[i2];
-    if (s1 != s2) return (s1 > s2);
-    i1++; i2++;
+  /* 2 */
+  c1 = block[i1]; c2 = block[i2];
+  if (c1 != c2) return (c1 > c2);
+  i1++; i2++;
 
-    /* 2 */
-    c1 = block[i1]; c2 = block[i2];
-    if (c1 != c2) return (c1 > c2);
-    s1 = quadrant[i1]; s2 = quadrant[i2];
-    if (s1 != s2) return (s1 > s2);
-    i1++; i2++;
-
-    ...
+  ...
 ```
+]
+.right-col[
+```asm
+# BB#0:
+        movl    %edi, %eax
+        movb    (%rdx,%rax), %al
+        movl    %esi, %ebp
+        movb    (%rdx,%rbp), %bl
+        cmpb    %bl, %al
+        jne     .LBB27_1
+# BB#2:
+        leal    1(%rdi), %eax
+        leal    1(%rsi), %ebp
+        movb    (%rdx,%rax), %al
+        movb    (%rdx,%rbp), %bl
+        cmpb    %bl, %al
+        jne     .LBB27_1
+
+# ...
+```
+]
 
 ???
 This code is directly taken from bzip2
+
+---
+name: signed-integer-optz
+template: basic-layout
+
+.left-col[
+```
+bool mainGtU(int32_t i1, int32_t i2,
+             uint8_t *block) {
+  uint8_t c1, c2;
+
+  /* 1 */
+  c1 = block[i1]; c2 = block[i2];
+  if (c1 != c2) return (c1 > c2);
+  i1++; i2++;
+
+  /* 2 */
+  c1 = block[i1]; c2 = block[i2];
+  if (c1 != c2) return (c1 > c2);
+  i1++; i2++;
+
+  ...
+```
+]
+.right-col[
+```asm
+# BB#0:
+        movzbl  (%rdx,%rsi), %eax
+        cmpb    %al, (%rdx,%rdi)
+        jne     .LBB27_1
+# BB#2:
+        movzbl  1(%rdx,%rsi), %eax
+        cmpb    %al, 1(%rdx,%rdi)
+        jne     .LBB27_1
+
+# ...
+```
+]
+
+???
+Just by changing to signed integer arithmetic we can completely change how we
+generate code for a 64-bit x86 platform.
 
 ---
 name: arithmetic-right-shift
