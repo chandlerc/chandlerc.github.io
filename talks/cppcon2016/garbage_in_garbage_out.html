@@ -19,30 +19,17 @@
       }
       blockquote {
         display: block;
-        background: #bbb;
-        padding: 15px 20px 15px 45px;
-        margin: 0 0 20px;
+        background: #222;
+        padding: 30px 30px 40px 30px;
+        border-radius: 30px;
+        margin: 30px 30px 20px;
         position: relative;
 
         font-family: 'Roboto Slab', serif;
         font-size: 32px;
         line-height: 1.2;
         text-align: justify;
-      }
-      blockquote::before{
-        content: "\201C";
-
-        font-family: 'Roboto Slab', serif;
-        font-size: 100px;
-        font-weight: bold;
-        color: #666;
-
-        position: absolute;
-        left: 10px;
-        top: 5px;
-      }
-      blockquote::after{
-        content: "";
+        text-shadow: initial;
       }
       blockquote p {
         margin: 0px;
@@ -212,6 +199,7 @@ template: title-layout
 > will provide a comprehensible foundation for people writing C code, for people
 > auditing C code, and for people formally verifying C code.
 
+.footnote[D. J. Bernstein [email](https://groups.google.com/d/msg/boring-crypto/48qa1kWignU/o8GGp2K1DAAJ)]
 ---
 name: no-platform-ub-tweet
 template: tweet-layout
