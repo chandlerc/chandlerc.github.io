@@ -96,6 +96,9 @@
       .tweet {
         text-shadow: initial;
       }
+      .meme {
+        background-size: contain;
+      }
 
       #slide-ub-is-scary2 h1 {
         font-size: 85px
@@ -120,6 +123,11 @@ class: center, middle, title
 name: tweet-layout
 layout: true
 class: center, middle, tweet
+
+---
+name: meme-layout
+layout: true
+class: center, middle, meme
 
 ---
 name: basic-layout
@@ -239,7 +247,7 @@ predictable way will *actively pessimize code* on some platform.
 name: programming-error
 template: title-layout
 
-## Programming error, like using an API out of contract
+## Programming error,<br />like using an API out of contract
 
 ???
 These are catching programming errors, not providing error handling! In this
@@ -267,7 +275,7 @@ gets to firmly and completely ignore such a possibility.
 name: incorrect-programs
 template: title-layout
 
-## Programming errors result in *incorrect programs*
+## Programming errors result in<br />*incorrect programs*
 
 ???
 With this basic framework of contracts in mind, we can start to pin down our
@@ -369,7 +377,7 @@ Node &findSink(Node &start_node) {
 name: ub-from-inability-to-define
 template: title-layout
 
-## "UB" stems from this: our inability to define behavior for incorrect programs
+## "UB" stems from our inability to define behavior for incorrect programs
 
 ---
 name: eliminate-ub
@@ -381,7 +389,7 @@ template: title-layout
 name: eliminate-local-ub
 template: title-layout
 
-## Maybe we can eliminate UB from one feature?
+## Maybe from just one language feature?
 
 ---
 name: eliminate-local-ub-requires
@@ -393,13 +401,12 @@ template: title-layout
 name: eliminate-local-ub-wide
 template: title-layout
 
-## This is exactly what a *wide contract* provides!
+## This is a *wide contract*!
 
 ---
 name: eliminate-all-ub
-template: title-layout
-
-## So can we eliminate *all* UB?
+template: meme-layout
+background-image: url(define-all-the-behavior.jpg)
 
 ???
 Not a really useful question... Even if every usage of every feature was
@@ -417,9 +424,8 @@ template: title-layout
 
 ---
 name: eliminate-all-ub-nope
-template: title-layout
-
-## No. (grumpy cat)
+template: meme-layout
+background-image: url(grumpy-no.jpg)
 
 ???
 Why not? Because this kind of extreme direction seems infeasible without
