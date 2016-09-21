@@ -3,7 +3,7 @@
   <head>
     <title>Title</title>
     <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css?family=Oswald|Roboto|Roboto+Mono" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald|Roboto|Roboto+Mono|Roboto+Slab" rel="stylesheet">
     <style>
       body {
         font-family: 'Roboto', sans-serif;
@@ -16,6 +16,33 @@
       h1, h2, h3 {
         font-family: 'Oswald', sans-serif;
         font-weight: normal;
+      }
+      blockquote {
+        display: block;
+        background: #bbb;
+        padding: 15px 20px 15px 45px;
+        margin: 0 0 20px;
+        position: relative;
+
+        font-family: 'Roboto Slab', serif;
+        font-size: 32px;
+        line-height: 1.2;
+        text-align: justify;
+      }
+      blockquote::before{
+        content: "\201C";
+
+        font-family: 'Roboto Slab', serif;
+        font-size: 100px;
+        font-weight: bold;
+        color: #666;
+
+        position: absolute;
+        left: 10px;
+        top: 5px;
+      }
+      blockquote::after{
+        content: "";
       }
       .footnote {
         position: absolute;
@@ -88,6 +115,7 @@
       }
       #slide-nasal-demons {
         background-color: #FFF;
+        background-size: contain;
       }
     </style>
   </head>
@@ -172,15 +200,14 @@ template: tweet-layout
 
 ---
 name: ub-djb-quote
-template: basic-layout
+template: title-layout
 
-As a boring platform for the portable parts of boring crypto software, 
-I'd like to see a free C compiler that clearly defines, and permanently 
-commits to, carefully designed semantics for everything that's labeled 
-"undefined" or "unspecified" or "implementation-defined" in the C 
-"standard". This compiler will provide a comprehensible foundation for 
-people writing C code, for people auditing C code, and for people 
-formally verifying C code.
+> As a boring platform for the portable parts of boring crypto software, I'd like
+> to see a free C compiler that clearly defines, and permanently commits to,
+> carefully designed semantics for everything that's labeled "undefined" or
+> "unspecified" or "implementation-defined" in the C "standard". This compiler
+> will provide a comprehensible foundation for people writing C code, for people
+> auditing C code, and for people formally verifying C code.
 
 ---
 name: no-platform-ub-tweet
