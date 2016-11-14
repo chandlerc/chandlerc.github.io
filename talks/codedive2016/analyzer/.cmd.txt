@@ -1,0 +1,1 @@
+clang --analyze -Xanalyzer -analyzer-output=text fopen.cc
