@@ -4,13 +4,11 @@ struct Bar {
 };
 typedef Bar bar_t;
 
-void foo_bar_baz(int a, int b, int c,
+void foo(int a, int b, int c,
 #if PLATFORM_FOO
-         foo_t obj,
-         int x, int y, int z) {
+         foo_t obj, int x, int y, int z) {
 #else // PLATFORM_BAR
-         bar_t obj_oasurchaoseruchaosercuh,
-         int x, int y, int aoeurschaorsuechaorseuhaosrchz) {
+         bar_t obj1, bar_t obj2) {
 #endif
   obj.foobar();
   // ...
