@@ -1,3 +1,4 @@
 BasedOnStyle: LLVM
 Cpp11BracedListStyle: true
 BreakBeforeBraces: Attach
+ColumnLimit: 72
