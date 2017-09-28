@@ -122,7 +122,7 @@ name: ooo-dot-x86
 template: basic-layout
 
 .left-col[
-```unix assembly
+```unix_assembly
 .LBB0_2:
         movl    (%rsi,%rdi,4), %ecx
         imull   (%r8,%rdi,4), %ecx
