@@ -152,7 +152,7 @@ name: ooo-dot-x86-asm-and-uops
 template: basic-layout
 
 .left-col[
-```unix assembly
+```unix_assembly
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
   imull   (%r8,%rdi,4), %ecx
@@ -170,8 +170,7 @@ template: basic-layout
   %ecx  = imul %tmp1, %ecx
   %eax  = add %ecx, %eax
   %rdi  = add $1, %rdi
-  %flag = cmp %rdi, %rdx
-        & ja %flag, .LBB0_2
+  %flag = cmp %rdi, %rdx; ja .LBB0_2
 
 ```
 ]
@@ -197,8 +196,7 @@ template: basic-layout
   %ecx  = imul %tmp1, %ecx
   %eax  = add %ecx, %eax
   %rdi  = add $1, %rdi
-  %flag = cmp %rdi, %rdx
-        & ja %flag, .LBB0_2
+  %flag = cmp %rdi, %rdx; ja .LBB0_2
 
 ```
 ]
@@ -221,8 +219,7 @@ template: basic-layout
   %ecx  = imul %tmp1, %ecx
   %eax  = add %ecx, %eax
   %rdi  = add $1, %rdi
-  %flag = cmp %rdi, %rdx
-        & ja %flag, .LBB0_2 ; TAKEN!
+  %flag = cmp %rdi, %rdx; ja .LBB0_2 (TAKEN)
 
 ```
 ]
@@ -245,8 +242,7 @@ template: basic-layout
   %ecx  = imul %tmp1, %ecx
   %eax  = add %ecx, %eax
   %rdi  = add $1, %rdi
-  %flag = cmp %rdi, %rdx
-        & jna %flag, .LBB0_3
+  %flag = cmp %rdi, %rdx; jna .LBB0_3
   ...
 
 .LBB0_3:
@@ -272,22 +268,19 @@ template: basic-layout
   %ecx  = imul %tmp1, %ecx
   %eax  = add %ecx, %eax
   %rdi  = add $1, %rdi
-  %flag = cmp %rdi, %rdx
-        & jna %flag, .LBB0_3
+  %flag = cmp %rdi, %rdx; jna .LBB0_3
   %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
   %ecx  = imul %tmp1, %ecx
   %eax  = add %ecx, %eax
   %rdi  = add $1, %rdi
-  %flag = cmp %rdi, %rdx
-        & jna %flag, .LBB0_3
+  %flag = cmp %rdi, %rdx; jna .LBB0_3
   %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
   %ecx  = imul %tmp1, %ecx
   %eax  = add %ecx, %eax
   %rdi  = add $1, %rdi
-  %flag = cmp %rdi, %rdx
-        & jna %flag, .LBB0_3
+  %flag = cmp %rdi, %rdx; jna .LBB0_3
   ...
 
 .LBB0_3:
@@ -320,22 +313,19 @@ template: basic-layout
   %ecx.1  = imul %tmp1.0, %ecx.0
   %eax.1  = add %ecx.1, %eax.0
   %rdi.1  = add $1, %rdi.0
-  %flag.0 = cmp %rdi.1, %rdx
-          & jna %flag.0, .LBB0_3
+  %flag.0 = cmp %rdi.1, %rdx; jna .LBB0_3
   %ecx.2  = load (%rsi,%rdi.1,4)
   %tmp1.1 = load (%r8,%rdi.1,4)
   %ecx.3  = imul %tmp1.1, %ecx.2
   %eax.2  = add %ecx.2, %eax.1
   %rdi.2  = add $1, %rdi.1
-  %flag.1 = cmp %rdi.2, %rdx
-          & jna %flag.1, .LBB0_3
+  %flag.1 = cmp %rdi.2, %rdx; jna .LBB0_3
   %ecx.5  = load (%rsi,%rdi.2,4)
   %tmp1.2 = load (%r8,%rdi.2,4)
   %ecx.6  = imul %tmp1.2, %ecx.5
   %eax.3  = add %ecx.6, %eax.2
   %rdi.3  = add $1, %rdi.2
-  %flag.2 = cmp %rdi.3, %rdx
-          & jna %flag.2, .LBB0_3
+  %flag.2 = cmp %rdi.3, %rdx; jna .LBB0_3
   ...
 
 .LBB0_3:
