@@ -282,9 +282,6 @@ template: basic-layout
   %rdi  = add $1, %rdi
   %flag = cmp %rdi, %rdx; jna .LBB0_3
   ...
-
-.LBB0_3:
-  ...
 ```
 ]
 
