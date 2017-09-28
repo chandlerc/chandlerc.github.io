@@ -394,6 +394,54 @@ So here we're going to track each cycle on our processor and show which
 instruction (named by its result) is executing on that unit during that cycle.
 
 ---
+name: ooo-dot-x86-unit-exec1
+template: basic-layout
+
+.left-col[
+.exec-units[
+| Cycle | Load    | ALU    | ALU    | Branch |
+| ----: | ----    | ---    | ---    | ------ |
+| 1     | %ecx_0  |        |        |        |
+| 2     | %tmp1_0 |        |        |        |
+| 3     |         |        |        |        |
+| 4     |         |        |        |        |
+| 5     |         |        |        |        |
+| 6     |         | %ecx_1 |        |        |
+| 7     |         |        |        |        |
+| 8     |         |        |        |        |
+| 9     |         |        | %eax_1 |        |
+| 10    |         |        |        |        |
+]
+]
+.right-col[
+```
+.LBB0_2:
+  %ecx_0  = load (%rsi,%rdi_0,4)
+  %tmp1_0 = load (%r8,%rdi_0,4)
+  %ecx_1  = imul %tmp1_0, %ecx_0
+  %eax_1  = add %ecx_1, %eax_0
+  %rdi_1  = add $1, %rdi_0
+  %flag_0 = cmp %rdi_1, %rdx; jna .LBB0_3
+  %ecx_2  = load (%rsi,%rdi_1,4)
+  %tmp1_1 = load (%r8,%rdi_1,4)
+  %ecx_3  = imul %tmp1_1, %ecx_2
+  %eax_2  = add %ecx_2, %eax_1
+  %rdi_2  = add $1, %rdi_1
+  %flag_1 = cmp %rdi_2, %rdx; jna .LBB0_3
+  %ecx_5  = load (%rsi,%rdi_2,4)
+  %tmp1_2 = load (%r8,%rdi_2,4)
+  %ecx_6  = imul %tmp1_2, %ecx_5
+  %eax_3  = add %ecx_6, %eax_2
+  %rdi_3  = add $1, %rdi_2
+  %flag_2 = cmp %rdi_3, %rdx; jna .LBB0_3
+  ...
+
+```
+]
+
+???
+
+---
 name: ooo-demo
 template: title-layout
 
