@@ -344,7 +344,7 @@ template: basic-layout
 .left-col[
 
 | Cycle | Load | ALU | ALU | Branch |
-| ----- | ---- | --- | --- | ------ |
+| ----: | ---- | --- | --- | ------ |
 | 1     |      |     |     |        |
 | 2     |      |     |     |        |
 | 3     |      |     |     |        |
