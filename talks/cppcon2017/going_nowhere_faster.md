@@ -342,7 +342,7 @@ name: ooo-dot-x86-units
 template: basic-layout
 
 .left-col[
-
+.exec-units[
 | Cycle | Load | ALU | ALU | Branch |
 | ----: | ---- | --- | --- | ------ |
 | 1     |      |     |     |        |
@@ -355,7 +355,7 @@ template: basic-layout
 | 8     |      |     |     |        |
 | 9     |      |     |     |        |
 | 10    |      |     |     |        |
-
+]
 ]
 .right-col[
 ```
