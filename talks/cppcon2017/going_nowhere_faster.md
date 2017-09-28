@@ -308,28 +308,26 @@ template: basic-layout
 .right-col[
 ```
 .LBB0_2:
-  %ecx.0  = load (%rsi,%rdi.0,4)
-  %tmp1.0 = load (%r8,%rdi.0,4)
-  %ecx.1  = imul %tmp1.0, %ecx.0
-  %eax.1  = add %ecx.1, %eax.0
-  %rdi.1  = add $1, %rdi.0
-  %flag.0 = cmp %rdi.1, %rdx; jna .LBB0_3
-  %ecx.2  = load (%rsi,%rdi.1,4)
-  %tmp1.1 = load (%r8,%rdi.1,4)
-  %ecx.3  = imul %tmp1.1, %ecx.2
-  %eax.2  = add %ecx.2, %eax.1
-  %rdi.2  = add $1, %rdi.1
-  %flag.1 = cmp %rdi.2, %rdx; jna .LBB0_3
-  %ecx.5  = load (%rsi,%rdi.2,4)
-  %tmp1.2 = load (%r8,%rdi.2,4)
-  %ecx.6  = imul %tmp1.2, %ecx.5
-  %eax.3  = add %ecx.6, %eax.2
-  %rdi.3  = add $1, %rdi.2
-  %flag.2 = cmp %rdi.3, %rdx; jna .LBB0_3
+  %ecx_0  = load (%rsi,%rdi_0,4)
+  %tmp1_0 = load (%r8,%rdi_0,4)
+  %ecx_1  = imul %tmp1_0, %ecx_0
+  %eax_1  = add %ecx_1, %eax_0
+  %rdi_1  = add $1, %rdi_0
+  %flag_0 = cmp %rdi_1, %rdx; jna .LBB0_3
+  %ecx_2  = load (%rsi,%rdi_1,4)
+  %tmp1_1 = load (%r8,%rdi_1,4)
+  %ecx_3  = imul %tmp1_1, %ecx_2
+  %eax_2  = add %ecx_2, %eax_1
+  %rdi_2  = add $1, %rdi_1
+  %flag_1 = cmp %rdi_2, %rdx; jna .LBB0_3
+  %ecx_5  = load (%rsi,%rdi_2,4)
+  %tmp1_2 = load (%r8,%rdi_2,4)
+  %ecx_6  = imul %tmp1_2, %ecx_5
+  %eax_3  = add %ecx_6, %eax_2
+  %rdi_3  = add $1, %rdi_2
+  %flag_2 = cmp %rdi_3, %rdx; jna .LBB0_3
   ...
 
-.LBB0_3:
-  ...
 ```
 ]
 
