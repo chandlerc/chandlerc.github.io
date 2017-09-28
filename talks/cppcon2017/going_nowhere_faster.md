@@ -605,7 +605,6 @@ template: basic-layout
 .exec-units[
 | Cycle | Load    | ALU     | ALU     |
 | ----: | ----    | ---     | ---     |
-| ...   | ...     | ...     | ...     |
 | 9     | %ecx_8  | %rdi_7  | %eax_1  |
 | 10    | %tmp1_4 | %ecx_5  | %flag_7 |
 | 11    | %ecx_10 | %rdi_8  | %eax_2  |
@@ -654,12 +653,15 @@ template: basic-layout
 name: ooo-demo
 template: title-layout
 
-# What tools can we use to identify this?
+# What tools can we use to help with this?
 
 ???
 T+15 minutes
 
-Back to the clamp loop
+Ok, this is *really* complicated. We're going to need help, we're going to need
+tools. What tools do we have?
+
+Let's go back to the clamp loop
 
 - use perf counters to show IPC and lack of stalls w/ branch, but stalls w/ cmov.
 T+18 minutes
@@ -671,7 +673,7 @@ T+23 minutes
 name: conclusion
 template: title-layout
 
-## 2.5 small size optimized structures, pointers, and bit packing
+## Hopefully this at least serves a basis for understanding loop performace!
 
 ---
 name: questions
@@ -680,7 +682,7 @@ template: title-layout
 # Questions?
 
 ---
-name: image-dummy
+name: bg-img-dummy
 template: basic-layout
 background-image: url(DragonFull.png)
 
