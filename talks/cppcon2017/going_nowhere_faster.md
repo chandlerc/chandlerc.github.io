@@ -317,10 +317,10 @@ template: basic-layout
   %eax_2  = add %ecx_2, %eax_1
   %rdi_2  = add $1, %rdi_1
   %flag_1 = cmp %rdi_2, %rdx; jna .LBB0_3
-  %ecx_5  = load (%rsi,%rdi_2,4)
+  %ecx_4  = load (%rsi,%rdi_2,4)
   %tmp1_2 = load (%r8,%rdi_2,4)
-  %ecx_6  = imul %tmp1_2, %ecx_5
-  %eax_3  = add %ecx_6, %eax_2
+  %ecx_5  = imul %tmp1_2, %ecx_4
+  %eax_3  = add %ecx_5, %eax_2
   %rdi_3  = add $1, %rdi_2
   %flag_2 = cmp %rdi_3, %rdx; jna .LBB0_3
   ...
@@ -372,10 +372,10 @@ template: basic-layout
   %eax_2  = add %ecx_2, %eax_1
   %rdi_2  = add $1, %rdi_1
   %flag_1 = cmp %rdi_2, %rdx; jna .LBB0_3
-  %ecx_5  = load (%rsi,%rdi_2,4)
+  %ecx_4  = load (%rsi,%rdi_2,4)
   %tmp1_2 = load (%r8,%rdi_2,4)
-  %ecx_6  = imul %tmp1_2, %ecx_5
-  %eax_3  = add %ecx_6, %eax_2
+  %ecx_5  = imul %tmp1_2, %ecx_4
+  %eax_3  = add %ecx_5, %eax_2
   %rdi_3  = add $1, %rdi_2
   %flag_2 = cmp %rdi_3, %rdx; jna .LBB0_3
   ...
@@ -394,23 +394,26 @@ So here we're going to track each cycle on our processor and show which
 instruction (named by its result) is executing on that unit during that cycle.
 
 ---
-name: ooo-dot-x86-unit-exec1
+name: ooo-dot-x86-unit-it1-g1
 template: basic-layout
 
 .left-col[
 .exec-units[
-| Cycle | Load    | ALU    | ALU    | Branch |
-| ----: | ----    | ---    | ---    | ------ |
-| 1     | %ecx_0  |        |        |        |
-| 2     | %tmp1_0 |        |        |        |
-| 3     |         |        |        |        |
-| 4     |         |        |        |        |
-| 5     |         |        |        |        |
-| 6     |         | %ecx_1 |        |        |
-| 7     |         |        |        |        |
-| 8     |         |        |        |        |
-| 9     |         |        | %eax_1 |        |
-| 10    |         |        |        |        |
+| Cycle | Load    | ALU     | ALU     |
+| ----: | ----    | ---     | ---     |
+| 1     | %ecx_0  |         |         |
+| 2     | %tmp1_0 |         |         |
+| 3     |         |         |         |
+| 4     |         |         |         |
+| 5     |         |         |         |
+| 6     |         | %ecx_1  |         |
+| 7     |         |         |         |
+| 8     |         |         |         |
+| 9     |         |         | %eax_1  |
+| 10    |         |         |         |
+| 11    |         |         |         |
+| 12    |         |         |         |
+| 13    |         |         |         |
 ]
 ]
 .right-col[
@@ -428,10 +431,216 @@ template: basic-layout
   %eax_2  = add %ecx_2, %eax_1
   %rdi_2  = add $1, %rdi_1
   %flag_1 = cmp %rdi_2, %rdx; jna .LBB0_3
-  %ecx_5  = load (%rsi,%rdi_2,4)
+  %ecx_4  = load (%rsi,%rdi_2,4)
   %tmp1_2 = load (%r8,%rdi_2,4)
-  %ecx_6  = imul %tmp1_2, %ecx_5
-  %eax_3  = add %ecx_6, %eax_2
+  %ecx_5  = imul %tmp1_2, %ecx_4
+  %eax_3  = add %ecx_5, %eax_2
+  %rdi_3  = add $1, %rdi_2
+  %flag_2 = cmp %rdi_3, %rdx; jna .LBB0_3
+  ...
+
+```
+]
+
+???
+
+---
+name: ooo-dot-x86-unit-it1-g2
+template: basic-layout
+
+.left-col[
+.exec-units[
+| Cycle | Load    | ALU     | ALU     |
+| ----: | ----    | ---     | ---     |
+| 1     | %ecx_0  | %rdi_1  |         |
+| 2     | %tmp1_0 |         | %flag_0 |
+| 3     |         |         |         |
+| 4     |         |         |         |
+| 5     |         |         |         |
+| 6     |         | %ecx_1  |         |
+| 7     |         |         |         |
+| 8     |         |         |         |
+| 9     |         |         | %eax_1  |
+| 10    |         |         |         |
+| 11    |         |         |         |
+| 12    |         |         |         |
+| 13    |         |         |         |
+]
+]
+.right-col[
+```
+.LBB0_2:
+  %ecx_0  = load (%rsi,%rdi_0,4)
+  %tmp1_0 = load (%r8,%rdi_0,4)
+  %ecx_1  = imul %tmp1_0, %ecx_0
+  %eax_1  = add %ecx_1, %eax_0
+  %rdi_1  = add $1, %rdi_0
+  %flag_0 = cmp %rdi_1, %rdx; jna .LBB0_3
+  %ecx_2  = load (%rsi,%rdi_1,4)
+  %tmp1_1 = load (%r8,%rdi_1,4)
+  %ecx_3  = imul %tmp1_1, %ecx_2
+  %eax_2  = add %ecx_2, %eax_1
+  %rdi_2  = add $1, %rdi_1
+  %flag_1 = cmp %rdi_2, %rdx; jna .LBB0_3
+  %ecx_4  = load (%rsi,%rdi_2,4)
+  %tmp1_2 = load (%r8,%rdi_2,4)
+  %ecx_5  = imul %tmp1_2, %ecx_4
+  %eax_3  = add %ecx_5, %eax_2
+  %rdi_3  = add $1, %rdi_2
+  %flag_2 = cmp %rdi_3, %rdx; jna .LBB0_3
+  ...
+
+```
+]
+
+???
+
+---
+name: ooo-dot-x86-unit-it2
+template: basic-layout
+
+.left-col[
+.exec-units[
+| Cycle | Load    | ALU     | ALU     |
+| ----: | ----    | ---     | ---     |
+| 1     | %ecx_0  | %rdi_1  |         |
+| 2     | %tmp1_0 | %rdi_2  | %flag_0 |
+| 3     | %ecx_2  |         | %flag_1 |
+| 4     | %tmp1_1 |         |         |
+| 5     |         |         |         |
+| 6     |         | %ecx_1  |         |
+| 7     |         |         |         |
+| 8     |         | %ecx_3  |         |
+| 9     |         |         | %eax_1  |
+| 10    |         |         |         |
+| 11    |         |         | %eax_2  |
+| 12    |         |         |         |
+| 13    |         |         |         |
+]
+]
+.right-col[
+```
+.LBB0_2:
+  %ecx_0  = load (%rsi,%rdi_0,4)
+  %tmp1_0 = load (%r8,%rdi_0,4)
+  %ecx_1  = imul %tmp1_0, %ecx_0
+  %eax_1  = add %ecx_1, %eax_0
+  %rdi_1  = add $1, %rdi_0
+  %flag_0 = cmp %rdi_1, %rdx; jna .LBB0_3
+  %ecx_2  = load (%rsi,%rdi_1,4)
+  %tmp1_1 = load (%r8,%rdi_1,4)
+  %ecx_3  = imul %tmp1_1, %ecx_2
+  %eax_2  = add %ecx_2, %eax_1
+  %rdi_2  = add $1, %rdi_1
+  %flag_1 = cmp %rdi_2, %rdx; jna .LBB0_3
+  %ecx_4  = load (%rsi,%rdi_2,4)
+  %tmp1_2 = load (%r8,%rdi_2,4)
+  %ecx_5  = imul %tmp1_2, %ecx_4
+  %eax_3  = add %ecx_5, %eax_2
+  %rdi_3  = add $1, %rdi_2
+  %flag_2 = cmp %rdi_3, %rdx; jna .LBB0_3
+  ...
+
+```
+]
+
+???
+
+---
+name: ooo-dot-x86-unit-it3
+template: basic-layout
+
+.left-col[
+.exec-units[
+| Cycle | Load    | ALU     | ALU     |
+| ----: | ----    | ---     | ---     |
+| 1     | %ecx_0  | %rdi_1  |         |
+| 2     | %tmp1_0 | %rdi_2  | %flag_0 |
+| 3     | %ecx_2  | %rdi_3  | %flag_1 |
+| 4     | %tmp1_1 |         | %flag_2 |
+| 5     | %ecx_4  |         |         |
+| 6     | %tmp1_2 | %ecx_1  |         |
+| 7     |         |         |         |
+| 8     |         | %ecx_3  |         |
+| 9     |         |         | %eax_1  |
+| 10    |         | %ecx_5  |         |
+| 11    |         |         | %eax_2  |
+| 12    |         |         |         |
+| 13    |         |         | %eax_3  |
+]
+]
+.right-col[
+```
+.LBB0_2:
+  %ecx_0  = load (%rsi,%rdi_0,4)
+  %tmp1_0 = load (%r8,%rdi_0,4)
+  %ecx_1  = imul %tmp1_0, %ecx_0
+  %eax_1  = add %ecx_1, %eax_0
+  %rdi_1  = add $1, %rdi_0
+  %flag_0 = cmp %rdi_1, %rdx; jna .LBB0_3
+  %ecx_2  = load (%rsi,%rdi_1,4)
+  %tmp1_1 = load (%r8,%rdi_1,4)
+  %ecx_3  = imul %tmp1_1, %ecx_2
+  %eax_2  = add %ecx_2, %eax_1
+  %rdi_2  = add $1, %rdi_1
+  %flag_1 = cmp %rdi_2, %rdx; jna .LBB0_3
+  %ecx_4  = load (%rsi,%rdi_2,4)
+  %tmp1_2 = load (%r8,%rdi_2,4)
+  %ecx_5  = imul %tmp1_2, %ecx_4
+  %eax_3  = add %ecx_5, %eax_2
+  %rdi_3  = add $1, %rdi_2
+  %flag_2 = cmp %rdi_3, %rdx; jna .LBB0_3
+  ...
+
+```
+]
+
+???
+
+---
+name: ooo-dot-x86-unit-itN
+template: basic-layout
+
+.left-col[
+.exec-units[
+| Cycle | Load    | ALU     | ALU     |
+| ----: | ----    | ---     | ---     |
+| ...   | ...     | ...     | ...     |
+| 9     | %ecx_8  | %rdi_7  | %eax_1  |
+| 10    | %tmp1_4 | %ecx_5  | %flag_7 |
+| 11    | %ecx_10 | %rdi_8  | %eax_2  |
+| 12    | %tmp1_5 | %ecx_7  | %flag_8 |
+| 13    | %ecx_12 | %rdi_9  | %eax_3  |
+| 14    | %tmp1_6 | %ecx_9  | %flag_9 |
+| 15    | %ecx_14 | %rdi_10 | %eax_4  |
+| 16    | %tmp1_7 | %ecx_11 | %flag_10 |
+| 17    | %ecx_16 | %rdi_11 | %eax_5  |
+| 18    | %tmp1_8 | %ecx_13 | %flag_12 |
+| 19    | %ecx_18 | %rdi_12 | %eax_6  |
+| 20    | %tmp1_9 | %ecx_15 | %flag_13 |
+| 21    | %ecx_20 | %rdi_13 | %eax_7  |
+| 22    | %tmp1_10 | %ecx_17 | %flag_14 |
+]
+]
+.right-col[
+```
+.LBB0_2:
+  %ecx_0  = load (%rsi,%rdi_0,4)
+  %tmp1_0 = load (%r8,%rdi_0,4)
+  %ecx_1  = imul %tmp1_0, %ecx_0
+  %eax_1  = add %ecx_1, %eax_0
+  %rdi_1  = add $1, %rdi_0
+  %flag_0 = cmp %rdi_1, %rdx; jna .LBB0_3
+  %ecx_2  = load (%rsi,%rdi_1,4)
+  %tmp1_1 = load (%r8,%rdi_1,4)
+  %ecx_3  = imul %tmp1_1, %ecx_2
+  %eax_2  = add %ecx_2, %eax_1
+  %rdi_2  = add $1, %rdi_1
+  %flag_1 = cmp %rdi_2, %rdx; jna .LBB0_3
+  %ecx_4  = load (%rsi,%rdi_2,4)
+  %tmp1_2 = load (%r8,%rdi_2,4)
+  %ecx_5  = imul %tmp1_2, %ecx_4
+  %eax_3  = add %ecx_5, %eax_2
   %rdi_3  = add $1, %rdi_2
   %flag_2 = cmp %rdi_3, %rdx; jna .LBB0_3
   ...
