@@ -868,8 +868,6 @@ template: basic-layout
 
 .left-col[
 .exec-units[
-| Cycle | Load    | ALU     | ALU     |
-| ----: | ----    | ---     | ---     |
 | 1     | %ecx_0  | %rdi_1  |         |
 | 2     | %tmp1_0 | %rdi_2  | %flag_0 |
 | 3     | %ecx_2  | %rdi_3  | %flag_1 |
@@ -890,7 +888,7 @@ template: basic-layout
 | 18    | %tmp1_8 | .h[%ecx_13] | %flag_10 |
 | 19    | %ecx_18 | %rdi_12 | %eax_6  |
 | 20    | %tmp1_9 | %ecx_15 | %flag_11 |
-| 21    | %ecx_20 | %rdi_13 | .h[%eax_7]  |
+| 21    | %ecx_20 | %rdi_13 | .h[%eax_7]  |]
 ]
 .right-col[
 ```
