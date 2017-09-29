@@ -26,7 +26,7 @@ to be back.
 
 ---
 name: reflect
-template: title-layout
+template: basic-layout
 
 1. Use efficient algorithms, fast data structures & idioms
 1. Benchmark the code that matters, understand why
@@ -39,22 +39,22 @@ T+2 minutes -- take it slow to let folks settle
 name: benchmark
 template: title-layout
 
-# You only care about performance that you benchmark!
+## You only care about performance that you benchmark!
 
 ---
 name: you-have-a-loop
 template: title-layout
 
-# So you have a loop in a benchmark...
+## So you have a loop in a benchmark...
 
 ???
 T+3 minutes -- ok, wrap up the slow intro, let's get down to business
 
 ---
 name: data-oriented
-template: title-layout
+template: basic-layout
 
-# It's probably the data...
+## It's probably the data...
 - Watch Mike Acton's talk; use data-oriented design
 - See my talk about profiling, but use counters to track cache miss rates
 - In the future, use tools like Efficiency Sanitizer to optimize data structures
