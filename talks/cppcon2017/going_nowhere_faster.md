@@ -436,6 +436,8 @@ template: basic-layout
   %rdi  = add $1, %rdi
   %flag = cmp %rdi, %rdx; `ja .LBB0_2`
                           # TAKEN!
+.LBB0_3:
+  ...
 
 ```
 ]
@@ -467,11 +469,34 @@ template: basic-layout
 ]
 
 ???
+---
+name: ooo-dot-x86-uops-spec0-hi
+template: basic-layout
+
+.left-col[
+]
+.right-col[
+```
+.LBB0_2:
+  %ecx  = load (%rsi,%rdi,4)
+  %tmp1 = load (%r8,%rdi,4)
+  %ecx  = imul %tmp1, %ecx
+  %eax  = add %ecx, %eax
+  %rdi  = add $1, %rdi
+  %flag = cmp %rdi, %rdx; `jna` .LBB0_3
+  ...
+
+.LBB0_3:
+  ...
+```
+]
+
+???
 ... because it assumes we'll keep executing the loop. Then it can imagine or
 speculate the instructions continue with more iterations of the loop...
 
 ---
-name: ooo-dot-x86-uops-spec1
+name: ooo-dot-x86-uops-spec1-it2
 template: basic-layout
 
 .left-col[
@@ -485,18 +510,54 @@ template: basic-layout
   %eax  = add %ecx, %eax
   %rdi  = add $1, %rdi
   %flag = cmp %rdi, %rdx; jna .LBB0_3
+```
+```
   %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
   %ecx  = imul %tmp1, %ecx
   %eax  = add %ecx, %eax
   %rdi  = add $1, %rdi
   %flag = cmp %rdi, %rdx; jna .LBB0_3
+```
+```
+  ...
+```
+]
+
+???
+---
+name: ooo-dot-x86-uops-spec1-it3
+template: basic-layout
+
+.left-col[
+]
+.right-col[
+```
+.LBB0_2:
   %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
   %ecx  = imul %tmp1, %ecx
   %eax  = add %ecx, %eax
   %rdi  = add $1, %rdi
   %flag = cmp %rdi, %rdx; jna .LBB0_3
+```
+```
+  %ecx  = load (%rsi,%rdi,4)
+  %tmp1 = load (%r8,%rdi,4)
+  %ecx  = imul %tmp1, %ecx
+  %eax  = add %ecx, %eax
+  %rdi  = add $1, %rdi
+  %flag = cmp %rdi, %rdx; jna .LBB0_3
+```
+```
+  %ecx  = load (%rsi,%rdi,4)
+  %tmp1 = load (%r8,%rdi,4)
+  %ecx  = imul %tmp1, %ecx
+  %eax  = add %ecx, %eax
+  %rdi  = add $1, %rdi
+  %flag = cmp %rdi, %rdx; jna .LBB0_3
+```
+```
   ...
 ```
 ]
