@@ -956,43 +956,5 @@ template: title-layout
 
 # Questions?
 
----
-name: bg-img-dummy
-template: basic-layout
-background-image: url(DragonFull.png)
-
-???
-
----
-name: code-dummy
-template: basic-layout
-
-```
-```
-
-???
-
----
-name: two-col-dummy
-template: basic-layout
-
-.left-col[
-```
-```
-]
-.right-col[
-```
-```
-]
-
-???
-
----
-name: img-dummy
-template: title-layout
-
-![Give me a pointer!](http://imgs.xkcd.com/comics/pointers.png)
-.footnote[<http://xkcd.com/138/>]
-
 ???
 
