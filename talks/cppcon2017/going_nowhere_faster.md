@@ -147,8 +147,8 @@ int dot(const std::vector<int> &a,
         const std::vector<int> &b) {
   int sum = 0;
   assert(a.size() == b.size());
-  for (int i = 0; i < a.size(); ++i)
-    sum += a[i] * b[i];
+* for (int i = 0; i < a.size(); ++i)
+*   sum += a[i] * b[i];
   return sum;
 }
 ```
@@ -236,7 +236,7 @@ template: basic-layout
 .left-col[
 ```unix_assembly
 .LBB0_2:
-  `movl    (%rsi,%rdi,4), %ecx`
+* movl    (%rsi,%rdi,4), %ecx
   imull   (%r8,%rdi,4), %ecx
   addl    %ecx, %eax
   addq    $1, %rdi
@@ -247,7 +247,7 @@ template: basic-layout
 .right-col[
 ```
 .LBB0_2:
-  `%ecx  = load (%rsi,%rdi,4)`
+* %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
   %ecx  = imul %tmp1, %ecx
   %eax  = add %ecx, %eax
@@ -276,7 +276,7 @@ template: basic-layout
 ```
 .LBB0_2:
   %ecx  = load (%rsi,%rdi,4)
-  `%tmp1 = load (%r8,%rdi,4)`
+* %tmp1 = load (%r8,%rdi,4)
   %ecx  = imul %tmp1, %ecx
   %eax  = add %ecx, %eax
   %rdi  = add $1, %rdi
@@ -293,7 +293,7 @@ template: basic-layout
 ```unix_assembly
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
-  `imull   (%r8,%rdi,4), %ecx`
+* imull   (%r8,%rdi,4), %ecx
   addl    %ecx, %eax
   addq    $1, %rdi
   cmpq    %rdi, %rdx
@@ -305,7 +305,7 @@ template: basic-layout
 .LBB0_2:
   %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
-  `%ecx  = imul %tmp1, %ecx`
+* %ecx  = imul %tmp1, %ecx
   %eax  = add %ecx, %eax
   %rdi  = add $1, %rdi
   %flag = cmp %rdi, %rdx; ja .LBB0_2
@@ -322,7 +322,7 @@ template: basic-layout
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
   imull   (%r8,%rdi,4), %ecx
-  `addl    %ecx, %eax`
+* addl    %ecx, %eax
   addq    $1, %rdi
   cmpq    %rdi, %rdx
   ja      .LBB0_2
@@ -334,7 +334,7 @@ template: basic-layout
   %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
   %ecx  = imul %tmp1, %ecx
-  `%eax  = add %ecx, %eax`
+* %eax  = add %ecx, %eax
   %rdi  = add $1, %rdi
   %flag = cmp %rdi, %rdx; ja .LBB0_2
 
@@ -351,7 +351,7 @@ template: basic-layout
   movl    (%rsi,%rdi,4), %ecx
   imull   (%r8,%rdi,4), %ecx
   addl    %ecx, %eax
-  `addq    $1, %rdi`
+* addq    $1, %rdi
   cmpq    %rdi, %rdx
   ja      .LBB0_2
 ```
@@ -363,7 +363,7 @@ template: basic-layout
   %tmp1 = load (%r8,%rdi,4)
   %ecx  = imul %tmp1, %ecx
   %eax  = add %ecx, %eax
-  `%rdi  = add $1, %rdi`
+* %rdi  = add $1, %rdi
   %flag = cmp %rdi, %rdx; ja .LBB0_2
 
 ```
@@ -380,8 +380,8 @@ template: basic-layout
   imull   (%r8,%rdi,4), %ecx
   addl    %ecx, %eax
   addq    $1, %rdi
-  `cmpq    %rdi, %rdx`
-  `ja      .LBB0_2`
+* cmpq    %rdi, %rdx
+* ja      .LBB0_2
 ```
 ]
 .right-col[
@@ -392,7 +392,7 @@ template: basic-layout
   %ecx  = imul %tmp1, %ecx
   %eax  = add %ecx, %eax
   %rdi  = add $1, %rdi
-  `%flag = cmp %rdi, %rdx`; `ja .LBB0_2`
+* %flag = cmp %rdi, %rdx; ja .LBB0_2
 
 ```
 ]
@@ -871,8 +871,6 @@ template: basic-layout
 
 |       |         |         |         |
 | ----: | ----    | ---     | ---     |
-| 1     | %ecx_0  | %rdi_1  |         |
-| 2     | %tmp1_0 | %rdi_2  | %flag_0 |
 | 3     | %ecx_2  | %rdi_3  | %flag_1 |
 | 4     | %tmp1_1 | %rdi_4  | %flag_2 |
 | 5     | %ecx_4  | %rdi_5  | %flag_3 |
