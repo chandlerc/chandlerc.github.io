@@ -154,7 +154,7 @@ int dot(const std::vector<int> &a,
 ```
 ]
 .right-col[
-```unix_assembly
+```
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
   imull   (%r8,%rdi,4), %ecx
@@ -173,7 +173,7 @@ name: ooo-dot-x86-shift
 template: basic-layout
 
 .left-col[
-```unix_assembly
+```
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
   imull   (%r8,%rdi,4), %ecx
@@ -199,7 +199,7 @@ name: ooo-dot-x86-asm-and-uops
 template: basic-layout
 
 .left-col[
-```unix_assembly
+```
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
   imull   (%r8,%rdi,4), %ecx
@@ -234,7 +234,7 @@ name: ooo-dot-x86-asm-and-uops-step1
 template: basic-layout
 
 .left-col[
-```unix_assembly
+```
 .LBB0_2:
 * movl    (%rsi,%rdi,4), %ecx
   imull   (%r8,%rdi,4), %ecx
@@ -262,7 +262,7 @@ name: ooo-dot-x86-asm-and-uops-step2
 template: basic-layout
 
 .left-col[
-```unix_assembly
+```
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
   imull   `(%r8,%rdi,4)`, %ecx
@@ -290,7 +290,7 @@ name: ooo-dot-x86-asm-and-uops-step3
 template: basic-layout
 
 .left-col[
-```unix_assembly
+```
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
 * imull   (%r8,%rdi,4), %ecx
@@ -318,7 +318,7 @@ name: ooo-dot-x86-asm-and-uops-step4
 template: basic-layout
 
 .left-col[
-```unix_assembly
+```
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
   imull   (%r8,%rdi,4), %ecx
@@ -346,7 +346,7 @@ name: ooo-dot-x86-asm-and-uops-step5
 template: basic-layout
 
 .left-col[
-```unix_assembly
+```
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
   imull   (%r8,%rdi,4), %ecx
@@ -374,7 +374,7 @@ name: ooo-dot-x86-asm-and-uops-step6
 template: basic-layout
 
 .left-col[
-```unix_assembly
+```
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
   imull   (%r8,%rdi,4), %ecx
