@@ -510,16 +510,14 @@ template: basic-layout
   %eax  = add %ecx, %eax
   %rdi  = add $1, %rdi
   %flag = cmp %rdi, %rdx; jna .LBB0_3
-```
-```
+``` ```
   %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
   %ecx  = imul %tmp1, %ecx
   %eax  = add %ecx, %eax
   %rdi  = add $1, %rdi
   %flag = cmp %rdi, %rdx; jna .LBB0_3
-```
-```
+``` ```
   ...
 ```
 ]
