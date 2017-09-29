@@ -434,7 +434,8 @@ template: basic-layout
   %ecx  = imul %tmp1, %ecx
   %eax  = add %ecx, %eax
   %rdi  = add $1, %rdi
-  %flag = cmp %rdi, %rdx; ja .LBB0_2 (TAKEN)
+  %flag = cmp %rdi, %rdx; `ja .LBB0_2`
+                          # TAKEN!
 
 ```
 ]
