@@ -62,8 +62,23 @@ template: basic-layout
 ???
 30 seconds of talking here worthwhile. give some context for ESan.
 
-TODO(chandlerc): build a benchmark that suffers from cache misses and use perf live to catch it.
-This will take 1-2 minutes to walk through, 1-2 minutes to benchmark, use perf events, and explain how it catches this
+---
+name: detecting-cache-problems
+template: title-layout
+
+## Let's try using performance counters...
+
+???
+Switch to live demo with cache benchmark.
+
+- Walk through the code, how it is reasoning about working set size.
+- Build and run benchmark
+- Look at cliffs and at the processor's cache architecture
+- Show performance counters with FE stall
+- Find cache performance counters
+- Show using cache performance counters, problems with multiplexing
+
+Easily 5 minutes here.
 
 ---
 name: small-loops
@@ -72,11 +87,11 @@ template: title-layout
 # What about small, tight loops?
 
 ???
-T+8 minutes here, pick it up if T+10
+T+12 minutes here, pick it up if T+15
 
 Look at a simple "clamp" loop microbenchmark
 
-- Show the most basic clamp loop (30s)
+- Show the most basic clamp loop (1m)
 - Draw analogy to zlib and other compression algos for why this matters, get it all building and running (1m)
 - discuss "obvious" alternatives on x86: cmov vs. branch (30s)
 - (hopefully) show cmov being sloooooooow. why? don't switch to perf counters or profile deeply yet (30s
@@ -88,9 +103,7 @@ template: title-layout
 # Modern processors are highly speculative
 
 ???
-T+10 minutes
-
-TODO: insert OOO demo from Jakub's keynote here
+T+15 minutes
 
 ---
 name: ooo-dot-cpp
