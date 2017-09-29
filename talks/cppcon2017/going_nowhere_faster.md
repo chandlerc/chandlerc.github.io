@@ -267,7 +267,7 @@ name: ooo-dot-x86-asm-and-uops-step2
 template: basic-layout
 
 .left-col[
-```assembly
+```c++-objdump
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
   imull   `(%r8,%rdi,4)`, %ecx
@@ -278,7 +278,7 @@ template: basic-layout
 ```
 ]
 .right-col[
-```assembly
+```c++-objdump
 .LBB0_2:
   %ecx  = load (%rsi,%rdi,4)
 * %tmp1 = load (%r8,%rdi,4)
