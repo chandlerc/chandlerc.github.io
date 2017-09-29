@@ -26,7 +26,6 @@ to be back.
 
 ---
 name: reflect
-template: basic-layout
 class: left, middle
 
 1. Use efficient algorithms, fast data structures & idioms
