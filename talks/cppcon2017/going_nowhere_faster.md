@@ -687,10 +687,10 @@ template: basic-layout
 .right-col[
 ```
 .LBB0_2:
-  %ecx_0  = load (%rsi,%rdi_0,4)
-  %tmp1_0 = load (%r8,%rdi_0,4)
-  %ecx_1  = imul %tmp1_0, %ecx_0
-  %eax_1  = add %ecx_1, %eax_0
+  `%ecx_0  = load (%rsi,%rdi_0,4)`
+  `%tmp1_0 = load (%r8,%rdi_0,4)`
+  `%ecx_1  = imul %tmp1_0, %ecx_0`
+  `%eax_1  = add %ecx_1, %eax_0`
   %rdi_1  = add $1, %rdi_0
   %flag_0 = cmp %rdi_1, %rdx; jna .LBB0_3
   %ecx_2  = load (%rsi,%rdi_1,4)
@@ -741,8 +741,8 @@ template: basic-layout
   %tmp1_0 = load (%r8,%rdi_0,4)
   %ecx_1  = imul %tmp1_0, %ecx_0
   %eax_1  = add %ecx_1, %eax_0
-  %rdi_1  = add $1, %rdi_0
-  %flag_0 = cmp %rdi_1, %rdx; jna .LBB0_3
+  `%rdi_1  = add $1, %rdi_0`
+  `%flag_0 = cmp %rdi_1, %rdx; jna .LBB0_3`
   %ecx_2  = load (%rsi,%rdi_1,4)
   %tmp1_1 = load (%r8,%rdi_1,4)
   %ecx_3  = imul %tmp1_1, %ecx_2
