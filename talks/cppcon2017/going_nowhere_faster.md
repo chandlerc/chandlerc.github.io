@@ -621,10 +621,10 @@ template: basic-layout
 | 7     |      |     |     |
 | 8     |      |     |     |
 | 9     |      |     |     |
-| 10    |         |         |         |
-| 11    |         |         |         |
-| 12    |         |         |         |
-| 13    |         |         |         |]
+| 10    |      |     |     |
+| 11    |      |     |     |
+| 12    |      |     |     |
+| 13    |      |     |     |]
 ]
 .right-col[
 ```
@@ -682,8 +682,7 @@ template: basic-layout
 | 10    |         |         |         |
 | 11    |         |         |         |
 | 12    |         |         |         |
-| 13    |         |         |         |
-]
+| 13    |         |         |         |]
 ]
 .right-col[
 ```
@@ -733,8 +732,7 @@ template: basic-layout
 | 10    |         |         |         |
 | 11    |         |         |         |
 | 12    |         |         |         |
-| 13    |         |         |         |
-]
+| 13    |         |         |         |]
 ]
 .right-col[
 ```
@@ -784,8 +782,7 @@ template: basic-layout
 | 10    |         |         |         |
 | 11    |         |         | %eax_2  |
 | 12    |         |         |         |
-| 13    |         |         |         |
-]
+| 13    |         |         |         |]
 ]
 .right-col[
 ```
@@ -835,8 +832,7 @@ template: basic-layout
 | 10    |         | %ecx_5  |         |
 | 11    |         |         | %eax_2  |
 | 12    |         |         |         |
-| 13    |         |         | %eax_3  |
-]
+| 13    |         |         | %eax_3  |]
 ]
 .right-col[
 ```
@@ -887,8 +883,7 @@ template: basic-layout
 | 19    | %ecx_18 | %rdi_12 | %eax_6  |
 | 20    | %tmp1_9 | %ecx_15 | %flag_13 |
 | 21    | %ecx_20 | %rdi_13 | %eax_7  |
-| 22    | %tmp1_10 | %ecx_17 | %flag_14 |
-]
+| 22    | %tmp1_10 | %ecx_17 | %flag_14 |]
 ]
 .right-col[
 ```
