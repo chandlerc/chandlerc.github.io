@@ -127,12 +127,17 @@ int dot(const std::vector<int> &a,
 .right-col[
 ]
 
+.footnote[Based on <http://llvm.org/devmtg/2013-04/olesen-slides.pdf>]
+
 ???
 To examine how modern processors work, let's look at an example with less
 control flow but more actual code. Dot product.
 
 When we compile this code for x86 (and turn off a bunch of fancy compiler
 optimizations) we get some fairly simple x86 code.
+
+All of this is very directly based on the excellent talk about this subject by
+Jakob Olesen at EuroLLVM in 2013.
 
 ---
 name: ooo-dot-x86
