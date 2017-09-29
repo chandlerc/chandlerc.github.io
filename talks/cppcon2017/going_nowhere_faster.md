@@ -869,7 +869,7 @@ template: basic-layout
 .left-col[
 .exec-units[
 
-|       |         |         |         |
+| Cycle | Load    | ALU     | ALU     |
 | ----: | ----    | ---     | ---     |
 | 1     | %ecx_0  | %rdi_1  |         |
 | 2     | %tmp1_0 | %rdi_2  | %flag_0 |
