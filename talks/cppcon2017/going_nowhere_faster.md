@@ -137,16 +137,27 @@ template: basic-layout
 .left-col[
 ```unix_assembly
 .LBB0_2:
-        movl    (%rsi,%rdi,4), %ecx
-        imull   (%r8,%rdi,4), %ecx
-        addl    %ecx, %eax
-        addq    $1, %rdi
-        cmpq    %rdi, %rdx
-        ja      .LBB0_2
+  movl    (%rsi,%rdi,4), %ecx
+  imull   (%r8,%rdi,4), %ecx
+  addl    %ecx, %eax
+  addq    $1, %rdi
+  cmpq    %rdi, %rdx
+  ja      .LBB0_2
 ```
 ]
 .right-col[
-```
+```cpp
+#include <cassert>
+#include <vector>
+
+int dot(const std::vector<int> &a,
+        const std::vector<int> &b) {
+  int sum = 0;
+  assert(a.size() == b.size());
+  for (int i = 0; i < a.size(); ++i)
+    sum += a[i] * b[i];
+  return sum;
+}
 ```
 ]
 
