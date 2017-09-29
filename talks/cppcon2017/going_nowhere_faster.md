@@ -159,7 +159,7 @@ int dot(const std::vector<int> &a,
 ```
 ]
 .right-col[
-```
+```text
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
   imull   (%r8,%rdi,4), %ecx
@@ -178,7 +178,7 @@ name: ooo-dot-x86-shift
 template: basic-layout
 
 .left-col[
-```
+```text
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
   imull   (%r8,%rdi,4), %ecx
@@ -204,7 +204,7 @@ name: ooo-dot-x86-asm-and-uops
 template: basic-layout
 
 .left-col[
-```
+```text
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
   imull   (%r8,%rdi,4), %ecx
@@ -215,7 +215,7 @@ template: basic-layout
 ```
 ]
 .right-col[
-```
+```text
 .LBB0_2:
   %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
@@ -239,7 +239,7 @@ name: ooo-dot-x86-asm-and-uops-step1
 template: basic-layout
 
 .left-col[
-```
+```text
 .LBB0_2:
 * movl    (%rsi,%rdi,4), %ecx
   imull   (%r8,%rdi,4), %ecx
@@ -250,7 +250,7 @@ template: basic-layout
 ```
 ]
 .right-col[
-```
+```text
 .LBB0_2:
 * %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
@@ -295,7 +295,7 @@ name: ooo-dot-x86-asm-and-uops-step3
 template: basic-layout
 
 .left-col[
-```
+```text
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
 * imull   (%r8,%rdi,4), %ecx
@@ -306,7 +306,7 @@ template: basic-layout
 ```
 ]
 .right-col[
-```
+```text
 .LBB0_2:
   %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
@@ -323,7 +323,7 @@ name: ooo-dot-x86-asm-and-uops-step4
 template: basic-layout
 
 .left-col[
-```
+```text
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
   imull   (%r8,%rdi,4), %ecx
@@ -334,7 +334,7 @@ template: basic-layout
 ```
 ]
 .right-col[
-```
+```text
 .LBB0_2:
   %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
@@ -351,7 +351,7 @@ name: ooo-dot-x86-asm-and-uops-step5
 template: basic-layout
 
 .left-col[
-```
+```text
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
   imull   (%r8,%rdi,4), %ecx
@@ -362,7 +362,7 @@ template: basic-layout
 ```
 ]
 .right-col[
-```
+```text
 .LBB0_2:
   %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
@@ -379,7 +379,7 @@ name: ooo-dot-x86-asm-and-uops-step6
 template: basic-layout
 
 .left-col[
-```
+```text
 .LBB0_2:
   movl    (%rsi,%rdi,4), %ecx
   imull   (%r8,%rdi,4), %ecx
@@ -390,7 +390,7 @@ template: basic-layout
 ```
 ]
 .right-col[
-```
+```text
 .LBB0_2:
   %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
@@ -409,7 +409,7 @@ template: basic-layout
 .left-col[
 ]
 .right-col[
-```
+```text
 .LBB0_2:
   %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
@@ -432,7 +432,7 @@ template: basic-layout
 .left-col[
 ]
 .right-col[
-```
+```text
 .LBB0_2:
   %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
@@ -458,7 +458,7 @@ template: basic-layout
 .left-col[
 ]
 .right-col[
-```
+```text
 .LBB0_2:
   %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
@@ -481,7 +481,7 @@ template: basic-layout
 .left-col[
 ]
 .right-col[
-```
+```text
 .LBB0_2:
   %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
@@ -507,7 +507,7 @@ template: basic-layout
 .left-col[
 ]
 .right-col[
-```
+```text
 .LBB0_2:
   %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
@@ -533,7 +533,7 @@ template: basic-layout
 .left-col[
 ]
 .right-col[
-```
+```text
 .LBB0_2:
   %ecx  = load (%rsi,%rdi,4)
   %tmp1 = load (%r8,%rdi,4)
@@ -575,7 +575,7 @@ template: basic-layout
 .left-col[
 ]
 .right-col[
-```
+```text
 .LBB0_2:
   %ecx_0  = load (%rsi,%rdi_0,4)
   %tmp1_0 = load (%r8,%rdi_0,4)
@@ -632,7 +632,7 @@ template: basic-layout
 | 13    |      |     |     |]
 ]
 .right-col[
-```
+```text
 .LBB0_2:
   %ecx_0  = load (%rsi,%rdi_0,4)
   %tmp1_0 = load (%r8,%rdi_0,4)
@@ -690,7 +690,7 @@ template: basic-layout
 | 13    |         |         |         |]
 ]
 .right-col[
-```
+```text
 .LBB0_2:
 * %ecx_0  = load (%rsi,%rdi_0,4)
 * %tmp1_0 = load (%r8,%rdi_0,4)
@@ -740,7 +740,7 @@ template: basic-layout
 | 13    |         |         |         |]
 ]
 .right-col[
-```
+```text
 .LBB0_2:
   %ecx_0  = load (%rsi,%rdi_0,4)
   %tmp1_0 = load (%r8,%rdi_0,4)
@@ -790,7 +790,7 @@ template: basic-layout
 | 13    |         |         |         |]
 ]
 .right-col[
-```
+```text
 .LBB0_2:
   %ecx_0  = load (%rsi,%rdi_0,4)
   %tmp1_0 = load (%r8,%rdi_0,4)
@@ -840,7 +840,7 @@ template: basic-layout
 | 13    |         |         | .h[%eax_3]  |]
 ]
 .right-col[
-```
+```text
 .LBB0_2:
   %ecx_0  = load (%rsi,%rdi_0,4)
   %tmp1_0 = load (%r8,%rdi_0,4)
@@ -897,7 +897,7 @@ template: basic-layout
 | 21    | %ecx_20 | %rdi_13 | .h[%eax_7]  |]
 ]
 .right-col[
-```
+```text
 .LBB0_2:
   %ecx_0  = load (%rsi,%rdi_0,4)
   %tmp1_0 = load (%r8,%rdi_0,4)
