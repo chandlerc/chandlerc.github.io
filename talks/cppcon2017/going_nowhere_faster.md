@@ -670,15 +670,15 @@ template: basic-layout
 .exec-units[
 | Cycle | Load    | ALU     | ALU     |
 | ----: | ----    | ---     | ---     |
-| 1     | %ecx_0  |         |         |
-| 2     | %tmp1_0 |         |         |
+| 1     | .h[%ecx_0]  |         |         |
+| 2     | .h[%tmp1_0] |         |         |
 | 3     |         |         |         |
 | 4     |         |         |         |
 | 5     |         |         |         |
-| 6     |         | %ecx_1  |         |
+| 6     |         | .h[%ecx_1]  |         |
 | 7     |         |         |         |
 | 8     |         |         |         |
-| 9     |         |         | %eax_1  |
+| 9     |         |         | .h[%eax_1]  |
 | 10    |         |         |         |
 | 11    |         |         |         |
 | 12    |         |         |         |
@@ -720,8 +720,8 @@ template: basic-layout
 .exec-units[
 | Cycle | Load    | ALU     | ALU     |
 | ----: | ----    | ---     | ---     |
-| 1     | %ecx_0  | %rdi_1  |         |
-| 2     | %tmp1_0 |         | %flag_0 |
+| 1     | %ecx_0  | .h[%rdi_1]  |         |
+| 2     | %tmp1_0 |         | .h[%flag_0] |
 | 3     |         |         |         |
 | 4     |         |         |         |
 | 5     |         |         |         |
@@ -771,16 +771,16 @@ template: basic-layout
 | Cycle | Load    | ALU     | ALU     |
 | ----: | ----    | ---     | ---     |
 | 1     | %ecx_0  | %rdi_1  |         |
-| 2     | %tmp1_0 | %rdi_2  | %flag_0 |
-| 3     | %ecx_2  |         | %flag_1 |
-| 4     | %tmp1_1 |         |         |
+| 2     | %tmp1_0 | .h[%rdi_2]  | %flag_0 |
+| 3     | .h[%ecx_2]  |         | .h[%flag_1] |
+| 4     | .h[%tmp1_1] |         |         |
 | 5     |         |         |         |
 | 6     |         | %ecx_1  |         |
 | 7     |         |         |         |
-| 8     |         | %ecx_3  |         |
+| 8     |         | .h[%ecx_3]  |         |
 | 9     |         |         | %eax_1  |
 | 10    |         |         |         |
-| 11    |         |         | %eax_2  |
+| 11    |         |         | .h[%eax_2]  |
 | 12    |         |         |         |
 | 13    |         |         |         |]
 ]
@@ -822,17 +822,17 @@ template: basic-layout
 | ----: | ----    | ---     | ---     |
 | 1     | %ecx_0  | %rdi_1  |         |
 | 2     | %tmp1_0 | %rdi_2  | %flag_0 |
-| 3     | %ecx_2  | %rdi_3  | %flag_1 |
-| 4     | %tmp1_1 |         | %flag_2 |
-| 5     | %ecx_4  |         |         |
-| 6     | %tmp1_2 | %ecx_1  |         |
+| 3     | %ecx_2  | .h[%rdi_3]  | %flag_1 |
+| 4     | %tmp1_1 |         | .h[%flag_2] |
+| 5     | .h[%ecx_4]  |         |         |
+| 6     | .h[%tmp1_2] | %ecx_1  |         |
 | 7     |         |         |         |
 | 8     |         | %ecx_3  |         |
 | 9     |         |         | %eax_1  |
-| 10    |         | %ecx_5  |         |
+| 10    |         | .h[%ecx_5]  |         |
 | 11    |         |         | %eax_2  |
 | 12    |         |         |         |
-| 13    |         |         | %eax_3  |]
+| 13    |         |         | .h[%eax_3]  |]
 ]
 .right-col[
 ```
@@ -870,20 +870,27 @@ template: basic-layout
 .exec-units[
 | Cycle | Load    | ALU     | ALU     |
 | ----: | ----    | ---     | ---     |
-| 9     | %ecx_8  | %rdi_7  | %eax_1  |
-| 10    | %tmp1_4 | %ecx_5  | %flag_7 |
+| 1     | %ecx_0  | %rdi_1  |         |
+| 2     | %tmp1_0 | %rdi_2  | %flag_0 |
+| 3     | %ecx_2  | %rdi_3  | %flag_1 |
+| 4     | %tmp1_1 | %rdi_4  | %flag_2 |
+| 5     | %ecx_4  | %rdi_5  | %flag_3 |
+| 6     | %tmp1_2 | %ecx_1  | %flag_4 |
+| 7     | %ecx_6  | %rdi_6  |         |
+| 8     | %tmp1_3 | %ecx_3  | %flag_5 |
+| 9     | %ecx_8  | .h[%rdi_7]  | %eax_1  |
+| 10    | %tmp1_4 | %ecx_5  | .h[%flag_6] |
 | 11    | %ecx_10 | %rdi_8  | %eax_2  |
-| 12    | %tmp1_5 | %ecx_7  | %flag_8 |
-| 13    | %ecx_12 | %rdi_9  | %eax_3  |
-| 14    | %tmp1_6 | %ecx_9  | %flag_9 |
+| 12    | %tmp1_5 | %ecx_7  | %flag_7 |
+| 13    | .h[%ecx_12] | %rdi_9  | %eax_3  |
+| 14    | .h[%tmp1_6] | %ecx_9  | %flag_8 |
 | 15    | %ecx_14 | %rdi_10 | %eax_4  |
-| 16    | %tmp1_7 | %ecx_11 | %flag_10 |
+| 16    | %tmp1_7 | %ecx_11 | %flag_9 |
 | 17    | %ecx_16 | %rdi_11 | %eax_5  |
-| 18    | %tmp1_8 | %ecx_13 | %flag_12 |
+| 18    | %tmp1_8 | .h[%ecx_13] | %flag_10 |
 | 19    | %ecx_18 | %rdi_12 | %eax_6  |
-| 20    | %tmp1_9 | %ecx_15 | %flag_13 |
-| 21    | %ecx_20 | %rdi_13 | %eax_7  |
-| 22    | %tmp1_10 | %ecx_17 | %flag_14 |]
+| 20    | %tmp1_9 | %ecx_15 | %flag_11 |
+| 21    | %ecx_20 | %rdi_13 | .h[%eax_7]  |
 ]
 .right-col[
 ```
