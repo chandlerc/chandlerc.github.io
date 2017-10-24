@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LLVM: A Modern, Open C++ Toolchain</title>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Oswald|Roboto|Roboto+Mono" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        font-size: 120%
+      }
+      a {
+        color: #96cbfe;
+        text-decoration: initial;
+      }
+      h1, h2, h3 {
+        font-family: 'Oswald', sans-serif;
+        font-weight: normal;
+      }
+      .footnote {
+        position: absolute;
+        bottom: 2em;
+        right: 1em;
+      }
+      .remark-container {
+        background-color: #000;
+      }
+      .remark-slide-scaler {
+        -moz-box-shadow: 0 0 30px #000;
+        -webkit-box-shadow: 0 0 30px #000;
+        box-shadow: 0 0 30px #000;
+      }
+      .remark-slide-content {
+        background-color: #000;
+        background-size: cover;
+        background-position: center;
+        color: #f8f8f8;
+        font-size: 32px;
+        text-shadow: 0px 0px 16px #000, 0px 0px 32px #000;
+        padding: 0.5em 1em 0.5em 1em
+      }
+      .remark-slide-content h1 {
+        font-size: 85px
+      }
+      .remark-slide-content h2 {
+        font-size: 75px
+      }
+      .remark-slide-content h3 {
+        font-size: 75px
+      }
+      .remark-code, .remark-inline-code {
+        font-family: 'Roboto Mono', monospace;
+      }
+      .remark-code {
+        font-size: 22px;
+      }
+      .remark-code-line-highlighted {
+        background-color: #422;
+        border-left: 5px solid #F00;
+        border-right: 5px solid #F00;
+        margin: -1px -7px 0px;
+        padding: 1px 2px 0px;
+      }
+      .remark-code-span-highlighted {
+        background-color: #422;
+        border: 5px solid #F00;
+        box-shadow: 0 0 30px #F00;
+        margin: -7px;
+        padding: 2px;
+      }
+      .left-col {
+        float: left;
+        width: 49%;
+      }
+      .right-col {
+        float: right;
+        width: 49%;
+      }
+
+    </style>
+  </head>
+  <body>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({
+        // Set the slideshow display ratio
+        // Default: '4:3'
+        // Alternatives: '16:9', ...
+        ratio: '16:9',
+
+        // Syntax highlighting theme
+        highlightLanguage: 'cpp',
+        highlightStyle: 'ir-black',
+        highlightLines: true,
+        highlightSpans: true,
+
+        // Customize slide number label, either using a format string..
+        slideNumberFormat: '(%current% / %total%)',
+
+        sourceUrl: 'llvm_toolchain.md',
+      });
+    </script>
+  </body>
+</html>
