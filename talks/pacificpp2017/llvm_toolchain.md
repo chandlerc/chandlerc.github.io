@@ -184,7 +184,7 @@ template: basic-layout
 - Includes code generation, optimization, linking, and loading
 - Written in C++, of course. ;]
 
-.footnote[(The letters don't stand for anything, its like XKCD.)]
+.footnote[(The letters don't stand for anything, like XKCD.)]
 
 ---
 name: what-can-llvm-do
@@ -226,7 +226,7 @@ template: title-layout
 name: open-source-community
 template: title-layout
 
-## *Open source* software, so it comes w/ a community
+## *Open source* software:<br/> it comes w/ a community
 
 ---
 name: back-to-demo
