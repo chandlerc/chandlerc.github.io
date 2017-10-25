@@ -128,19 +128,19 @@ make goofy mission impossible references, wake people up
 name: closed-source
 template: title-layout
 
-## First: many are closed source and proprietary
+### First: many are closed source and proprietary
 
 ---
 name: hacking-gcc
 template: title-layout
 
-## Second: GCC is open source, but hard to hack on
+### Second: GCC is open source, but hard to hack on
 
 ---
 name: binutils-linkers-and-gdb-oh-my
 template: title-layout
 
-## Third: Need binutils, GDB, etc.
+### Third: Need to build binutils, GDB, etc.
 
 .footnote[There is a whole project around this: Crosstool-NG]
 
@@ -148,7 +148,7 @@ template: title-layout
 name: dont-forget-the-bugs
 template: title-layout
 
-## Fourth: What happens when you hit a bug?
+### Fourth: Now you need to debug miscompiles!
 
 ---
 name: companies-invest-lots-in-toolchains
@@ -160,7 +160,13 @@ template: title-layout
 name: toolchain-impossible-redux
 template: title-layout
 
-# Rolling your own toolchain is impossible!
+# Building your own toolchain?
+
+---
+name: toolchain-impossible-redux-big
+template: title-layout
+
+# *IMPOSSIBLE!*
 
 ---
 name: toolchain-in-a-talk
