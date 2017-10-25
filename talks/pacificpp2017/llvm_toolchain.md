@@ -208,19 +208,19 @@ template: title-layout
 name: backup-llvm-is-software
 template: title-layout
 
-# But LLVM is still a just C++ software
+# But LLVM is still just C++ software
 
 ---
 name: llvm-has-bugs
 template: title-layout
 
-## LLVM has bugs just like all other software
+## LLVM has bugs!<br/>(just like all other software)
 
 ---
 name: you-can-hack-onllvm
 template: title-layout
 
-## You can hack on LLVM just like other software
+## You can hack on LLVM!<br/>(just like other software)
 
 ---
 name: open-source-community
@@ -244,25 +244,25 @@ template: title-layout
 name: cxx-moving-faster
 template: title-layout
 
-## C++ is moving faster, your toolchain needs to catch up
+## C++ is moving faster<br/>Your toolchain needs to catch up
 
 ---
 name: toolchains-just-software
 template: title-layout
 
-## C++ toolchains are just C++ software
+## C++ toolchains are C++ software
 
 ---
 name: hack-on-toolchains
 template: title-layout
 
-## If you hack on C++ software, you can hack on your toolchain
+## If you hack on C++ software,<br/>you can hack on your toolchain
 
 ---
 name: get-llvm
 template: title-layout
 
-## Start using (and hacking) on LLVM and enjoy some amazing tools
+## Start using (and hacking) on LLVM<br/>Enjoy some amazing tools
 
 ---
 name: questions
