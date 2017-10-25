@@ -23,58 +23,250 @@ Intro:
 TODO: moar intro
 
 ---
-name: number-bullets
-class: left, middle
-
-1. Blah
-1. Blah
-1. Blah
-
-???
-Notes
-
----
-name: one-liner
+name: cxx-up-and-to-the-right
 template: title-layout
 
-## !
+# C++ is taking off
 
 ???
-Notes
+- Regular release cadence
+- Awesome new features
+- Continues to be uniquely positioned for performance critical or resource
+  constrained code
+
+TODO: maybe show Herb's graphic about the process?
 
 ---
-name: point-bullets
-template: basic-layout
-
-## Title
-- Blah
-- Blah
-- Blah
-
-???
-Notes
-
----
-name: code-two-cols
-template: basic-layout
-
-.left-col[
-```cpp
-```
-]
-.right-col[
-]
-
-.footnote[]
-
-???
-Notes
-
----
-name: conclusion
+name: toolchains-are-lagging
 template: title-layout
 
-## Something! 
+# C++ toolchains ... aren't
+
+???
+- Toolchains dragging compared to the language
+- Poll audience what compiler they can rely on when writing 80% of their C++
+  code
+
+---
+name: toolchains-are-lagging-debian
+template: title-layout
+
+## Debian: GCC 6, Clang 3.8
+
+---
+name: toolchains-are-lagging-ubuntu-lts
+template: title-layout
+
+## Ubuntu LTS (latest): GCC 5, Clang 3.8
+
+---
+name: toolchains-are-lagging-ubuntu-lts
+template: title-layout
+
+## Ubuntu LTS (previou): GCC 4.8, Clang 3.4
+
+---
+name: toolchains-are-lagging-ubuntu-lts
+template: title-layout
+
+## RHEL: GCC 4.8, Clang: NOPE!
+
+---
+name: toolchains-are-lagging-sad
+template: title-layout
+
+# =[
+
+---
+name: toolchain-release-cylces
+template: basic-layout
+
+## Stack release cycles are a killer
+1. 6-months to 1-year for toolchain release
+2. 6-months to N-years for distro release
+3. ??? for deployment of distro
+
+---
+name: toolchain-bug-cycle
+template: title-layout
+
+## What happens when you hit a bug?
+
+---
+name: toolchain-bug-cycle
+template: basic-layout
+
+## Bug fixes are a nightmare...
+1. 1 to N years to get new toolchain
+2. Days or months to find a bug and report it
+3. Days or months for upstream to fix it
+4. 1 to N years to get fixed toolchain???
+
+---
+name: toolchain-dev
+template: title-layout
+
+## Need to own and develop in-house toolchain?
+
+(you know, like Google, Apple, and others?)
+
+???
+The only path forward seems to be to develop an in-house toolchain...
+This is what Google, Apple, Sony, Intel, IBM, ARM, Microsoft, and more all do.
+But this is nuts, owning and developing toolchains is crazy hard, right?
+
+---
+name: toolchain-mission-impossible
+template: title-layout
+
+# In-house toolchain development seems crazy...
+
+???
+make goofy mission impossible references, wake people up
+
+---
+name: closed-source
+template: title-layout
+
+## First: many are closed source and proprietary
+
+---
+name: hacking-gcc
+template: title-layout
+
+## Second: GCC is open source, but *really* hard to hack on
+
+---
+name: binutils-linkers-and-gdb-oh-my
+template: title-layout
+
+## Third: Need binutils, linker, GDB, all different... 
+
+---
+name: crosstool-ng
+template: title-layout
+
+## (Whole projects around this: Crosstool-NG)
+
+---
+name: dont-forget-the-bugs
+template: title-layout
+
+## Fourth: What happens when you hit a bug?
+
+---
+name: companies-invest-lots-in-toolchains
+template: title-layout
+
+## Companies doing this today are *huge!*
+
+---
+name: toolchain-impossible-redux
+template: title-layout
+
+# Rolling your own toolchain is impossible!
+
+---
+name: toolchain-in-a-talk
+template: title-layout
+
+# So let's do it live, during the talk!
+
+---
+name: llvm-game-changer 
+template: title-layout
+
+# LLVM changes the game a bit. ;]
+
+---
+name: what-is-llvm
+template: basic-layout
+
+## What is LLVM?
+- Open source project
+- Moduler collection of compiler & toolchain infra
+- Includes code generation, optimization, linking, and loading
+- Written in C++, of course. ;]
+
+.footnote[(The letters don't stand for anything, its like XKCD.)]
+
+---
+name: what-can-llvm-do
+
+## What can you do with LLVM?
+- Code generation for DSLs (e.g. Halide or XLA)
+- Traditional compilers for general purpose languages
+- Developer / editor tools for static analysis, refactoring, etc.
+- There are active frontends targeting LLVM for a huge number of languages,
+  including, of course...
+
+.footnote[(DSL: Domain Specific Language)]
+
+---
+name: clang-fe
+template: title-layout
+
+## Clang: the LLVM C++ frontend
+
+---
+name: backup-llvm-is-software
+template: title-layout
+
+# But LLVM is still a just C++ software
+
+---
+name: llvm-has-bugs
+template: title-layout
+
+## LLVM has bugs just like all other software
+
+---
+name: you-can-hack-onllvm
+template: title-layout
+
+## You can hack on LLVM just like other software
+
+---
+name: open-source-community
+template: title-layout
+
+## *Open source* software, so it comes w/ a community
+
+---
+name: back-to-demo
+template: title-layout
+
+# OK, back to building LLVM...
+
+---
+name: wrapup-time 
+template: title-layout
+
+# Summary time!
+
+---
+name: cxx-moving-faster
+template: title-layout
+
+## C++ is moving faster, your toolchain needs to catch up
+
+---
+name: toolchains-just-software
+template: title-layout
+
+## C++ toolchains are just C++ software
+
+---
+name: hack-on-toolchains
+template: title-layout
+
+## If you hack on C++ software, you can hack on your toolchain
+
+---
+name: get-llvm
+template: title-layout
+
+## Start using (and hacking) on LLVM and enjoy some amazing tools
 
 ---
 name: questions
