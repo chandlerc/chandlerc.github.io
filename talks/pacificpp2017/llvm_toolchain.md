@@ -54,19 +54,19 @@ template: title-layout
 ## Debian: GCC 6, Clang 3.8
 
 ---
-name: toolchains-are-lagging-ubuntu-lts
+name: toolchains-are-lagging-xenial
 template: title-layout
 
-## Ubuntu LTS (latest): GCC 5, Clang 3.8
+## Ubuntu LTS (Xenial): GCC 5, Clang 3.8
 
 ---
-name: toolchains-are-lagging-ubuntu-lts
+name: toolchains-are-lagging-trusty
 template: title-layout
 
-## Ubuntu LTS (previou): GCC 4.8, Clang 3.4
+## Ubuntu LTS (Trusty): GCC 4.8, Clang 3.4
 
 ---
-name: toolchains-are-lagging-ubuntu-lts
+name: toolchains-are-lagging-rhel
 template: title-layout
 
 ## RHEL: GCC 4.8, Clang: NOPE!
@@ -81,7 +81,7 @@ template: title-layout
 name: toolchain-release-cylces
 template: basic-layout
 
-## Stack release cycles are a killer
+## Stacked release cycles add up quickly
 1. 6-months to 1-year for toolchain release
 2. 6-months to N-years for distro release
 3. ??? for deployment of distro
@@ -106,7 +106,7 @@ template: basic-layout
 name: toolchain-dev
 template: title-layout
 
-## Need to own and develop in-house toolchain?
+## Need to develop toolchain in-house?
 
 (you know, like Google, Apple, and others?)
 
@@ -119,7 +119,7 @@ But this is nuts, owning and developing toolchains is crazy hard, right?
 name: toolchain-mission-impossible
 template: title-layout
 
-# In-house toolchain development seems crazy...
+# In-house toolchain seems crazy...
 
 ???
 make goofy mission impossible references, wake people up
@@ -134,19 +134,15 @@ template: title-layout
 name: hacking-gcc
 template: title-layout
 
-## Second: GCC is open source, but *really* hard to hack on
+## Second: GCC is open source, but hard to hack on
 
 ---
 name: binutils-linkers-and-gdb-oh-my
 template: title-layout
 
-## Third: Need binutils, linker, GDB, all different... 
+## Third: Need binutils, GDB, etc.
 
----
-name: crosstool-ng
-template: title-layout
-
-## (Whole projects around this: Crosstool-NG)
+.footnote[There is a whole project around this: Crosstool-NG]
 
 ---
 name: dont-forget-the-bugs
