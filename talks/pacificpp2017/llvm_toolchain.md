@@ -214,19 +214,23 @@ template: title-layout
 name: llvm-has-bugs
 template: title-layout
 
-## LLVM has bugs!<br/>(just like all other software)
+## LLVM has bugs!
+
+### (just like other software)
 
 ---
 name: you-can-hack-onllvm
 template: title-layout
 
-## You can hack on LLVM!<br/>(just like other software)
+## You can hack on LLVM!
+
+###(just like other software)
 
 ---
 name: open-source-community
 template: title-layout
 
-## *Open source* software:<br/> it comes w/ a community
+## *Open source* software:<br/> it comes with a community
 
 ---
 name: back-to-demo
