@@ -101,6 +101,7 @@ name: ooo-start
 template: title-layout
 
 # Modern processors are highly speculative
+## This speculative behavior couldn't be a security vunerability, right? :)
 
 ???
 T+15 minutes
