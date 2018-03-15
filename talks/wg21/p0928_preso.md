@@ -232,7 +232,7 @@ struct PrivateKey : KeyBase {
 };
 
 void do_crypto(KeyBase &key) const {
- auto h = key.secure_hash();
+  auto h = key.secure_hash();
   // ...
 }
 ```
