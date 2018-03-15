@@ -41,6 +41,7 @@ name:
 template: basic-layout
 
 ```cpp
+
 ```
 
 ???
@@ -53,10 +54,12 @@ template: basic-layout
 
 .left-col[
 ```cpp
+
 ```
 ]
 .right-col[
 ```cpp
+
 ```
 ]
 
