@@ -209,13 +209,45 @@ const char *string::data() const {
 - 
 
 ---
+name: v1-ex3.0
+template: basic-layout
+
+```cpp
+struct KeyBase {
+  virtual sha256 secure_hash() = 0;
+private:
+  std::vector<std::byte> key_data;
+};
+
+struct PublicKey : KeyBase {
+  sha256 secure_hash() override {
+    return fast_non_constant_time_hash(key_data);
+  }
+};
+
+struct PrivateKey : KeyBase {
+  sha256 secure_hash() override {
+    return slow_constant_time_hash(key_data);
+  }
+};
+
+void do_crypto(KeyBase &key) const {
+ auto h = key.secure_hash();
+  // ...
+}
+```
+
+???
+- 
+- 
+
+---
 name: v1-ex3.1
 template: basic-layout
 
 ```cpp
 struct KeyBase {
   virtual sha256 secure_hash() = 0;
-
 private:
   std::vector<std::byte> key_data;
 };
