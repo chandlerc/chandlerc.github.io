@@ -168,7 +168,7 @@ const char *string::get_pointer() const {
     return get_short_pointer();
 }
 
-const char &string::operator[]i(size_t i) const {
+const char &string::operator[](size_t i) const {
 	const char *pointer = get_pointer();
   return pointetr[i];
 }
@@ -194,7 +194,7 @@ const char *string::get_pointer() const {
     return get_short_pointer();
 }
 
-const char &string::operator[]i(size_t i) const {
+const char &string::operator[](size_t i) const {
 	const char *pointer = get_pointer();
   return pointetr[i];
 }
@@ -280,9 +280,9 @@ array &arr2 = ...; /* array of size 0x400 */
 unsigned long untrusted_offset = ...;
 
 if (untrusted_offset < arr1->length) {
-  unsigned char value = `load_no_speculate(arr1->data + untrusted_offset,
-                                          arr1->data, arr1->data + arr1->length,
-                                          0u, arr1->data + untrusted_offset);`
+* unsigned char value = load_no_speculate(arr1->data + untrusted_offset,
+*                                         arr1->data, arr1->data + arr1->length,
+*                                         0u, arr1->data + untrusted_offset);
   unsigned long index2 = ((value & 1) * 0x100) + 0x200;
   unsigned char value2 = arr2->data[index2];
   // ... doesn't matter what else
@@ -350,7 +350,7 @@ const char *string::get_pointer() const {
     return get_short_pointer();
 }
 
-const char &string::operator[]i(size_t i) const {
+const char &string::operator[](size_t i) const {
 	const char *pointer = get_pointer();
   return pointetr[i];
 }
@@ -378,7 +378,7 @@ const char *string::get_pointer() const {
     return get_long_pointer();
 }
 
-const char &string::operator[]i(size_t i) const {
+const char &string::operator[](size_t i) const {
 	const char *pointer = get_pointer();
   return pointetr[i];
 }
@@ -406,7 +406,7 @@ const char *string::get_pointer() const {
     return get_long_pointer();
 }
 
-const char &string::operator[]i(size_t i) const {
+const char &string::operator[](size_t i) const {
 	const char *pointer = get_pointer();
   return pointetr[i];
 }
