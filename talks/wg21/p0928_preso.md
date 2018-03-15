@@ -27,7 +27,7 @@ template: title-layout
 ???
 
 ---
-name: v1-ex1 
+name: v1-ex1.0
 template: basic-layout
 
 ```cpp
@@ -42,6 +42,58 @@ unsigned long untrusted_offset = ...;
 
 if (untrusted_offset < arr1->length) {
   unsigned char value = arr1->data[untrusted_offset];
+  unsigned long index2 = ((value & 1) * 0x100) + 0x200;
+  unsigned char value2 = arr2->data[index2];
+  // ... doesn't matter what else
+}
+```
+
+???
+- 
+- 
+
+---
+name: v1-ex1.1 
+template: basic-layout
+
+```cpp
+struct array {
+  unsigned long length;
+  unsigned char data[];
+};
+array &arr1 = ...; /* small array */
+array &arr2 = ...; /* array of size 0x400 */
+
+unsigned long untrusted_offset = ...;
+
+*if (untrusted_offset < arr1->length) {
+  unsigned char value = arr1->data[untrusted_offset];
+  unsigned long index2 = ((value & 1) * 0x100) + 0x200;
+  unsigned char value2 = arr2->data[index2];
+  // ... doesn't matter what else
+}
+```
+
+???
+- 
+- 
+
+---
+name: v1-ex1.2 
+template: basic-layout
+
+```cpp
+struct array {
+  unsigned long length;
+  unsigned char data[];
+};
+array &arr1 = ...; /* small array */
+array &arr2 = ...; /* array of size 0x400 */
+
+unsigned long untrusted_offset = ...;
+
+if (untrusted_offset < arr1->length) {
+*  unsigned char value = arr1->data[untrusted_offset];
   unsigned long index2 = ((value & 1) * 0x100) + 0x200;
   unsigned char value2 = arr2->data[index2];
   // ... doesn't matter what else
@@ -168,10 +220,10 @@ template: basic-layout
 
 ```cpp
 ;
-// Requires: All `Ts` are integral or pointer types.
-// Returns: `predicate`.
-// Remarks: If `predicate` is false, then any speculative execution in
-// which it is treated as true will also treat `zero_args...` as zero.
+// Requires: All 'Ts' are integral or pointer types.
+// Returns: 'predicate'.
+// Remarks: If 'predicate' is false, then any speculative execution in
+// which it is treated as true will also treat 'zero_args...' as zero.
 template <typename ...Ts>
 bool protect_from_speculation(bool predicate, Ts &...zero_args);
 ```
