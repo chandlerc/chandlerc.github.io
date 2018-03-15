@@ -356,8 +356,8 @@ array &arr2 = ...; /* array of size 0x400 */
 
 unsigned long untrusted_offset = ...;
 
-if (protect_from_speculation(untrusted_offset < arr1->length,
-                             untrusted_offset)) {
+*if (protect_from_speculation(untrusted_offset < arr1->length,
+*                            untrusted_offset)) {
   unsigned char value = arr1->data[untrusted_offset];
   unsigned long index2 = ((value & 1) * 0x100) + 0x200;
   unsigned char value2 = arr2->data[index2];
@@ -375,7 +375,7 @@ template: basic-layout
 
 ```cpp
 const char *string::get_pointer() const {
-  if (protect_from_speculation(is_long(), this)
+* if (protect_from_speculation(is_long(), this)
     return get_long_pointer();
   else
     return get_short_pointer();
@@ -403,7 +403,7 @@ template: basic-layout
 const char *string::get_pointer() const {
   bool is_short = !protect_from_speculation(is_long(), this);
   // ... lots of code ...
-  if (is_short)
+* if (is_short)
     return get_short_pointer();
   else
     return get_long_pointer();
@@ -431,7 +431,7 @@ template: basic-layout
 const char *string::get_pointer() const {
   bool is_short = !is_long();
   // ... lots of code ...
-  if [[harden_misspeculation(this)]] (is_short)
+* if [[harden_misspeculation(this)]] (is_short)
     return get_short_pointer();
   else
     return get_long_pointer();
@@ -458,7 +458,6 @@ template: basic-layout
 ```cpp
 struct KeyBase {
   virtual sha256 secure_hash() = 0;
-
 private:
   std::vector<std::byte> key_data;
 };
@@ -470,11 +469,13 @@ struct PublicKey : KeyBase {
 };
 
 struct PrivateKey : KeyBase {
-  sha256 secure_hash() override { return slow_constant_time_hash(key_data); }
+  sha256 secure_hash() override {
+    return slow_constant_time_hash(key_data);
+  }
 };
 
 void do_crypto(KeyBase &key) const {
-  auto h = [[harden_misspeculation(key)]] key.secure_hash();
+* auto h = [[harden_misspeculation(key)]] key.secure_hash();
   // ...
 }
 ```
