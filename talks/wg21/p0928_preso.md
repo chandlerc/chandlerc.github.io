@@ -49,11 +49,11 @@ if (untrusted_offset < arr1->length) {
 ```
 
 ???
-- 
-- 
+-
+-
 
 ---
-name: v1-ex1.1 
+name: v1-ex1.1
 template: basic-layout
 
 ```cpp
@@ -75,11 +75,11 @@ unsigned long untrusted_offset = ...;
 ```
 
 ???
-- 
-- 
+-
+-
 
 ---
-name: v1-ex1.2 
+name: v1-ex1.2
 template: basic-layout
 
 ```cpp
@@ -101,8 +101,8 @@ if (untrusted_offset < arr1->length) {
 ```
 
 ???
-- 
-- 
+-
+-
 
 ---
 name: v1-ex1.3
@@ -127,8 +127,8 @@ if (untrusted_offset < arr1->length) {
 ```
 
 ???
-- 
-- 
+-
+-
 
 ---
 name: v1-ex1.4
@@ -153,8 +153,8 @@ if (untrusted_offset < arr1->length) {
 ```
 
 ???
-- 
-- 
+-
+-
 
 ---
 name: v1-ex2.0
@@ -179,8 +179,8 @@ const char *string::data() const {
 ```
 
 ???
-- 
-- 
+-
+-
 
 ---
 name: v1-ex2.1
@@ -205,8 +205,8 @@ const char *string::data() const {
 ```
 
 ???
-- 
-- 
+-
+-
 
 ---
 name: v1-ex3.0
@@ -238,8 +238,8 @@ void do_crypto(KeyBase &key) const {
 ```
 
 ???
-- 
-- 
+-
+-
 
 ---
 name: v1-ex3.1
@@ -271,11 +271,11 @@ void do_crypto(KeyBase &key) const {
 ```
 
 ???
-- 
-- 
+-
+-
 
 ---
-name: m1 
+name: m1
 template: basic-layout
 
 ```cpp
@@ -294,8 +294,8 @@ T load_no_speculate(const volatile T *ptr, const volatile void *lower,
 ```
 
 ???
-- 
-- 
+-
+-
 
 ---
 name: v1-ex1-m1
@@ -322,15 +322,14 @@ if (untrusted_offset < arr1->length) {
 ```
 
 ???
-- 
-- 
+-
+-
 
 ---
-name: m2 
+name: m2
 template: basic-layout
 
 ```cpp
-;
 // Requires: All 'Ts' are integral or pointer types.
 // Returns: 'predicate'.
 // Remarks: If 'predicate' is false, then any speculative execution in
@@ -340,8 +339,8 @@ bool protect_from_speculation(bool predicate, Ts &...zero_args);
 ```
 
 ???
-- 
-- 
+-
+-
 
 ---
 name: v1-ex1-m2
@@ -367,8 +366,8 @@ if (protect_from_speculation(untrusted_offset < arr1->length,
 ```
 
 ???
-- 
-- 
+-
+-
 
 ---
 name: v1-ex2-m2
@@ -393,8 +392,8 @@ const char *string::data() const {
 ```
 
 ???
-- 
-- 
+-
+-
 
 ---
 name: v1-ex2-m2b
@@ -421,8 +420,8 @@ const char *string::data() const {
 ```
 
 ???
-- 
-- 
+-
+-
 
 ---
 name: v1-ex2-m3
@@ -449,8 +448,8 @@ const char *string::data() const {
 ```
 
 ???
-- 
-- 
+-
+-
 
 ---
 name: v1-ex3-m3
@@ -481,21 +480,21 @@ void do_crypto(KeyBase &key) const {
 ```
 
 ???
-- 
-- 
+-
+-
 
 ---
-name: 
+name:
 template: title-layout
 
-# 
+#
 
 ???
-- 
-- 
+-
+-
 
 ---
-name: 
+name:
 template: basic-layout
 
 ```cpp
@@ -503,11 +502,11 @@ template: basic-layout
 ```
 
 ???
-- 
-- 
+-
+-
 
 ---
-name: 
+name:
 template: basic-layout
 
 .left-col[
@@ -522,6 +521,6 @@ template: basic-layout
 ]
 
 ???
-- 
-- 
+-
+-
 
