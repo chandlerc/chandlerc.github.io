@@ -93,7 +93,7 @@ array &arr2 = ...; /* array of size 0x400 */
 unsigned long untrusted_offset = ...;
 
 if (untrusted_offset < arr1->length) {
-*  unsigned char value = arr1->data[untrusted_offset];
+* unsigned char value = arr1->data[untrusted_offset];
   unsigned long index2 = ((value & 1) * 0x100) + 0x200;
   unsigned char value2 = arr2->data[index2];
   // ... doesn't matter what else
@@ -105,7 +105,59 @@ if (untrusted_offset < arr1->length) {
 - 
 
 ---
-name: v1-ex2 
+name: v1-ex1.3
+template: basic-layout
+
+```cpp
+struct array {
+  unsigned long length;
+  unsigned char data[];
+};
+array &arr1 = ...; /* small array */
+array &arr2 = ...; /* array of size 0x400 */
+
+unsigned long untrusted_offset = ...;
+
+if (untrusted_offset < arr1->length) {
+  unsigned char value = arr1->data[untrusted_offset];
+* unsigned long index2 = ((value & 1) * 0x100) + 0x200;
+  unsigned char value2 = arr2->data[index2];
+  // ... doesn't matter what else
+}
+```
+
+???
+- 
+- 
+
+---
+name: v1-ex1.4
+template: basic-layout
+
+```cpp
+struct array {
+  unsigned long length;
+  unsigned char data[];
+};
+array &arr1 = ...; /* small array */
+array &arr2 = ...; /* array of size 0x400 */
+
+unsigned long untrusted_offset = ...;
+
+if (untrusted_offset < arr1->length) {
+  unsigned char value = arr1->data[untrusted_offset];
+  unsigned long index2 = ((value & 1) * 0x100) + 0x200;
+* unsigned char value2 = arr2->data[index2];
+  // ... doesn't matter what else
+}
+```
+
+???
+- 
+- 
+
+---
+name: v1-ex2.0
 template: basic-layout
 
 ```cpp
@@ -131,7 +183,33 @@ const char *string::data() const {
 - 
 
 ---
-name: v1-ex3 
+name: v1-ex2.1
+template: basic-layout
+
+```cpp
+const char *string::get_pointer() const {
+* if (is_long())
+    return get_long_pointer();
+  else
+    return get_short_pointer();
+}
+
+const char &string::operator[]i(size_t i) const {
+	const char *pointer = get_pointer();
+  return pointetr[i];
+}
+
+const char *string::data() const {
+	return get_pointer();
+}
+```
+
+???
+- 
+- 
+
+---
+name: v1-ex3.1
 template: basic-layout
 
 ```cpp
@@ -149,11 +227,13 @@ struct PublicKey : KeyBase {
 };
 
 struct PrivateKey : KeyBase {
-  sha256 secure_hash() override { return slow_constant_time_hash(key_data); }
+  sha256 secure_hash() override {
+    return slow_constant_time_hash(key_data);
+  }
 };
 
 void do_crypto(KeyBase &key) const {
-  auto h = key.secure_hash();
+* auto h = key.secure_hash();
   // ...
 }
 ```
@@ -167,7 +247,6 @@ name: m1
 template: basic-layout
 
 ```cpp
-;
 template <typename T>
 T load_no_speculate(const volatile T *ptr, const volatile void *lower,
                     const volatile void *upper, T failval,
@@ -201,9 +280,9 @@ array &arr2 = ...; /* array of size 0x400 */
 unsigned long untrusted_offset = ...;
 
 if (untrusted_offset < arr1->length) {
-  unsigned char value = load_no_speculate(arr1->data + untrusted_offset,
+  unsigned char value = `load_no_speculate(arr1->data + untrusted_offset,
                                           arr1->data, arr1->data + arr1->length,
-                                          0u, arr1->data + untrusted_offset);
+                                          0u, arr1->data + untrusted_offset);`
   unsigned long index2 = ((value & 1) * 0x100) + 0x200;
   unsigned char value2 = arr2->data[index2];
   // ... doesn't matter what else
