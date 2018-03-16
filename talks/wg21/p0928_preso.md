@@ -12,7 +12,7 @@ name: title
 template: title-layout
 
 # Spectre
-## Speculative Execution <br> Covert Side-Channel Exploits
+## Speculative Execution Covert Side-Channels
 .footnote[Chandler Carruth, <chandlerc@gmail.com>, [@chandlerc1024](https://twitter.com/chandlerc1024)]
 
 ???
