@@ -572,7 +572,8 @@ template: title-layout
 
 ---
 name: polls
-template: title-layout
+template: basic-layout
+class: left
 
 # Semantics / specification polls
 
@@ -582,7 +583,7 @@ template: title-layout
 
 ---
 name: polls2
-template: title-layout
+template: basic-layout
 
 # Syntax polls
 
