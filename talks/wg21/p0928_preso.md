@@ -571,17 +571,15 @@ template: title-layout
 -
 
 ---
-name: polls
+name:
 template: basic-layout
 
-# Semantics / specification polls
-
-- Mumble
-- Mumble
-- Mumble
+---
+name:
+template: basic-layout
 
 ---
-name: polls2
+name: polls
 template: basic-layout
 
 # Syntax polls
@@ -591,35 +589,4 @@ template: basic-layout
 - Other (probably bad) options:
   - Magic operator, applies to either condition expression or indirect call.
   - Suggestions?
-
----
-name:
-template: basic-layout
-
-```cpp
-
-```
-
-???
--
--
-
----
-name:
-template: basic-layout
-
-.left-col[
-```cpp
-
-```
-]
-.right-col[
-```cpp
-
-```
-]
-
-???
--
--
 
