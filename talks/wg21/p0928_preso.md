@@ -573,7 +573,6 @@ template: title-layout
 ---
 name: polls
 template: basic-layout
-class: left
 
 # Semantics / specification polls
 
