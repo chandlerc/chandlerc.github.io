@@ -1,0 +1,1 @@
+clang++ -pthreads -static-libstdc++ -std=c++11 -fsanitize=thread -o bug.0 bug.0.cpp

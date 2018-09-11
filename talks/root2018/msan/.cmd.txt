@@ -1,0 +1,1 @@
+clang++ -static-libstdc++ -std=c++11 -fsanitize=memory -fsanitize-memory-track-origins -o bug bug.cpp
