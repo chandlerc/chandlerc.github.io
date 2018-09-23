@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geek Speak Lightning Talk (CppCon 2018)</title>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Oswald|Roboto|Roboto+Mono|Playfair+Display" rel="stylesheet">
+    <style>
+      :root {
+        --blue-900: #1D57A9;
+        --blue-600: #2581DF;
+        --blue-400: #6BA5ED;
+        --red-900: #A81314;
+        --red-600: #D33B30;
+        --red-400: #E66A5E;
+        --grey-500: #9AA0A6;
+        --grey-600: #80868B;
+        --grey-800: #3C4043;
+        --grey-900: #202124;
+
+        --red-fg: var(--red-400);
+        --red-bg: var(--red-600);
+        --red-bg-dark: #4C0909; /* darker than red-900 */
+        --blue-fg: var(--blue-400);
+        --blue-bg: var(--blue-600);
+        --blue-bg-dark: var(--blue-900);
+
+        --grey-mid: var(--grey-500);
+        --grey-bg: var(--grey-800);
+        --grey-bg-dark: var(--grey-900);
+
+        /* --bg-color: var(--grey-bg-dark); */
+        --bg-color: black;
+      }
+
+      body {
+        font-family: 'Roboto', sans-serif;
+        font-size: 120%
+      }
+      a {
+        color: var(--blue-fg);
+        text-decoration: initial;
+      }
+      h1, h2, h3 {
+        font-family: 'Oswald', sans-serif;
+        font-weight: normal;
+      }
+
+      blockquote {
+        font-family: 'Playfair Display', serif;
+      }
+      blockquote:before, blockquote:after {
+        color: var(--grey-bg);
+        font-size: 200px;
+        font-style: italic;
+      }
+      blockquote:before {
+        content: '\201C';
+        float: left;
+        margin-top: -80px;
+      }
+      blockquote:after {
+        content: '\201D';
+        float: right;
+        margin-top: -200px;
+      }
+
+      blockquote cite {
+        font-family: 'Robot', sans-serif;
+        display: block;
+        text-align: right;
+      }
+      blockquote cite:before {
+        content: '\2014 ';
+      }
+
+      .footnote {
+        position: absolute;
+        bottom: 2em;
+        right: 1em;
+      }
+      .remark-container {
+        background-color: var(--bg-color);
+      }
+      .remark-slide-scaler {
+        -moz-box-shadow: 0 0 0 #000;
+        -webkit-box-shadow: 0 0 0 #000;
+        box-shadow: 0 0 0 #000;
+      }
+      .remark-slide-content {
+        background-color: var(--bg-color);
+        background-size: cover;
+        background-position: center;
+        color: white;
+        font-size: 32px;
+        padding: 0.5em 1em 0.5em 1em
+      }
+      .remark-slide-content h1 {
+        font-size: 85px
+      }
+      .remark-slide-content h2 {
+        font-size: 75px
+      }
+      .remark-slide-content h3 {
+        font-size: 65px
+      }
+      .remark-code, .remark-inline-code {
+        font-family: 'Roboto Mono', monospace;
+      }
+      .remark-code {
+        font-size: 22px;
+      }
+      .remark-code-line-highlighted {
+        background-color: var(--red-bg-dark);
+        border-left: 5px solid var(--red-fg);
+        border-right: 5px solid var(--red-fg);
+        margin: -1px -7px 0px;
+        padding: 1px 2px 0px;
+      }
+      .remark-code-span-highlighted {
+        background-color: var(--red-bg-dark);
+        border: 5px solid var(--red-fg);
+        box-shadow: 0 0 30px var(--red-fg);
+        margin: -7px;
+        padding: 2px;
+      }
+      .left-col {
+        float: left;
+        width: 49%;
+      }
+      .right-col {
+        float: right;
+        width: 49%;
+      }
+      .hl {
+        color: var(--blue-fg);
+        text-decoration: underline;
+      }
+      .shadow {
+        text-shadow: 0px 0px 16px #000, 0px 0px 32px #000;
+      }
+
+      #slide-title h2 {
+        font-size: 65px;
+        -webkit-margin-before: 0;
+        -webkit-margin-after: 0;
+      }
+      #slide-title h1 {
+        font-size: 150px;
+        -webkit-margin-before: -0.5em;
+        -webkit-margin-after: 0.1em;
+      }
+
+    </style>
+  </head>
+  <body>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({
+        // Set the slideshow display ratio
+        // Default: '4:3'
+        // Alternatives: '16:9', ...
+        ratio: '16:9',
+
+        // Syntax highlighting theme
+        highlightLanguage: 'cpp',
+        highlightStyle: 'ir-black',
+        highlightLines: true,
+        highlightSpans: true,
+
+        // Customize slide number label, either using a format string..
+        slideNumberFormat: '(%current% / %total%)',
+
+        sourceUrl: 'geek_speak_lighting.md',
+      });
+    </script>
+  </body>
+</html>
