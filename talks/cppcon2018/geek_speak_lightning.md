@@ -11,12 +11,16 @@ class: left, top
 name: title
 template: title-layout
 
-Geek Speak
+# Geek Speak
 
 .footnote[Chandler Carruth, <chandlerc@gmail.com>, [@chandlerc1024](https://twitter.com/chandlerc1024)]
 
+--
+name: title
+template: title-layout
+count: false
+
 ???
-Intro:
 
 ---
 name: want
@@ -59,3 +63,4 @@ template: title-layout
 - you can tell *your* story, and achieve something you *really* want
 
 ---
+count: false
