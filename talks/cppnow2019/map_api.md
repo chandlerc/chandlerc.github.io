@@ -817,7 +817,7 @@ class Map {
 public:
   // ...
   template <typename OtherKeyT>
-  auto insert(const OtherhKeyT &Key,
+  auto insert(const OtherKeyT &Key,
               function_ref<ValueT()> LazyValue) -> InsertKVResult;
 
   template <typename OtherKeyT>
@@ -840,7 +840,7 @@ class Map {
 public:
   // ...
   template <typename OtherKeyT>
-  auto insert(const OtherhKeyT &Key,
+  auto insert(const OtherKeyT &Key,
               `function_ref`<ValueT()> LazyValue) -> InsertKVResult;
 
   template <typename OtherKeyT>
@@ -863,7 +863,7 @@ class Map {
 public:
   // ...
   template <typename OtherKeyT>
-  auto insert(const OtherhKeyT &Key,
+  auto insert(const OtherKeyT &Key,
               function_ref<`ValueT()`> LazyValue) -> InsertKVResult;
 
   template <typename OtherKeyT>
@@ -886,7 +886,7 @@ class Map {
 public:
   // ...
   template <typename OtherKeyT>
-  auto insert(const OtherhKeyT &Key,
+  auto insert(const OtherKeyT &Key,
               function_ref<void(ValueT *ValueStorage)> ValueCreator)
       -> InsertKVResult;
 
@@ -911,7 +911,7 @@ class Map {
 public:
   // ...
   template <typename OtherKeyT>
-  auto insert(const OtherhKeyT &Key,
+  auto insert(const OtherKeyT &Key,
               function_ref<`void(ValueT *ValueStorage)`> ValueCreator)
       -> InsertKVResult;
 
@@ -936,7 +936,7 @@ class Map {
 public:
   // ...
   template <typename OtherKeyT>
-  auto insert(const OtherhKeyT &Key,
+  auto insert(const OtherKeyT &Key,
               function_ref<void(ValueT *ValueStorage)> ValueCreator)
       -> InsertKVResult;
 
@@ -964,7 +964,7 @@ class Map {
 public:
   // ...
   template <typename OtherKeyT>
-  auto insert(const OtherhKeyT &Key,
+  auto insert(const OtherKeyT &Key,
               function_ref<void(ValueT *ValueStorage)> ValueCreator)
       -> InsertKVResult;
 
@@ -992,7 +992,7 @@ class Map {
 public:
   // ...
   template <typename OtherKeyT>
-  auto insert(const OtherhKeyT &Key,
+  auto insert(const OtherKeyT &Key,
               function_ref<void(KeyT *KeyStorage,
                                 ValueT *ValueStorage)> KVCreator)
       -> InsertKVResult;
@@ -1019,7 +1019,7 @@ class Map {
 public:
   // ...
   template <typename OtherKeyT>
-  auto insert(const OtherhKeyT &Key,
+  auto insert(const OtherKeyT &Key,
               function_ref<void(`KeyT *KeyStorage`,
                                 ValueT *ValueStorage)> KVCreator)
       -> InsertKVResult;
@@ -1046,7 +1046,7 @@ class Map {
 public:
   // ...
   template <typename OtherKeyT>
-  auto insert(const OtherhKeyT &Key,
+  auto insert(const OtherKeyT &Key,
               function_ref<void(KeyT *KeyStorage,
                                 `ValueT *ValueStorage`)> KVCreator)
       -> InsertKVResult;
@@ -1073,7 +1073,7 @@ class Map {
 public:
   // ...
   template <typename OtherKeyT>
-  auto insert(const OtherhKeyT &Key,
+  auto insert(const OtherKeyT &Key,
               function_ref<void(KeyT *KeyStorage,
                                 ValueT *ValueStorage)> KVCreator)
       -> InsertKVResult;
@@ -1081,12 +1081,12 @@ public:
   // ...
 };
 
-void f(std::string Name, Map<std::string, BigComplexType> &big_map) {
+void f(std::string_view Name, Map<std::string, BigComplexType> &big_map) {
   auto Result =
       big_map.insert(Name,
-                     [Name = std::move(Name)](std::string *KeyStorage,
-                                              BigComplexType *ValueStorage) {
-                       new (KeyStorage) std::string(std::move(Name));
+                     [Name](std::string *KeyStorage,
+                            BigComplexType *ValueStorage) {
+                       new (KeyStorage) std::string(Name);
                        new (ValueStorage) BigComplexType(...);
                      });
   // ...
@@ -1104,7 +1104,7 @@ class Map {
 public:
   // ...
   template <typename OtherKeyT>
-  auto insert(const OtherhKeyT &Key,
+  auto insert(const OtherKeyT &Key,
               function_ref<void(KeyT *KeyStorage,
                                 ValueT *ValueStorage)> KVCreator)
       -> InsertKVResult;
@@ -1112,12 +1112,12 @@ public:
   // ...
 };
 
-void f(std::string Name, Map<std::string, BigComplexType> &big_map) {
+void f(std::string_view Name, Map<std::string, BigComplexType> &big_map) {
   auto Result =
       big_map.insert(Name,
-                     [`Name = std::move(Name)`](std::string *KeyStorage,
-                                              BigComplexType *ValueStorage) {
-                       new (KeyStorage) std::string(std::move(Name));
+                     [`Name`](std::string *KeyStorage,
+                            BigComplexType *ValueStorage) {
+                       new (KeyStorage) std::string(Name);
                        new (ValueStorage) BigComplexType(...);
                      });
   // ...
@@ -1135,7 +1135,7 @@ class Map {
 public:
   // ...
   template <typename OtherKeyT>
-  auto insert(const OtherhKeyT &Key,
+  auto insert(const OtherKeyT &Key,
               function_ref<void(KeyT *KeyStorage,
                                 ValueT *ValueStorage)> KVCreator)
       -> InsertKVResult;
@@ -1143,12 +1143,12 @@ public:
   // ...
 };
 
-void f(std::string Name, Map<std::string, BigComplexType> &big_map) {
+void f(std::string_view Name, Map<std::string, BigComplexType> &big_map) {
   auto Result =
       big_map.insert(Name,
-                     [Name = std::move(Name)](std::string *KeyStorage,
-                                              BigComplexType *ValueStorage) {
-*                      new (KeyStorage) std::string(std::move(Name));
+                     [Name](std::string *KeyStorage,
+                            BigComplexType *ValueStorage) {
+*                      new (KeyStorage) std::string(Name);
 *                      new (ValueStorage) BigComplexType(...);
                      });
   // ...
@@ -1169,7 +1169,7 @@ name: small-size
 template: basic-layout
 
 ```cpp
-template <typename KeyT, typename ValueT, ..., int SmallSize>
+template <typename KeyT, typename ValueT, int SmallSize>
 class Map {
 public:
   auto lookup(const KeyT &Key) const -> LookupKVResult;
@@ -1196,7 +1196,7 @@ name: small-size-hl
 template: basic-layout
 
 ```cpp
-template <typename KeyT, typename ValueT, ..., `int SmallSize`>
+template <typename KeyT, typename ValueT, `int SmallSize`>
 class Map {
 public:
   auto lookup(const KeyT &Key) const -> LookupKVResult;
@@ -1223,7 +1223,7 @@ name: small-size-buffer-ptr
 template: basic-layout
 
 ```cpp
-template <typename KeyT, typename ValueT, ..., int SmallSize>
+template <typename KeyT, typename ValueT, int SmallSize>
 class Map {
 public:
   auto lookup(const KeyT &Key) const -> LookupKVResult;
@@ -1250,7 +1250,7 @@ name: small-size-small-buffer
 template: basic-layout
 
 ```cpp
-template <typename KeyT, typename ValueT, ..., int SmallSize>
+template <typename KeyT, typename ValueT, int SmallSize>
 class Map {
 public:
   auto lookup(const KeyT &Key) const -> LookupKVResult;
@@ -1291,7 +1291,7 @@ private:
   void **BufferPtrOrSmallBuffer;
 };
 
-template <typename KeyT, typename ValueT, ..., int SmallSize>
+template <typename KeyT, typename ValueT, int SmallSize>
 class Map {
 public:
   explicit operator MapRef<KeyT, ValueT>();
@@ -1320,7 +1320,7 @@ private:
   void **BufferPtrOrSmallBuffer;
 };
 
-template <typename KeyT, typename ValueT, ..., int SmallSize>
+template <typename KeyT, typename ValueT, int SmallSize>
 class Map {
 public:
 * explicit operator MapRef<KeyT, ValueT>();
@@ -1343,7 +1343,7 @@ private:
   void **BufferPtrOrSmallBuffer;
 };
 
-template <typename KeyT, typename ValueT, ..., int SmallSize>
+template <typename KeyT, typename ValueT, int SmallSize>
 class Map {
 private:
   struct DataMembers {
@@ -1372,7 +1372,7 @@ private:
   void **BufferPtrOrSmallBuffer;
 };
 
-template <typename KeyT, typename ValueT, ..., int SmallSize>
+template <typename KeyT, typename ValueT, int SmallSize>
 class Map {
 private:
   struct DataMembers {
@@ -1401,7 +1401,7 @@ private:
   void **BufferPtrOrSmallBuffer;
 };
 
-template <typename KeyT, typename ValueT, ..., `int SmallSize`>
+template <typename KeyT, typename ValueT, `int SmallSize`>
 class Map {
 private:
   struct DataMembers {
@@ -1430,7 +1430,7 @@ private:
 * void **BufferPtrOrSmallBuffer;
 };
 
-template <typename KeyT, typename ValueT, ..., int SmallSize>
+template <typename KeyT, typename ValueT, int SmallSize>
 class Map {
 private:
   struct DataMembers {
@@ -1467,7 +1467,7 @@ public:
   // ... 
 };
 
-template <typename KeyT, typename ValueT, ..., int SmallSize>
+template <typename KeyT, typename ValueT, int SmallSize>
 class Map {
 public:
   explicit operator MapView<KeyT, ValueT>() const;
@@ -1498,7 +1498,7 @@ public:
   // ... 
 };
 
-template <typename KeyT, typename ValueT, ..., int SmallSize>
+template <typename KeyT, typename ValueT, int SmallSize>
 class Map {
 public:
 * explicit operator MapView<KeyT, ValueT>() const;
@@ -1522,7 +1522,7 @@ private:
   void *Data;
 };
 
-template <typename KeyT, typename ValueT, ..., int SmallSize>
+template <typename KeyT, typename ValueT, int SmallSize>
 class Map {
 private:
   struct DataMembers {
@@ -1551,7 +1551,7 @@ private:
   void *Data;
 };
 
-template <typename KeyT, typename ValueT, ..., int SmallSize>
+template <typename KeyT, typename ValueT, int SmallSize>
 class Map {
 private:
   struct DataMembers {
@@ -1580,7 +1580,7 @@ private:
   void *Data;
 };
 
-template <typename KeyT, typename ValueT, ..., `int SmallSize`>
+template <typename KeyT, typename ValueT, `int SmallSize`>
 class Map {
 private:
   struct DataMembers {
@@ -1609,7 +1609,7 @@ private:
   void *Data;
 };
 
-template <typename KeyT, typename ValueT, ..., int SmallSize>
+template <typename KeyT, typename ValueT, int SmallSize>
 class Map {
 private:
   struct DataMembers {
@@ -1638,7 +1638,7 @@ private:
 * void *Data;
 };
 
-template <typename KeyT, typename ValueT, ..., int SmallSize>
+template <typename KeyT, typename ValueT, int SmallSize>
 class Map {
 private:
   struct DataMembers {
