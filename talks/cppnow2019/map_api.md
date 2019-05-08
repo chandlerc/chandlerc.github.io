@@ -39,7 +39,7 @@ template: img-layout
 name: core-api
 template: title-layout
 
-# What are the most fundamental APIs for a map?
+# Four fundamental APIs
 
 ???
 
@@ -1658,6 +1658,17 @@ name: fine-meme
 template: img-layout
 
 ![And we have a clean and minimal map API!](api_minions.gif)
+
+???
+
+---
+name: credits
+template: basic-layout
+class: bottom, right
+
+Thanks to Hana and Jeff for their photoshop assistance.
+
+Thanks to Hana, Jeff, and Michael for review and feedback.
 
 ???
 
