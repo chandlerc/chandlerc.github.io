@@ -487,7 +487,7 @@ public:
 
   auto update(const KeyT &Key, ValueT Value) -> InsertKVResult;
 
-* auto remove(const KeyT &Key) -> `RemoveKVResult`;
+  auto remove(const KeyT &Key) -> `RemoveKVResult`;
 
   // ...
 };
