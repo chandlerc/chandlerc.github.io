@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>About me on The Loquacious One</title>
+    <link>https://chandlerc.github.io/about/</link>
+    <description>Recent content in About me on The Loquacious One</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.</copyright>
+    
+	<atom:link href="https://chandlerc.github.io/about/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+  </channel>
+</rss>

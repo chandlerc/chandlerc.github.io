@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on The Loquacious One</title>
+    <link>https://chandlerc.github.io/tags/</link>
+    <description>Recent content in Tags on The Loquacious One</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.</copyright>
+    <lastBuildDate>Sun, 14 Jul 2019 23:13:13 +0200</lastBuildDate>
+    
+	<atom:link href="https://chandlerc.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>untagged</title>
+      <link>https://chandlerc.github.io/tags/untagged/</link>
+      <pubDate>Sun, 14 Jul 2019 23:13:13 +0200</pubDate>
+      
+      <guid>https://chandlerc.github.io/tags/untagged/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

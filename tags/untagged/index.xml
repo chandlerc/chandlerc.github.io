@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>untagged on The Loquacious One</title>
+    <link>https://chandlerc.github.io/tags/untagged/</link>
+    <description>Recent content in untagged on The Loquacious One</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.</copyright>
+    <lastBuildDate>Sun, 14 Jul 2019 23:13:13 +0200</lastBuildDate>
+    
+	<atom:link href="https://chandlerc.github.io/tags/untagged/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Welcome</title>
+      <link>https://chandlerc.github.io/posts/welcome/</link>
+      <pubDate>Sun, 14 Jul 2019 23:13:13 +0200</pubDate>
+      
+      <guid>https://chandlerc.github.io/posts/welcome/</guid>
+      <description>Welcome everyone to my first &amp;ldquo;real&amp;rdquo; blog. =]
+To set some initial expectations, not all of these posts will be of super high quality published material. Often, I plan to use them for random musings and thoughts which I might have posted somewhere like Twitter, but required a bit more text than fits in a typical tweet.
+I hope you all enjoy these. And at least when I have some things to say there will be a place I can post and link to that is easier than tweets.</description>
+    </item>
+    
+  </channel>
+</rss>
